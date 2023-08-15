@@ -9,4 +9,6 @@ class Assets {
       'https://i.pinimg.com/564x/df/27/66/df2766f09b7a6ae23a9ec9dd9084896a.jpg';
   static String person4 =
       'https://i.pinimg.com/564x/43/3d/03/433d0346af08d5f9814b535c55aaf32e.jpg';
+  static String progressIndicator =
+      'assets/animations/lottie/progress_indicator.json';
 }

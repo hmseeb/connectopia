@@ -19,7 +19,7 @@ class AnimatedFlashTitle extends StatelessWidget {
       child: Text(
         title,
         style: const TextStyle(
-          fontSize: 48,
+          fontSize: 44,
           fontWeight: FontWeight.bold,
         ),
       ),

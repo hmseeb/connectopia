@@ -10,12 +10,14 @@ class AuthTextField extends StatelessWidget {
     this.controller,
     this.obscureText,
     this.avoidBottomInset,
+    this.onChanged,
   });
 
   final bool? obscureText;
   final bool? avoidBottomInset;
   final String hintText;
   final TextEditingController? controller;
+  final Function(String value)? onChanged;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,6 +32,7 @@ class AuthTextField extends StatelessWidget {
         ),
       ),
       child: TextFormField(
+        onChanged: onChanged,
         scrollPadding: avoidBottomInset ?? false
             ? EdgeInsets.only(
                 bottom: MediaQuery.viewInsetsOf(context).bottom + 32)
