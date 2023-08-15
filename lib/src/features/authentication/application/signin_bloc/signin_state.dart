@@ -9,23 +9,12 @@ sealed class SigninState extends Equatable {
 
 class SigninInitialState extends SigninState {}
 
+class ValidState extends SigninState {}
+
 class SigninLoadingState extends SigninState {}
 
-class ValidSigninState extends SigninState {}
-
-class InvalidEmailState extends SigninState {
-  final String error;
-
-  InvalidEmailState(this.error);
-}
-
-class InvalidPasswordState extends SigninState {
-  final String error;
-
-  InvalidPasswordState(this.error);
-}
-
 class SigninSuccessState extends SigninState {}
+
 class SigninFailureState extends SigninState {
   final String error;
 

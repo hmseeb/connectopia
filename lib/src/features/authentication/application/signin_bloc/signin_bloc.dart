@@ -9,18 +9,23 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
   final signinRepo = SigninRepository();
 
   SigninBloc() : super(SigninInitialState()) {
-    on<EmailOrPasswordChanged>((event, emit) {
-      if (!signinRepo.isEmailValid(event.email)) {
-        emit(InvalidEmailState('Enter a valid email address'));
-      } else if (!signinRepo.isValidPassword(event.password)) {
-        if (event.password == '')
-          emit(SigninInitialState());
-        else
-          emit(InvalidPasswordState(
-              'Your password must be at least 8 characters long and contain at least one number and one special character'));
-      } else {
-        emit(ValidSigninState());
-      }
+    bool isEmailValid = false;
+    bool isPasswordValid = false;
+
+    on<EmailChangedEvent>((event, emit) {
+      isEmailValid = signinRepo.isValidEmail(event.email);
+      if (isEmailValid && isPasswordValid)
+        emit(ValidState());
+      else
+        emit(SigninInitialState());
+    });
+
+    on<PasswordChangedEvent>((event, emit) {
+      isPasswordValid = signinRepo.isValidPassword(event.password);
+      if (isEmailValid && isPasswordValid)
+        emit(ValidState());
+      else
+        emit(SigninInitialState());
     });
 
     on<SigninButtonPressed>((event, emit) async {

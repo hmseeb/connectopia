@@ -17,7 +17,7 @@ class SigninRepository {
     return true;
   }
 
-  bool isEmailValid(String email) {
+  bool isValidEmail(String email) {
     // Basic email format validation
     final emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
 
@@ -59,20 +59,6 @@ class SigninRepository {
     if (password.length < 8) {
       return false; // Password length is less than 8 characters
     }
-
-    bool hasDigit = false;
-    bool hasSpecialChar = false;
-
-    for (var char in password.runes) {
-      final charStr = String.fromCharCode(char);
-
-      if (RegExp(r'[0-9]').hasMatch(charStr)) {
-        hasDigit = true;
-      } else if (RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(charStr)) {
-        hasSpecialChar = true;
-      }
-    }
-
-    return hasDigit && hasSpecialChar;
+    return true;
   }
 }

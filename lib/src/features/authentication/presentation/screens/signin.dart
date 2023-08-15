@@ -3,7 +3,6 @@ import 'package:connectopia/src/constants/sizing.dart';
 import 'package:connectopia/src/features/authentication/application/signin_bloc/signin_bloc.dart';
 import 'package:connectopia/src/features/authentication/presentation/views/forgot_password_sheet.dart';
 import 'package:connectopia/src/features/authentication/presentation/widgets/appbar_title.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/error_box.dart';
 import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -42,6 +41,8 @@ class _SigninScreenState extends State<SigninScreen> {
     _passwordController.dispose();
     super.dispose();
   }
+
+  bool _isPasswordInvisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -90,22 +91,18 @@ class _SigninScreenState extends State<SigninScreen> {
                 BlocBuilder<SigninBloc, SigninState>(
                   builder: (context, state) {
                     return AuthTextField(
+                        suffixIcon: state is ValidState
+                            ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                            : null,
                         hintText: 'Enter your email',
                         controller: _emailController,
                         onChanged: (value) {
                           context.read<SigninBloc>().add(
-                                EmailOrPasswordChanged(
+                                EmailChangedEvent(
                                   _emailController.text,
-                                  _passwordController.text,
                                 ),
                               );
                         });
-                  },
-                ),
-                BlocBuilder<SigninBloc, SigninState>(
-                  builder: (context, state) {
-                    return ErrorContainer(
-                        message: state is InvalidEmailState ? state.error : '');
                   },
                 ),
                 SizedBox(height: _height * 3),
@@ -114,23 +111,27 @@ class _SigninScreenState extends State<SigninScreen> {
                 BlocBuilder<SigninBloc, SigninState>(
                   builder: (context, state) {
                     return AuthTextField(
+                        obscureText: _isPasswordInvisible,
+                        suffixIcon: InkWell(
+                          splashColor: Colors.transparent,
+                          onTap: () {
+                            setState(() {
+                              _isPasswordInvisible = !_isPasswordInvisible;
+                            });
+                          },
+                          child: Icon(_isPasswordInvisible
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        ),
                         hintText: 'Enter your password',
                         controller: _passwordController,
                         onChanged: (value) {
                           context.read<SigninBloc>().add(
-                                EmailOrPasswordChanged(
-                                  _emailController.text,
+                                PasswordChangedEvent(
                                   _passwordController.text,
                                 ),
                               );
                         });
-                  },
-                ),
-                BlocBuilder<SigninBloc, SigninState>(
-                  builder: (context, state) {
-                    return ErrorContainer(
-                        message:
-                            state is InvalidPasswordState ? state.error : '');
                   },
                 ),
                 SizedBox(height: _height * 2),
@@ -149,7 +150,7 @@ class _SigninScreenState extends State<SigninScreen> {
                           behavior: SnackBarBehavior.floating,
                           content: Center(
                               child: Text(
-                            state.error.toLowerCase(),
+                            state.error,
                             style: TextStyle(
                                 color: Pellete.kWhite,
                                 fontWeight: FontWeight.bold),
@@ -163,7 +164,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   },
                   builder: (context, state) {
                     return ElevatedButton(
-                      onPressed: state is ValidSigninState
+                      onPressed: state is ValidState
                           ? () {
                               context.read<SigninBloc>().add(
                                     SigninButtonPressed(

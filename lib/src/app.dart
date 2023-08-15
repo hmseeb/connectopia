@@ -1,5 +1,5 @@
 import 'package:connectopia/src/features/authentication/application/signin_bloc/signin_bloc.dart';
-import 'package:connectopia/src/routes.dart';
+import 'package:connectopia/src/features/authentication/presentation/screens/signin.dart';
 import 'package:connectopia/src/theme/buttons.dart';
 import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
@@ -34,8 +34,8 @@ class Connectopia extends StatelessWidget {
           ),
         ),
         initialRoute: '/',
-        // home: const SigninScreen(),
-        onGenerateRoute: (settings) => GenerateRoutes.onGenerateRoute(settings),
+        home: const SigninScreen(),
+        // onGenerateRoute: (settings) => GenerateRoutes.onGenerateRoute(settings),
       ),
     );
   }

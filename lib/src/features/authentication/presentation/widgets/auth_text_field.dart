@@ -3,7 +3,7 @@ import 'package:gradient_borders/box_borders/gradient_box_border.dart';
 
 import '../../../../theme/colors.dart';
 
-class AuthTextField extends StatelessWidget {
+class AuthTextField extends StatefulWidget {
   const AuthTextField({
     super.key,
     required this.hintText,
@@ -11,6 +11,7 @@ class AuthTextField extends StatelessWidget {
     this.obscureText,
     this.avoidBottomInset,
     this.onChanged,
+    this.suffixIcon,
   });
 
   final bool? obscureText;
@@ -18,6 +19,12 @@ class AuthTextField extends StatelessWidget {
   final String hintText;
   final TextEditingController? controller;
   final Function(String value)? onChanged;
+  final Widget? suffixIcon;
+  @override
+  State<AuthTextField> createState() => _AuthTextFieldState();
+}
+
+class _AuthTextFieldState extends State<AuthTextField> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,15 +39,19 @@ class AuthTextField extends StatelessWidget {
         ),
       ),
       child: TextFormField(
-        onChanged: onChanged,
-        scrollPadding: avoidBottomInset ?? false
+        obscureText: widget.obscureText ?? false,
+        onChanged: widget.onChanged,
+        scrollPadding: widget.avoidBottomInset ?? false
             ? EdgeInsets.only(
                 bottom: MediaQuery.viewInsetsOf(context).bottom + 32)
             : EdgeInsets.zero,
-        controller: controller,
+        controller: widget.controller,
         onTapOutside: (event) => FocusScope.of(context).unfocus(),
         decoration: InputDecoration(
-          hintText: hintText,
+          
+          suffixIconColor: Pellete.kSecondary,
+          suffixIcon: widget.suffixIcon,
+          hintText: widget.hintText,
           hintStyle: TextStyle(color: Colors.grey),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(32),
