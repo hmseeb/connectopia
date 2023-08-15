@@ -5,8 +5,6 @@ import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'features/authentication/presentation/screens/signin.dart';
-
 class Connectopia extends StatelessWidget {
   const Connectopia({super.key});
 
@@ -35,8 +33,8 @@ class Connectopia extends StatelessWidget {
             secondary: Pellete.kSecondary,
           ),
         ),
-        // initialRoute: '/',
-        home: const SigninScreen(),
+        initialRoute: '/',
+        // home: const SigninScreen(),
         onGenerateRoute: (settings) => GenerateRoutes.onGenerateRoute(settings),
       ),
     );
