@@ -6,14 +6,14 @@ import 'package:connectopia/src/features/authentication/presentation/widgets/app
 import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../common/messages/error_snakbar.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/field_q_button.dart';
 import '../widgets/field_title.dart';
 import '../widgets/or_divider.dart';
-import '../widgets/service_button.dart';
+import '../widgets/service_wrapper.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -68,21 +68,7 @@ class _SigninScreenState extends State<SigninScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AuthServiceButton(
-                      height: _height,
-                      width: _width,
-                      icon: FontAwesomeIcons.google,
-                    ),
-                    AuthServiceButton(
-                      height: _height,
-                      width: _width,
-                      icon: FontAwesomeIcons.instagram,
-                    ),
-                  ],
-                ),
+                AuthServiceWrapper(height: _height, width: _width),
                 SizedBox(height: _height * 4),
                 OrDivider(),
                 SizedBox(height: _height * 3),
@@ -134,6 +120,20 @@ class _SigninScreenState extends State<SigninScreen> {
                         });
                   },
                 ),
+                SizedBox(height: _height * 1),
+                BlocBuilder<SigninBloc, SigninState>(
+                  builder: (context, state) {
+                    return AnimatedContainer(
+                      height: state is InvalidPasswordState ? _height * 2 : 0,
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeIn,
+                      child: Text(
+                        state is InvalidPasswordState ? state.error : '',
+                        style: TextStyle(color: Colors.redAccent),
+                      ),
+                    );
+                  },
+                ),
                 SizedBox(height: _height * 2),
                 TextFieldQButton(
                     title: 'Forgotten Password?',
@@ -146,17 +146,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   listener: (context, state) {
                     if (state is SigninFailureState) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          content: Center(
-                              child: Text(
-                            state.error,
-                            style: TextStyle(
-                                color: Pellete.kWhite,
-                                fontWeight: FontWeight.bold),
-                          )),
-                          backgroundColor: Colors.red,
-                        ),
+                        errorSnack(state),
                       );
                     } else {
                       // TODO: Navigate to home screen

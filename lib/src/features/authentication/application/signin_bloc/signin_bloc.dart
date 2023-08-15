@@ -25,7 +25,8 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       if (isEmailValid && isPasswordValid)
         emit(ValidState());
       else
-        emit(SigninInitialState());
+        emit(InvalidPasswordState(
+            'Password must be at least 8 characters long'));
     });
 
     on<SigninButtonPressed>((event, emit) async {

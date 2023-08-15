@@ -1,14 +1,13 @@
 import 'package:connectopia/src/constants/sizing.dart';
 import 'package:connectopia/src/features/authentication/presentation/widgets/appbar_title.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/service_button.dart';
 import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../widgets/auth_text_field.dart';
 import '../widgets/field_q_button.dart';
 import '../widgets/field_title.dart';
 import '../widgets/or_divider.dart';
+import '../widgets/service_wrapper.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -61,21 +60,7 @@ class _SignupScreenState extends State<SignupScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    AuthServiceButton(
-                      height: _height,
-                      width: _width,
-                      icon: FontAwesomeIcons.google,
-                    ),
-                    AuthServiceButton(
-                      height: _height,
-                      width: _width,
-                      icon: FontAwesomeIcons.instagram,
-                    ),
-                  ],
-                ),
+                AuthServiceWrapper(height: _height, width: _width),
                 SizedBox(height: _height * 4),
                 OrDivider(),
                 SizedBox(height: _height * 3),
