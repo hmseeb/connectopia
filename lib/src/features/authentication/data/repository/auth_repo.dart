@@ -33,6 +33,7 @@ class AuthRepo {
     }
   }
 
+  // TODO: Add SMTP server
   Future sendVerificationEmail(String email) async {
     try {
       await pb.collection('users').requestPasswordReset(email);
