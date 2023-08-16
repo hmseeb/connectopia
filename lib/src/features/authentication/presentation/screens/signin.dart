@@ -140,6 +140,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       );
                     } else if (state is SigninSuccessState) {
                       // TODO: Navigate to home screen
+                      Navigator.pushReplacementNamed(context, '/home');
                     }
                   },
                   builder: (context, state) {

@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class ScreenSize {
   static double width(BuildContext context) =>
-      MediaQuery.of(context).size.width / 100;
+      MediaQuery.sizeOf(context).width / 100;
   static double height(BuildContext context) =>
-      MediaQuery.of(context).size.height / 100;
-  static Size size(BuildContext context) => MediaQuery.of(context).size;
+      MediaQuery.sizeOf(context).height / 100;
+
 
   static double kSpaceXS = 0.5;
   static double kSpaceS = 1;

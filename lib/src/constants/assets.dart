@@ -1,3 +1,5 @@
+import 'dart:math';
+
 class Assets {
   static String logo = 'assets/images/logo.png';
   static String splash = 'assets/animations/rive/splash.riv';
@@ -11,4 +13,19 @@ class Assets {
       'https://i.pinimg.com/564x/43/3d/03/433d0346af08d5f9814b535c55aaf32e.jpg';
   static String progressIndicator =
       'assets/animations/lottie/progress_indicator.json';
+
+  static String getRandomAvatar() {
+    List<String> avatars = [
+      'cat',
+      'cow',
+      'deer',
+      'jacutinga',
+      'koi',
+      'macaw',
+      'panda-bear',
+      'shark',
+    ];
+    int randomIndex = Random().nextInt(avatars.length);
+    return 'assets/images/avatar_placeholders/${avatars[randomIndex]}.png';
+  }
 }

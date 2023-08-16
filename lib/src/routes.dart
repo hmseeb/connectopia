@@ -3,6 +3,7 @@ import 'package:connectopia/src/features/authentication/presentation/screens/acc
 import 'package:connectopia/src/features/authentication/presentation/screens/onboarding.dart';
 import 'package:connectopia/src/features/authentication/presentation/screens/signin.dart';
 import 'package:connectopia/src/features/authentication/presentation/screens/signup.dart';
+import 'package:connectopia/src/features/feeds/presentation/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 class GenerateRoutes {
@@ -45,6 +46,10 @@ class GenerateRoutes {
         return PageRouteBuilder(
           pageBuilder: (_, animation, secondaryAnimation) =>
               const SignupScreen(),
+        );
+      case '/home':
+        return PageRouteBuilder(
+          pageBuilder: (_, animation, secondaryAnimation) => const HomeScreen(),
         );
 
       default:
