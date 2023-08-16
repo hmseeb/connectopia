@@ -77,15 +77,17 @@ class _SigninScreenState extends State<SigninScreen> {
                 BlocBuilder<SigninBloc, SigninState>(
                   builder: (context, state) {
                     return AuthTextField(
-                        suffixIcon: state is ValidState
-                            ? Icon(Icons.check_box, color: Pellete.kPrimary)
-                            : null,
+                        suffixIcon:
+                            state is ValidEmailState || state is ValidState
+                                ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                                : null,
                         hintText: 'Enter your email',
                         controller: _emailController,
                         onChanged: (value) {
                           context.read<SigninBloc>().add(
-                                EmailChangedEvent(
+                                EmailOrPasswordChangedEvent(
                                   _emailController.text,
+                                  _passwordController.text,
                                 ),
                               );
                         });
@@ -113,7 +115,8 @@ class _SigninScreenState extends State<SigninScreen> {
                         controller: _passwordController,
                         onChanged: (value) {
                           context.read<SigninBloc>().add(
-                                PasswordChangedEvent(
+                                EmailOrPasswordChangedEvent(
+                                  _emailController.text,
                                   _passwordController.text,
                                 ),
                               );
@@ -121,19 +124,6 @@ class _SigninScreenState extends State<SigninScreen> {
                   },
                 ),
                 SizedBox(height: _height * 1),
-                BlocBuilder<SigninBloc, SigninState>(
-                  builder: (context, state) {
-                    return AnimatedContainer(
-                      height: state is InvalidPasswordState ? _height * 2 : 0,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeIn,
-                      child: Text(
-                        state is InvalidPasswordState ? state.error : '',
-                        style: TextStyle(color: Colors.redAccent),
-                      ),
-                    );
-                  },
-                ),
                 SizedBox(height: _height * 2),
                 TextFieldQButton(
                     title: 'Forgotten Password?',
@@ -146,7 +136,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   listener: (context, state) {
                     if (state is SigninFailureState) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        errorSnack(state),
+                        errorSnack(state.error),
                       );
                     } else {
                       // TODO: Navigate to home screen

@@ -1,15 +1,31 @@
-import 'package:flutter/material.dart';
+import 'package:connectopia/src/db/pocketbase.dart';
+import 'package:pocketbase/pocketbase.dart';
 
-class SigninRepository {
-  Future<bool> signin(String email, String password) async {
-    await Future.delayed(Duration(seconds: 5));
-    debugPrint('email: $email, password: $password');
-    return true;
+PocketBase pb = PocketBaseSingleton().pb;
+
+class AuthRepo {
+  Future<Object> signin(String email, String password) async {
+    try {
+      final user =
+          await pb.collection('users').authWithPassword(email, password);
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  Future<bool> signup(String email, String password) async {
-    await Future.delayed(Duration(seconds: 2));
-    return true;
+  Future<Object> signup(String email, String password, String name) async {
+    try {
+      final user = await pb.collection('users').create(body: {
+        'email': email,
+        'password': password,
+        'passwordConfirm': password,
+        'name': name,
+      });
+      return user;
+    } catch (error) {
+      throw error;
+    }
   }
 
   Future<bool> signout() async {
@@ -60,5 +76,16 @@ class SigninRepository {
       return false; // Password length is less than 8 characters
     }
     return true;
+  }
+
+  bool isValidUsername(String username) {
+    // Regular expression to match valid usernames.
+    // This regex allows usernames with only lowercase letters, numbers, and underscores.
+    username.replaceAll(' ', '');
+
+    if (username.length < 4) return false;
+    final RegExp usernameRegex = RegExp(r'^[a-z0-9_]+$');
+
+    return usernameRegex.hasMatch(username);
   }
 }

@@ -1,7 +1,12 @@
+import 'package:connectopia/src/common/messages/error_snakbar.dart';
+import 'package:connectopia/src/constants/assets.dart';
 import 'package:connectopia/src/constants/sizing.dart';
+import 'package:connectopia/src/features/authentication/application/signup_bloc/signup_bloc.dart';
 import 'package:connectopia/src/features/authentication/presentation/widgets/appbar_title.dart';
 import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../widgets/auth_text_field.dart';
 import '../widgets/field_q_button.dart';
@@ -36,6 +41,7 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
+  bool _isPasswordInvisible = true;
   @override
   Widget build(BuildContext context) {
     final _height = ScreenSize.height(context);
@@ -64,29 +70,102 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(height: _height * 4),
                 OrDivider(),
                 SizedBox(height: _height * 3),
-                TextFieldTitle(title: 'Name'),
+                TextFieldTitle(title: 'Username'),
                 SizedBox(height: _height * 1),
-                AuthTextField(
-                  hintText: 'Enter your name',
-                  controller: _nameController,
+                BlocBuilder<SignupBloc, SignupState>(
+                  builder: (context, state) {
+                    return AuthTextField(
+                      onChanged: (value) {
+                        context
+                            .read<SignupBloc>()
+                            .add(UsernameChangedEvent(value));
+                      },
+                      suffixIcon: context.read<SignupBloc>().usernameValid
+                          ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                          : null,
+                      hintText: 'Enter your username',
+                      controller: _nameController,
+                    );
+                  },
                 ),
                 SizedBox(height: _height * 3),
                 TextFieldTitle(title: 'Email'),
                 SizedBox(height: _height * 1),
-                AuthTextField(
-                  hintText: 'Enter your email',
-                  controller: _emailController,
+                BlocBuilder<SignupBloc, SignupState>(
+                  builder: (context, state) {
+                    return AuthTextField(
+                      onChanged: (value) {
+                        context
+                            .read<SignupBloc>()
+                            .add(EmailChangedEvent(value));
+                      },
+                      suffixIcon: context.read<SignupBloc>().emailValid
+                          ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                          : null,
+                      hintText: 'Enter your email',
+                      controller: _emailController,
+                    );
+                  },
                 ),
                 SizedBox(height: _height * 3),
                 TextFieldTitle(title: 'Password'),
                 SizedBox(height: _height * 1),
-                AuthTextField(
-                  avoidBottomInset: true,
-                  hintText: 'Enter your password',
-                  controller: _passwordController,
+                BlocBuilder<SignupBloc, SignupState>(
+                  builder: (context, state) {
+                    return AuthTextField(
+                        obscureText: _isPasswordInvisible,
+                        suffixIcon: InkWell(
+                          splashColor: Colors.transparent,
+                          onTap: () {
+                            setState(() {
+                              _isPasswordInvisible = !_isPasswordInvisible;
+                            });
+                          },
+                          child: Icon(_isPasswordInvisible
+                              ? Icons.visibility_off
+                              : Icons.visibility),
+                        ),
+                        hintText: 'Enter your password',
+                        controller: _passwordController,
+                        onChanged: (value) {
+                          context.read<SignupBloc>().add(
+                                PasswordChangedEvent(
+                                  _passwordController.text,
+                                ),
+                              );
+                        });
+                  },
                 ),
                 SizedBox(height: _height * 6),
-                ElevatedButton(onPressed: () {}, child: Text('Sign Up')),
+                BlocConsumer<SignupBloc, SignupState>(
+                  listener: (context, state) {
+                    if (state is SignupFailureState) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        errorSnack(state.error),
+                      );
+                    } else {
+                      // TODO: Navigate to home screen
+                    }
+                  },
+                  builder: (context, state) {
+                    return ElevatedButton(
+                      onPressed: state is ValidState
+                          ? () {
+                              context.read<SignupBloc>().add(
+                                    SignupButtonPressedEvent(
+                                      _emailController.text,
+                                      _passwordController.text,
+                                      _nameController.text,
+                                    ),
+                                  );
+                            }
+                          : null,
+                      child: state is SignupLoadingState
+                          ? Lottie.asset(Assets.progressIndicator)
+                          : const Text('Sign In'),
+                    );
+                  },
+                ),
                 SizedBox(height: _height * 3),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

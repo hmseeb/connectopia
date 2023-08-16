@@ -7,15 +7,11 @@ sealed class SigninState extends Equatable {
   List<Object> get props => [];
 }
 
-class InvalidPasswordState extends SigninState {
-  final String error;
-
-  InvalidPasswordState(this.error);
-}
-
 class SigninInitialState extends SigninState {}
 
 class ValidState extends SigninState {}
+
+class ValidEmailState extends SigninState {}
 
 class SigninLoadingState extends SigninState {}
 
