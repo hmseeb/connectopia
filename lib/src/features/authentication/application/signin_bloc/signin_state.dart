@@ -22,3 +22,13 @@ class SigninFailureState extends SigninState {
 
   SigninFailureState(this.error);
 }
+
+final class SigningWithOAuthState extends SigninState {}
+
+final class SigningWithOAuthFailedState extends SigninState {
+  final String error;
+
+  SigningWithOAuthFailedState(this.error);
+}
+
+final class SigningWithOAuthSuccessState extends SigninState {}

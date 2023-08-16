@@ -111,7 +111,7 @@ class _SigninScreenState extends State<SigninScreen> {
                               ? Icons.visibility_off
                               : Icons.visibility),
                         ),
-                        hintText: 'your password',
+                        hintText: 'Enter your password',
                         controller: _passwordController,
                         onChanged: (value) {
                           context.read<SigninBloc>().add(
@@ -138,7 +138,7 @@ class _SigninScreenState extends State<SigninScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         errorSnack(state.error),
                       );
-                    } else {
+                    } else if (state is SigninSuccessState) {
                       // TODO: Navigate to home screen
                     }
                   },

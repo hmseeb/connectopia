@@ -20,3 +20,7 @@ final class SigninButtonPressed extends SigninEvent {
   final String password;
   List<Object> get props => [email, password];
 }
+
+final class SigninWithGoogleButtonPressed extends SigninEvent {}
+
+final class SigninWithFacebookButtonPressed extends SigninEvent {}

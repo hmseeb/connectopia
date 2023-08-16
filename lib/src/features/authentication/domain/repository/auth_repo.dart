@@ -1,9 +1,12 @@
 import 'package:connectopia/src/db/pocketbase.dart';
+import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
-
-PocketBase pb = PocketBaseSingleton().pb;
+import 'package:url_launcher/url_launcher.dart';
 
 class AuthRepo {
+  PocketBase pb = PocketBaseSingleton().pb;
+  Logger logger = Logger();
+
   Future<Object> signin(String email, String password) async {
     try {
       final user =
@@ -25,6 +28,31 @@ class AuthRepo {
       return user;
     } catch (error) {
       throw error;
+    }
+  }
+
+  Future sendVerificationEmail(String email) async {
+    try {
+      await pb.collection('users').requestPasswordReset(email);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  // TODO: Fix not working on real device
+  Future signinWithOAuth(String provider) async {
+    try {
+      await pb.collection('users').authWithOAuth2(
+        provider,
+        (Uri) {
+          launchUrl(
+            Uri,
+            mode: LaunchMode.inAppWebView,
+          );
+        },
+      );
+    } catch (e) {
+      throw e;
     }
   }
 
@@ -91,12 +119,12 @@ class AuthRepo {
 
   String handleError(Object? error) {
     String errorMsg = error.toString();
-
+    logger.e(errorMsg);
     if (errorMsg.contains('validation_invalid_email')) {
       return 'Email invalid or already taken';
     } else if (errorMsg.contains('validation_invalid_username')) {
       return 'Username invalid or already taken';
     }
-    return 'An error occurred.';
+    return 'Something went wrong. Please try again later.';
   }
 }

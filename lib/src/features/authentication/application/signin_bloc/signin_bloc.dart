@@ -32,7 +32,29 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
           .signin(event.email, event.password)
           .then((value) => emit(SigninSuccessState()))
           .onError((error, stackTrace) {
-        emit(SigninFailureState('Invalid username or password'));
+        String errorMsg = authRepo.handleError(error);
+        emit(SigninFailureState(errorMsg));
+      });
+    });
+
+    on<SigninWithGoogleButtonPressed>((event, emit) async {
+      await authRepo
+          .signinWithOAuth('google')
+          .then((value) => emit(SigningWithOAuthSuccessState()))
+          .onError((error, stackTrace) {
+        String errorMsg = authRepo.handleError(error);
+        emit(SigningWithOAuthFailedState(errorMsg));
+        emit(SigninInitialState());
+      });
+    });
+    on<SigninWithFacebookButtonPressed>((event, emit) async {
+      await authRepo
+          .signinWithOAuth('facebook')
+          .then((value) => emit(SigningWithOAuthSuccessState()))
+          .onError((error, stackTrace) {
+        String errorMsg = authRepo.handleError(error);
+        emit(SigningWithOAuthFailedState(errorMsg));
+        emit(SigninInitialState());
       });
     });
   }

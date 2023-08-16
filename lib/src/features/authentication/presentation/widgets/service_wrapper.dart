@@ -1,5 +1,8 @@
+import 'package:connectopia/src/common/messages/error_snakbar.dart';
+import 'package:connectopia/src/features/authentication/application/signin_bloc/signin_bloc.dart';
 import 'package:connectopia/src/features/authentication/presentation/widgets/service_button.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AuthServiceWrapper extends StatelessWidget {
@@ -18,15 +21,31 @@ class AuthServiceWrapper extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        AuthServiceButton(
-          height: _height,
-          width: _width,
-          icon: FontAwesomeIcons.google,
+        BlocConsumer<SigninBloc, SigninState>(
+          listener: (context, state) {
+            if (state is SigningWithOAuthFailedState) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(errorSnack(state.error));
+            }
+          },
+          builder: (context, state) {
+            return AuthServiceButton(
+              height: _height,
+              width: _width,
+              icon: FontAwesomeIcons.google,
+              onClick: () {
+                context.read<SigninBloc>().add(SigninWithGoogleButtonPressed());
+              },
+            );
+          },
         ),
         AuthServiceButton(
           height: _height,
           width: _width,
-          icon: FontAwesomeIcons.instagram,
+          icon: FontAwesomeIcons.facebookF,
+          onClick: () {
+            context.read<SigninBloc>().add(SigninWithFacebookButtonPressed());
+          },
         ),
       ],
     );
