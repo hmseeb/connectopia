@@ -80,7 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             .read<SignupBloc>()
                             .add(UsernameChangedEvent(value));
                       },
-                      suffixIcon: state is ValidUsernameState
+                      suffixIcon: context.read<SignupBloc>().isValidUsername
                           ? Icon(Icons.check_box, color: Pellete.kPrimary)
                           : null,
                       hintText: 'Enter your username',
@@ -99,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             .read<SignupBloc>()
                             .add(EmailChangedEvent(value));
                       },
-                      suffixIcon: state is ValidEmailState
+                      suffixIcon: context.read<SignupBloc>().isValidEmail
                           ? Icon(Icons.check_box, color: Pellete.kPrimary)
                           : null,
                       hintText: 'Enter your email',

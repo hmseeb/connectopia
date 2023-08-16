@@ -65,8 +65,4 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
     on<SignupButtonPressedEvent>(_handleSubmitButtonPressedEvent);
   }
-
-  bool get usernameValid => isValidUsername;
-  bool get emailValid => isValidEmail;
-  bool get passwordValid => isValidPassword;
 }

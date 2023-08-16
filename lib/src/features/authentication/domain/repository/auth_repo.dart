@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:connectopia/src/db/pocketbase.dart';
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -125,6 +127,15 @@ class AuthRepo {
     } else if (errorMsg.contains('validation_invalid_username')) {
       return 'Username invalid or already taken';
     }
-    return 'Something went wrong. Please try again later.';
+    int randomIndex = Random().nextInt(errors.length);
+    return errors[randomIndex];
   }
+
+  List<String> errors = [
+    "We are embarassed! Human Error is inevitable, but this is unacceptable. We'll look into the matter now.",
+    'There was a glitch in the matrix...',
+    "Oops, you've might have overlooked some fields.",
+    "Less is more, but we need more information before we can proceed.",
+    "Happens to the best of us, you've might have missed out some fields."
+  ];
 }
