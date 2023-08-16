@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/features/authentication/domain/repository/auth_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/auth_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/validation_repo.dart';
 import 'package:equatable/equatable.dart';
 
 part 'forgot_pwd_event.dart';
@@ -8,8 +9,9 @@ part 'forgot_pwd_state.dart';
 class ForgotPwdBloc extends Bloc<ForgotPwdEvent, ForgotPwdState> {
   AuthRepo authRepo;
   ForgotPwdBloc(this.authRepo) : super(ForgotPwdInitial()) {
+    ValidationRepo fieldValidator = ValidationRepo();
     _handleEmailChanged(event, emit) {
-      if (authRepo.isValidEmail(event.email))
+      if (fieldValidator.isValidEmail(event.email))
         emit(ValidEmailState());
       else
         emit(ForgotPwdInitial());

@@ -1,7 +1,9 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/features/authentication/domain/repository/auth_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/auth_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/errors_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/validation_repo.dart';
 import 'package:equatable/equatable.dart';
 
 part 'signup_event.dart';
@@ -13,6 +15,8 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   bool isValidEmail = false;
   bool isValidPassword = false;
 
+  ValidationRepo fieldValidator = ValidationRepo();
+  ErrorHandlerRepo errorHandler = ErrorHandlerRepo();
   SignupBloc(this.authRepo) : super(SignupInitial()) {
     void _checkAllFieldsValidity(Emitter<SignupState> emit) {
       if (isValidUsername && isValidEmail && isValidPassword) {
@@ -21,7 +25,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     }
 
     void _handleUsernameChangedEvent(event, emit) {
-      isValidUsername = (authRepo.isValidUsername(event.username));
+      isValidUsername = (fieldValidator.isValidUsername(event.username));
       if (isValidUsername)
         emit(ValidUsernameState());
       else
@@ -30,7 +34,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     }
 
     void _handleEmailChangedEvent(event, emit) {
-      isValidEmail = (authRepo.isValidEmail(event.email));
+      isValidEmail = (fieldValidator.isValidEmail(event.email));
       if (isValidEmail)
         emit(ValidEmailState());
       else
@@ -39,7 +43,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     }
 
     void _handlePasswordChangeEvent(event, emit) {
-      isValidPassword = (authRepo.isValidPassword(event.password));
+      isValidPassword = (fieldValidator.isValidPassword(event.password));
       if (isValidPassword)
         emit(ValidPasswordState());
       else
@@ -54,7 +58,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
           .then((value) {
         emit(SignupSuccessState());
       }).catchError((error) {
-        String errorMsg = authRepo.handleError(error);
+        String errorMsg = errorHandler.handleError(error);
         emit(SignupFailureState(error: errorMsg));
       });
     }

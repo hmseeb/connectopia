@@ -1,7 +1,9 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/features/authentication/domain/repository/auth_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/auth_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/errors_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/validation_repo.dart';
 import 'package:equatable/equatable.dart';
 
 part 'signin_event.dart';
@@ -14,10 +16,13 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
     bool isEmailValid = false;
     bool isPasswordValid = false;
 
+    ValidationRepo fieldValidator = ValidationRepo();
+    ErrorHandlerRepo errorHandler = ErrorHandlerRepo();
+
     on<EmailOrPasswordChangedEvent>((event, emit) {
-      isEmailValid = authRepo.isValidEmail(event.email) ||
-          authRepo.isValidUsername(event.email);
-      isPasswordValid = authRepo.isValidPassword(event.password);
+      isEmailValid = fieldValidator.isValidEmail(event.email) ||
+          fieldValidator.isValidUsername(event.email);
+      isPasswordValid = fieldValidator.isValidPassword(event.password);
       if (isEmailValid && isPasswordValid)
         emit(ValidState());
       else if (isEmailValid)
@@ -32,7 +37,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
           .signin(event.email, event.password)
           .then((value) => emit(SigninSuccessState()))
           .onError((error, stackTrace) {
-        String errorMsg = authRepo.handleError(error);
+        String errorMsg = errorHandler.handleError(error);
         emit(SigninFailureState(errorMsg));
       });
     });
@@ -42,7 +47,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
           .signinWithOAuth('google')
           .then((value) => emit(SigningWithOAuthSuccessState()))
           .onError((error, stackTrace) {
-        String errorMsg = authRepo.handleError(error);
+        String errorMsg = errorHandler.handleError(error);
         emit(SigningWithOAuthFailedState(errorMsg));
         emit(SigninInitialState());
       });
@@ -52,7 +57,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
           .signinWithOAuth('facebook')
           .then((value) => emit(SigningWithOAuthSuccessState()))
           .onError((error, stackTrace) {
-        String errorMsg = authRepo.handleError(error);
+        String errorMsg = errorHandler.handleError(error);
         emit(SigningWithOAuthFailedState(errorMsg));
         emit(SigninInitialState());
       });
