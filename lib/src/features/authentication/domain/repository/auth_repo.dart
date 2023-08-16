@@ -20,7 +20,7 @@ class AuthRepo {
         'email': email,
         'password': password,
         'passwordConfirm': password,
-        'name': name,
+        'username': name,
       });
       return user;
     } catch (error) {
@@ -87,5 +87,16 @@ class AuthRepo {
     final RegExp usernameRegex = RegExp(r'^[a-z0-9_]+$');
 
     return usernameRegex.hasMatch(username);
+  }
+
+  String handleError(Object? error) {
+    String errorMsg = error.toString();
+
+    if (errorMsg.contains('validation_invalid_email')) {
+      return 'Email invalid or already taken';
+    } else if (errorMsg.contains('validation_invalid_username')) {
+      return 'Username invalid or already taken';
+    }
+    return 'An error occurred.';
   }
 }

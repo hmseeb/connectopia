@@ -43,7 +43,7 @@ Future<dynamic> forgetPasswordBottomSheet(
                 const SizedBox(height: 8),
                 AuthTextField(
                   avoidBottomInset: true,
-                  hintText: 'Enter your email',
+                  hintText: 'your email',
                   controller: controller,
                 ),
                 const SizedBox(height: 80),
@@ -178,7 +178,7 @@ Future<dynamic> resetPasswordBottomSheet(BuildContext context) {
               const SizedBox(height: 8),
               AuthTextField(
                 avoidBottomInset: true,
-                hintText: 'Enter new password',
+                hintText: 'New password',
               ),
               SizedBox(height: _height * 5),
               Align(

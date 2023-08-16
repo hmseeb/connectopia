@@ -81,7 +81,7 @@ class _SigninScreenState extends State<SigninScreen> {
                             state is ValidEmailState || state is ValidState
                                 ? Icon(Icons.check_box, color: Pellete.kPrimary)
                                 : null,
-                        hintText: 'Enter your email',
+                        hintText: 'Username or email',
                         controller: _emailController,
                         onChanged: (value) {
                           context.read<SigninBloc>().add(
@@ -111,7 +111,7 @@ class _SigninScreenState extends State<SigninScreen> {
                               ? Icons.visibility_off
                               : Icons.visibility),
                         ),
-                        hintText: 'Enter your password',
+                        hintText: 'your password',
                         controller: _passwordController,
                         onChanged: (value) {
                           context.read<SigninBloc>().add(

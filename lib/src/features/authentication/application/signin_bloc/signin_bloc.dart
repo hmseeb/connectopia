@@ -15,7 +15,8 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
     bool isPasswordValid = false;
 
     on<EmailOrPasswordChangedEvent>((event, emit) {
-      isEmailValid = authRepo.isValidEmail(event.email);
+      isEmailValid = authRepo.isValidEmail(event.email) ||
+          authRepo.isValidUsername(event.email);
       isPasswordValid = authRepo.isValidPassword(event.password);
       if (isEmailValid && isPasswordValid)
         emit(ValidState());
@@ -31,7 +32,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
           .signin(event.email, event.password)
           .then((value) => emit(SigninSuccessState()))
           .onError((error, stackTrace) {
-        emit(SigninFailureState(error.toString()));
+        emit(SigninFailureState('Invalid username or password'));
       });
     });
   }

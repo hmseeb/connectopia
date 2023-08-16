@@ -17,6 +17,12 @@ class ValidEmailState extends SignupState {}
 
 class ValidPasswordState extends SignupState {}
 
+class InvalidUsernameState extends SignupState {}
+
+class InvalidEmailState extends SignupState {}
+
+class InvalidPasswordState extends SignupState {}
+
 class SignupLoadingState extends SignupState {}
 
 class SignupSuccessState extends SignupState {}

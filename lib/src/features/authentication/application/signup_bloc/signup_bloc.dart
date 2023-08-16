@@ -20,31 +20,40 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
 
     void _handleUsernameChangedEvent(event, emit) {
       isValidUsername = (authRepo.isValidUsername(event.username));
-      if (isValidUsername) emit(ValidUsernameState());
-
+      if (isValidUsername)
+        emit(ValidUsernameState());
+      else
+        emit(InvalidUsernameState());
       _checkAllFieldsValidity(emit);
     }
 
     void _handleEmailChangedEvent(event, emit) {
       isValidEmail = (authRepo.isValidEmail(event.email));
-      if (isValidEmail) emit(ValidEmailState());
+      if (isValidEmail)
+        emit(ValidEmailState());
+      else
+        emit(InvalidEmailState());
       _checkAllFieldsValidity(emit);
     }
 
     void _handlePasswordChangeEvent(event, emit) {
       isValidPassword = (authRepo.isValidPassword(event.password));
-      if (isValidPassword) emit(ValidPasswordState());
+      if (isValidPassword)
+        emit(ValidPasswordState());
+      else
+        emit(InvalidPasswordState());
       _checkAllFieldsValidity(emit);
     }
 
-    void _handleSubmitButtonPressedEvent(event, emit) {
+    void _handleSubmitButtonPressedEvent(event, emit) async {
       emit(SignupLoadingState());
-      authRepo
+      final userData = await authRepo
           .signup(event.username, event.email, event.password)
           .then((value) {
         emit(SignupSuccessState());
       }).catchError((error) {
-        emit(SignupFailureState(error: error.toString()));
+        String errorMsg = authRepo.handleError(error);
+        emit(SignupFailureState(error: errorMsg));
       });
     }
 

@@ -80,7 +80,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             .read<SignupBloc>()
                             .add(UsernameChangedEvent(value));
                       },
-                      suffixIcon: context.read<SignupBloc>().usernameValid
+                      suffixIcon: state is ValidUsernameState
                           ? Icon(Icons.check_box, color: Pellete.kPrimary)
                           : null,
                       hintText: 'Enter your username',
@@ -99,7 +99,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             .read<SignupBloc>()
                             .add(EmailChangedEvent(value));
                       },
-                      suffixIcon: context.read<SignupBloc>().emailValid
+                      suffixIcon: state is ValidEmailState
                           ? Icon(Icons.check_box, color: Pellete.kPrimary)
                           : null,
                       hintText: 'Enter your email',
@@ -143,8 +143,11 @@ class _SignupScreenState extends State<SignupScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         errorSnack(state.error),
                       );
-                    } else {
-                      // TODO: Navigate to home screen
+                    } else if (state is SignupSuccessState) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          successSnack('Account created successfully'));
+                      //TODO: Navigate to home on successs
+                      Navigator.pushReplacementNamed(context, '/signin');
                     }
                   },
                   builder: (context, state) {
@@ -162,7 +165,7 @@ class _SignupScreenState extends State<SignupScreen> {
                           : null,
                       child: state is SignupLoadingState
                           ? Lottie.asset(Assets.progressIndicator)
-                          : const Text('Sign In'),
+                          : const Text('Sign Up'),
                     );
                   },
                 ),
