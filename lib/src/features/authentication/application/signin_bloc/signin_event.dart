@@ -24,3 +24,5 @@ final class SigninButtonPressed extends SigninEvent {
 final class SigninWithGoogleButtonPressed extends SigninEvent {}
 
 final class SigninWithFacebookButtonPressed extends SigninEvent {}
+
+final class PageChangeEvent extends SigninEvent {}

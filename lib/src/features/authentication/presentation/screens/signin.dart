@@ -168,6 +168,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     TextFieldQButton(
                         title: 'Sign Up',
                         onTapped: () {
+                          context.read<SigninBloc>().add(PageChangeEvent());
                           Navigator.pushReplacementNamed(
                               context, '/animated-signup');
                         }),

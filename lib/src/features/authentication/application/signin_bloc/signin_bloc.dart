@@ -57,5 +57,9 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
         emit(SigninInitialState());
       });
     });
+
+    on<PageChangeEvent>((event, emit) {
+      emit(SigninInitialState());
+    });
   }
 }

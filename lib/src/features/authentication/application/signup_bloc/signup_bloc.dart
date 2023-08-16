@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:bloc/bloc.dart';
 import 'package:connectopia/src/features/authentication/domain/repository/auth_repo.dart';
 import 'package:equatable/equatable.dart';
@@ -64,5 +66,12 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
     on<PasswordChangedEvent>(_handlePasswordChangeEvent);
 
     on<SignupButtonPressedEvent>(_handleSubmitButtonPressedEvent);
+
+    on<PageChangeEvent>((event, emit) {
+      isValidUsername = false;
+      isValidEmail = false;
+      isValidPassword = false;
+      emit(SignupInitial());
+    });
   }
 }
