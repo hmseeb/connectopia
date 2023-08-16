@@ -7,9 +7,9 @@ part 'forgot_pwd_event.dart';
 part 'forgot_pwd_state.dart';
 
 class ForgotPwdBloc extends Bloc<ForgotPwdEvent, ForgotPwdState> {
+  ValidationRepo fieldValidator = ValidationRepo();
   AuthRepo authRepo;
   ForgotPwdBloc(this.authRepo) : super(ForgotPwdInitial()) {
-    ValidationRepo fieldValidator = ValidationRepo();
     _handleEmailChanged(event, emit) {
       if (fieldValidator.isValidEmail(event.email))
         emit(ValidEmailState());

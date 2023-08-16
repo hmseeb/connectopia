@@ -11,13 +11,12 @@ part 'signin_state.dart';
 
 class SigninBloc extends Bloc<SigninEvent, SigninState> {
   AuthRepo authRepo;
+  ValidationRepo fieldValidator = ValidationRepo();
+  ErrorHandlerRepo errorHandler = ErrorHandlerRepo();
 
   SigninBloc(this.authRepo) : super(SigninInitialState()) {
     bool isEmailValid = false;
     bool isPasswordValid = false;
-
-    ValidationRepo fieldValidator = ValidationRepo();
-    ErrorHandlerRepo errorHandler = ErrorHandlerRepo();
 
     on<EmailOrPasswordChangedEvent>((event, emit) {
       isEmailValid = fieldValidator.isValidEmail(event.email) ||
