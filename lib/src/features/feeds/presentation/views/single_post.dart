@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:full_screen_image/full_screen_image.dart';
 import 'package:iconly/iconly.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -154,16 +154,12 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                       controller: _pageController,
                       itemCount: widget.images!.length,
                       itemBuilder: (context, index) {
-                        return FullScreenWidget(
-                          disposeLevel: DisposeLevel.High,
-                          child: Hero(
-                            tag: widget.images![index],
-                            child: Image.network(
-                              widget.images![index],
-                              height: _height * ScreenSize.kSpaceXXL,
-                              width: double.infinity,
-                              fit: BoxFit.contain,
-                            ),
+                        return InstaImageViewer(
+                          child: Image.network(
+                            widget.images![index],
+                            height: _height * ScreenSize.kSpaceXXL,
+                            width: double.infinity,
+                            fit: BoxFit.contain,
                           ),
                         );
                       },

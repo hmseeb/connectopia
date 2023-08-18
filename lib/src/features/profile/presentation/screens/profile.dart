@@ -3,8 +3,8 @@ import 'package:connectopia/src/constants/assets.dart';
 import 'package:connectopia/src/constants/sizing.dart';
 import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:full_screen_image/full_screen_image.dart';
 import 'package:iconly/iconly.dart';
+import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key, required this.isOwnProfile});
@@ -15,16 +15,18 @@ class UserProfileScreen extends StatefulWidget {
 }
 
 class _UserProfileScreenState extends State<UserProfileScreen>
-    with SingleTickerProviderStateMixin {
-  late final _tabController;
+    with TickerProviderStateMixin {
+  late final _userTabController;
+  late final _personalTabController;
   late final _scrollController;
   bool _isScrolled = false;
 
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(length: widget.isOwnProfile ? 4 : 2, vsync: this);
+    _userTabController = TabController(length: 2, vsync: this);
+    _personalTabController = TabController(length: 4, vsync: this);
+
     _scrollController = ScrollController()
       ..addListener(() {
         if (_scrollController.offset > 100) {
@@ -46,7 +48,8 @@ class _UserProfileScreenState extends State<UserProfileScreen>
   @override
   void dispose() {
     super.dispose();
-    _tabController.dispose();
+    _personalTabController.dispose();
+    _userTabController.dispose();
     _scrollController.dispose();
   }
 
@@ -63,8 +66,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
             children: [
               AspectRatio(
                 aspectRatio: 2,
-                child: FullScreenWidget(
-                  disposeLevel: DisposeLevel.High,
+                child: InstaImageViewer(
                   child: Image.network(
                     Assets.randomImage,
                     fit: BoxFit.cover,
@@ -79,8 +81,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                   width: _height * 10,
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(100),
-                    child: FullScreenWidget(
-                      disposeLevel: DisposeLevel.High,
+                    child: InstaImageViewer(
                       child: Image.asset(
                         Assets.getRandomAvatar(),
                         fit: BoxFit.contain,
@@ -254,7 +255,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
             preferredSize: Size.fromHeight(_height * 6),
             child: Container(
               child: TabBar(
-                  controller: _tabController,
+                  controller: widget.isOwnProfile
+                      ? _personalTabController
+                      : _userTabController,
                   indicatorColor: Pellete.kWhite,
                   labelColor: Pellete.kWhite,
                   unselectedLabelColor: Pellete.kWhite.withOpacity(0.5),
@@ -285,7 +288,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
               if (widget.isOwnProfile) GridPostView(),
               if (widget.isOwnProfile) GridPostView(),
             ],
-            controller: _tabController,
+            controller: widget.isOwnProfile
+                ? _personalTabController
+                : _userTabController,
           ),
         ),
       ],
@@ -309,8 +314,7 @@ class GridPostView extends StatelessWidget {
         mainAxisSpacing: 1,
       ),
       itemBuilder: (context, index) {
-        return FullScreenWidget(
-          disposeLevel: DisposeLevel.High,
+        return InstaImageViewer(
           child: Image.network(
             Assets.randomImage,
             fit: BoxFit.contain,

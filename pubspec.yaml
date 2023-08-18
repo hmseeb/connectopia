@@ -53,9 +53,9 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   http: ^1.1.0
   colorful_safe_area: ^1.0.0
-  full_screen_image: ^2.0.0
   autoscale_tabbarview: ^1.0.2
   flutter_glow: ^0.3.0
+  insta_image_viewer: ^1.0.2
 
 dev_dependencies:
   flutter_test:
