@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
             selectedItemColor: Pellete.kWhite,
-            unselectedItemColor: Pellete.kWhite.withOpacity(0.5),
+            unselectedItemColor: Pellete.kGrey,
             type: BottomNavigationBarType.fixed,
             showUnselectedLabels: false,
             showSelectedLabels: false,

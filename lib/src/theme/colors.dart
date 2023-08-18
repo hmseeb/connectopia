@@ -6,7 +6,7 @@ class Pellete {
   static const Color kTertiary = Color(0xFFACDF3A);
   static const Color kWhite = Color(0xFFf5f5f7);
   static const Color kBlack = Color.fromARGB(255, 27, 27, 28);
-  static const Color kGrey = Color(0xFF9B9B9B);
+  static Color kGrey = kWhite.withOpacity(0.5);
   static const Color kBlue = Colors.blueAccent;
   static const Gradient kBackgroundGradient = LinearGradient(
     begin: Alignment.topRight,
