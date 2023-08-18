@@ -48,6 +48,14 @@ dependencies:
   logger: ^2.0.1
   shared_preferences: ^2.2.0
   json_annotation: ^4.8.1
+  iconly: ^1.0.1
+  readmore: ^2.2.0
+  smooth_page_indicator: ^1.1.0
+  http: ^1.1.0
+  colorful_safe_area: ^1.0.0
+  full_screen_image: ^2.0.0
+  autoscale_tabbarview: ^1.0.2
+  flutter_glow: ^0.3.0
 
 dev_dependencies:
   flutter_test:

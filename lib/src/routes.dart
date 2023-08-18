@@ -3,7 +3,8 @@ import 'package:connectopia/src/features/authentication/presentation/screens/acc
 import 'package:connectopia/src/features/authentication/presentation/screens/onboarding.dart';
 import 'package:connectopia/src/features/authentication/presentation/screens/signin.dart';
 import 'package:connectopia/src/features/authentication/presentation/screens/signup.dart';
-import 'package:connectopia/src/features/feeds/presentation/screens/home_screen.dart';
+import 'package:connectopia/src/common/app/home.dart';
+import 'package:connectopia/src/features/profile/presentation/screens/profile.dart';
 import 'package:flutter/material.dart';
 
 class GenerateRoutes {
@@ -51,6 +52,12 @@ class GenerateRoutes {
         return PageRouteBuilder(
           pageBuilder: (_, animation, secondaryAnimation) => const HomeScreen(),
         );
+      case '/profile':
+        final args = settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(
+            builder: (_) => UserProfileScreen(
+                  isOwnProfile: args['isOwnProfile'],
+                ));
 
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());

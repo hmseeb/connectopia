@@ -28,4 +28,18 @@ class Assets {
     int randomIndex = Random().nextInt(avatars.length);
     return 'assets/images/avatar_placeholders/${avatars[randomIndex]}.png';
   }
+
+  static String get randomImage {
+    List<String> urls = [
+      'https://source.unsplash.com/random/720x720',
+      'https://source.unsplash.com/user/erondu/720x720',
+      'https://source.unsplash.com/720x720/?nature,water',
+      'https://source.unsplash.com/WLUHO9A_xik/720x720',
+      'https://source.unsplash.com/TCpfPxKPOvk/720x720'
+    ];
+
+    int randomIndex = Random().nextInt(urls.length);
+
+    return urls[randomIndex];
+  }
 }
