@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:connectopia/src/features/feeds/presentation/screens/feeds.dart';
 import 'package:connectopia/src/features/profile/presentation/screens/profile.dart';
@@ -34,69 +36,77 @@ class _HomeScreenState extends State<HomeScreen> {
           gradient: Pellete.kBackgroundGradient,
         ),
         child: Scaffold(
+          extendBody: true,
           body: selectedScreens[selectedIndex],
-          bottomNavigationBar: BottomNavigationBar(
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(
-                  IconlyLight.home,
-                ),
-                activeIcon: GlowIcon(
-                  IconlyBold.home,
-                  glowColor: Pellete.kWhite,
-                ),
-                label: 'Home',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(IconlyLight.search),
-                activeIcon: GlowIcon(
-                  IconlyBold.search,
-                  glowColor: Pellete.kWhite,
-                ),
-                label: 'Search',
-              ),
-              BottomNavigationBarItem(
-                icon: Container(
-                  child: Icon(
-                    Icons.add,
-                    color: Pellete.kWhite,
+          bottomNavigationBar: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: BottomNavigationBar(
+                items: [
+                  BottomNavigationBarItem(
+                    icon: Icon(
+                      IconlyLight.home,
+                    ),
+                    activeIcon: GlowIcon(
+                      IconlyBold.home,
+                      glowColor: Pellete.kWhite,
+                    ),
+                    label: 'Home',
                   ),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Pellete.kPrimary,
+                  BottomNavigationBarItem(
+                    icon: Icon(IconlyLight.search),
+                    activeIcon: GlowIcon(
+                      IconlyBold.search,
+                      glowColor: Pellete.kWhite,
+                    ),
+                    label: 'Search',
                   ),
-                ),
-                label: 'Add',
+                  BottomNavigationBarItem(
+                    icon: Container(
+                      child: Icon(
+                        Icons.add,
+                        color: Pellete.kWhite,
+                      ),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Pellete.kPrimary,
+                      ),
+                    ),
+                    label: 'Add',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(IconlyLight.notification),
+                    activeIcon: GlowIcon(
+                      IconlyBold.notification,
+                      glowColor: Pellete.kWhite,
+                    ),
+                    label: 'Notifications',
+                  ),
+                  BottomNavigationBarItem(
+                    icon: Icon(IconlyLight.profile),
+                    activeIcon: GlowIcon(
+                      IconlyBold.profile,
+                      glowColor: Pellete.kWhite,
+                    ),
+                    label: 'Profile',
+                  ),
+                ],
+                selectedItemColor: Pellete.kWhite,
+                unselectedItemColor: Pellete.kGrey,
+                type: BottomNavigationBarType.fixed,
+                showUnselectedLabels: false,
+                showSelectedLabels: false,
+                backgroundColor:
+                    Pellete.kBackgroundGradient.colors[1].withOpacity(0.5),
+                elevation: 0,
+                currentIndex: selectedIndex,
+                onTap: (index) {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
               ),
-              BottomNavigationBarItem(
-                icon: Icon(IconlyLight.notification),
-                activeIcon: GlowIcon(
-                  IconlyBold.notification,
-                  glowColor: Pellete.kWhite,
-                ),
-                label: 'Notifications',
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(IconlyLight.profile),
-                activeIcon: GlowIcon(
-                  IconlyBold.profile,
-                  glowColor: Pellete.kWhite,
-                ),
-                label: 'Profile',
-              ),
-            ],
-            selectedItemColor: Pellete.kWhite,
-            unselectedItemColor: Pellete.kGrey,
-            type: BottomNavigationBarType.fixed,
-            showUnselectedLabels: false,
-            showSelectedLabels: false,
-            backgroundColor: Pellete.kBackgroundGradient.colors[0],
-            currentIndex: selectedIndex,
-            onTap: (index) {
-              setState(() {
-                selectedIndex = index;
-              });
-            },
+            ),
           ),
         ),
       ),
