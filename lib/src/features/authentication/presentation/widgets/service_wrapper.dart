@@ -1,6 +1,6 @@
-import 'package:connectopia/src/common/messages/error_snakbar.dart';
-import 'package:connectopia/src/features/authentication/application/signin_bloc/signin_bloc.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/service_button.dart';
+import '../../../../common/messages/error_snakbar.dart';
+import '../../application/signin_bloc/signin_bloc.dart';
+import 'service_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

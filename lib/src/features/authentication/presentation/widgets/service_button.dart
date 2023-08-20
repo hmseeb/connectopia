@@ -1,4 +1,4 @@
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthServiceButton extends StatelessWidget {
@@ -25,7 +25,7 @@ class AuthServiceButton extends StatelessWidget {
         width: _width * 40,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: Pellete.kBlack,
+          color: Pellete.kDark,
         ),
         child: Icon(
           icon,

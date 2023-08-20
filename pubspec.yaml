@@ -56,6 +56,9 @@ dependencies:
   autoscale_tabbarview: ^1.0.2
   flutter_glow: ^0.3.0
   insta_image_viewer: ^1.0.2
+  image_picker: ^1.0.2
+  flutter_dotenv: ^5.1.0
+  skeletonizer: ^0.7.0
 
 dev_dependencies:
   flutter_test:
@@ -92,7 +95,7 @@ flutter:
     - assets/images/avatar_placeholders/
     - assets/animations/rive/
     - assets/animations/lottie/
-
+    - .env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

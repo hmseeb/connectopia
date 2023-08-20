@@ -1,4 +1,4 @@
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class RPSCustomPainter extends CustomPainter {

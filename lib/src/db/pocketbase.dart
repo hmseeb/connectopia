@@ -1,3 +1,4 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pocketbase/pocketbase.dart';
 
 class PocketBaseSingleton {
@@ -8,6 +9,6 @@ class PocketBaseSingleton {
   factory PocketBaseSingleton() {
     return _instance;
   }
-
-  PocketBaseSingleton._internal() : pb = PocketBase('http://127.0.0.1:8090');
+  PocketBaseSingleton._internal()
+      : pb = PocketBase(dotenv.env['POCKETBASE_URL']!);
 }

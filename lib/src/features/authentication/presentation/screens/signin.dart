@@ -1,9 +1,9 @@
-import 'package:connectopia/src/constants/assets.dart';
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/features/authentication/application/signin_bloc/signin_bloc.dart';
-import 'package:connectopia/src/features/authentication/presentation/views/forgot_password_sheet.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/appbar_title.dart';
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../constants/assets.dart';
+import '../../../../constants/sizing.dart';
+import '../../application/signin_bloc/signin_bloc.dart';
+import '../views/forgot_password_sheet.dart';
+import '../widgets/appbar_title.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -100,8 +100,7 @@ class _SigninScreenState extends State<SigninScreen> {
                   builder: (context, state) {
                     return AuthTextField(
                         obscureText: _isPasswordInvisible,
-                        suffixIcon: InkWell(
-                          splashColor: Colors.transparent,
+                        suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
                               _isPasswordInvisible = !_isPasswordInvisible;

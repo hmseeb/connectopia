@@ -1,10 +1,10 @@
-import 'package:connectopia/src/common/messages/error_snakbar.dart';
-import 'package:connectopia/src/constants/assets.dart';
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/features/authentication/application/forgot_pwd_bloc/forgot_pwd_bloc.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/auth_text_field.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/common_sheet.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/field_title.dart';
+import '../../../../common/messages/error_snakbar.dart';
+import '../../../../constants/assets.dart';
+import '../../../../constants/sizing.dart';
+import '../../application/forgot_pwd_bloc/forgot_pwd_bloc.dart';
+import '../widgets/auth_text_field.dart';
+import '../widgets/common_sheet.dart';
+import '../widgets/field_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';

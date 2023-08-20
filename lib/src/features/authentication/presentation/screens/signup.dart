@@ -1,13 +1,13 @@
-import 'package:connectopia/src/common/messages/error_snakbar.dart';
-import 'package:connectopia/src/constants/assets.dart';
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/features/authentication/application/signup_bloc/signup_bloc.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/appbar_title.dart';
-import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../common/messages/error_snakbar.dart';
+import '../../../../constants/assets.dart';
+import '../../../../constants/sizing.dart';
+import '../../../../theme/colors.dart';
+import '../../application/signup_bloc/signup_bloc.dart';
+import '../widgets/appbar_title.dart';
 import '../widgets/auth_text_field.dart';
 import '../widgets/field_q_button.dart';
 import '../widgets/field_title.dart';
@@ -24,12 +24,12 @@ class SignupScreen extends StatefulWidget {
 class _SignupScreenState extends State<SignupScreen> {
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
-  late final TextEditingController _nameController;
+  late final TextEditingController _usernameController;
   @override
   void initState() {
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
-    _nameController = TextEditingController();
+    _usernameController = TextEditingController();
     super.initState();
   }
 
@@ -37,7 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
   void dispose() {
     _emailController.dispose();
     _passwordController.dispose();
-    _nameController.dispose();
+    _usernameController.dispose();
     super.dispose();
   }
 
@@ -70,25 +70,6 @@ class _SignupScreenState extends State<SignupScreen> {
                 SizedBox(height: _height * 4),
                 OrDivider(),
                 SizedBox(height: _height * 3),
-                TextFieldTitle(title: 'Username'),
-                SizedBox(height: _height * 1),
-                BlocBuilder<SignupBloc, SignupState>(
-                  builder: (context, state) {
-                    return AuthTextField(
-                      onChanged: (value) {
-                        context
-                            .read<SignupBloc>()
-                            .add(UsernameChangedEvent(value));
-                      },
-                      suffixIcon: context.read<SignupBloc>().isValidUsername
-                          ? Icon(Icons.check_box, color: Pellete.kPrimary)
-                          : null,
-                      hintText: 'Enter your username',
-                      controller: _nameController,
-                    );
-                  },
-                ),
-                SizedBox(height: _height * 3),
                 TextFieldTitle(title: 'Email'),
                 SizedBox(height: _height * 1),
                 BlocBuilder<SignupBloc, SignupState>(
@@ -114,8 +95,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   builder: (context, state) {
                     return AuthTextField(
                         obscureText: _isPasswordInvisible,
-                        suffixIcon: InkWell(
-                          splashColor: Colors.transparent,
+                        suffixIcon: GestureDetector(
                           onTap: () {
                             setState(() {
                               _isPasswordInvisible = !_isPasswordInvisible;
@@ -134,6 +114,25 @@ class _SignupScreenState extends State<SignupScreen> {
                                 ),
                               );
                         });
+                  },
+                ),
+                SizedBox(height: _height * 3),
+                TextFieldTitle(title: 'Username'),
+                SizedBox(height: _height * 1),
+                BlocBuilder<SignupBloc, SignupState>(
+                  builder: (context, state) {
+                    return AuthTextField(
+                      onChanged: (value) {
+                        context
+                            .read<SignupBloc>()
+                            .add(UsernameChangedEvent(value));
+                      },
+                      suffixIcon: context.read<SignupBloc>().isValidUsername
+                          ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                          : null,
+                      hintText: 'Enter your username',
+                      controller: _usernameController,
+                    );
                   },
                 ),
                 SizedBox(height: _height * 6),
@@ -158,7 +157,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     SignupButtonPressedEvent(
                                       _emailController.text,
                                       _passwordController.text,
-                                      _nameController.text,
+                                      _usernameController.text,
                                     ),
                                   );
                             }

@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
-import 'package:connectopia/src/features/feeds/presentation/screens/feeds.dart';
-import 'package:connectopia/src/features/profile/presentation/screens/profile.dart';
-import 'package:connectopia/src/theme/colors.dart';
+import '../../features/feeds/presentation/screens/feeds.dart';
+import '../../features/profile/presentation/screens/profile.dart';
+import '../../theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:iconly/iconly.dart';
@@ -20,21 +20,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> selectedScreens = [
     const FeedsScreen(),
-    const UserProfileScreen(isOwnProfile: true),
     const UserProfileScreen(isOwnProfile: false),
+    const SizedBox(),
     const UserProfileScreen(isOwnProfile: true),
     const UserProfileScreen(isOwnProfile: true),
   ];
   @override
   Widget build(BuildContext context) {
-    return ColorfulSafeArea(
-      topColor: Pellete.kBackgroundGradient.colors[0],
-      top: selectedIndex == 0 ? true : false,
-      bottom: false,
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: Pellete.kBackgroundGradient,
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: Pellete.kBackgroundGradient,
+      ),
+      child: ColorfulSafeArea(
+        color: Colors.transparent,
+        top: selectedIndex == 0 ? true : false,
+        bottom: false,
         child: Scaffold(
           extendBody: true,
           body: selectedScreens[selectedIndex],
@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Pellete.kPrimary,
+                        color: Pellete.kSecondary,
                       ),
                     ),
                     label: 'Add',
@@ -101,9 +101,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 elevation: 0,
                 currentIndex: selectedIndex,
                 onTap: (index) {
-                  setState(() {
-                    selectedIndex = index;
-                  });
+                  if (index == 2) {
+                    Navigator.pushNamed(context, '/create-post');
+                  } else {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  }
                 },
               ),
             ),

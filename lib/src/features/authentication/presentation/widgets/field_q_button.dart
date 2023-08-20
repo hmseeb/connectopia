@@ -1,4 +1,4 @@
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class TextFieldQButton extends StatelessWidget {
@@ -11,7 +11,7 @@ class TextFieldQButton extends StatelessWidget {
   final String title;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTapped,
       child: Text(
         title,

@@ -48,7 +48,6 @@ class _AuthTextFieldState extends State<AuthTextField> {
         controller: widget.controller,
         onTapOutside: (event) => FocusScope.of(context).unfocus(),
         decoration: InputDecoration(
-          
           suffixIconColor: Pellete.kSecondary,
           suffixIcon: widget.suffixIcon,
           hintText: widget.hintText,
@@ -57,7 +56,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
             borderRadius: BorderRadius.circular(32),
             borderSide: BorderSide.none,
           ),
-          fillColor: Pellete.kBlack,
+          fillColor: Pellete.kDark,
           filled: true,
         ),
       ),

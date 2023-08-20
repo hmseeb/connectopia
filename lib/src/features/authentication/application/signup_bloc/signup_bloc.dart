@@ -24,7 +24,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       }
     }
 
-    void _handleUsernameChangedEvent(event, emit) {
+    void _handleUsernameChangedEvent(UsernameChangedEvent event, emit) {
       isValidUsername = (fieldValidator.isValidUsername(event.username));
       if (isValidUsername)
         emit(ValidUsernameState());
@@ -33,7 +33,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       _checkAllFieldsValidity(emit);
     }
 
-    void _handleEmailChangedEvent(event, emit) {
+    void _handleEmailChangedEvent(EmailChangedEvent event, emit) {
       isValidEmail = (fieldValidator.isValidEmail(event.email));
       if (isValidEmail)
         emit(ValidEmailState());
@@ -51,10 +51,11 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       _checkAllFieldsValidity(emit);
     }
 
-    void _handleSubmitButtonPressedEvent(event, emit) async {
+    void _handleSubmitButtonPressedEvent(
+        SignupButtonPressedEvent event, emit) async {
       emit(SignupLoadingState());
       final userData = await authRepo
-          .signup(event.username, event.email, event.password)
+          .signup(event.email, event.password, event.username)
           .then((value) {
         emit(SignupSuccessState());
       }).catchError((error) {

@@ -1,11 +1,14 @@
-import 'package:connectopia/src/common/splash/splash_screen.dart';
-import 'package:connectopia/src/features/authentication/presentation/screens/access.dart';
-import 'package:connectopia/src/features/authentication/presentation/screens/onboarding.dart';
-import 'package:connectopia/src/features/authentication/presentation/screens/signin.dart';
-import 'package:connectopia/src/features/authentication/presentation/screens/signup.dart';
-import 'package:connectopia/src/common/app/home.dart';
-import 'package:connectopia/src/features/profile/presentation/screens/profile.dart';
+import 'package:connectopia/src/features/profile/presentation/screens/edit_profile.dart';
 import 'package:flutter/material.dart';
+
+import 'common/app/home.dart';
+import 'common/splash/splash_screen.dart';
+import 'features/authentication/presentation/screens/access.dart';
+import 'features/authentication/presentation/screens/onboarding.dart';
+import 'features/authentication/presentation/screens/signin.dart';
+import 'features/authentication/presentation/screens/signup.dart';
+import 'features/create_posts/presentation/screens/post_screen.dart';
+import 'features/profile/presentation/screens/profile.dart';
 
 class GenerateRoutes {
   static onGenerateRoute(RouteSettings settings) {
@@ -58,6 +61,16 @@ class GenerateRoutes {
             builder: (_) => UserProfileScreen(
                   isOwnProfile: args['isOwnProfile'],
                 ));
+      case '/create-post':
+        return PageRouteBuilder(
+          pageBuilder: (_, animation, secondaryAnimation) =>
+              const PostsScreen(),
+        );
+      case '/edit-profile':
+        return PageRouteBuilder(
+          pageBuilder: (_, animation, secondaryAnimation) =>
+              const EditProfileScreen(),
+        );
 
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());

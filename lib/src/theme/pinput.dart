@@ -1,4 +1,4 @@
-import 'package:connectopia/src/theme/colors.dart';
+import 'colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 

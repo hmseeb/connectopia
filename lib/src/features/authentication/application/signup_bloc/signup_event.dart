@@ -36,17 +36,17 @@ class PasswordChangedEvent extends SignupEvent {
 
 class SignupButtonPressedEvent extends SignupEvent {
   SignupButtonPressedEvent(
-    this.username,
     this.email,
     this.password,
+    this.username,
   );
 
-  final String username;
   final String email;
   final String password;
+  final String username;
 
   @override
-  List<Object> get props => [username, email, password];
+  List<Object> get props => [email, password, username];
 }
 
 final class PageChangeEvent extends SignupEvent {}

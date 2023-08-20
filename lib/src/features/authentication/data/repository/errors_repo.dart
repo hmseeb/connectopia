@@ -8,19 +8,25 @@ class ErrorHandlerRepo {
     String errorMsg = error.toString();
     logger.e(errorMsg);
     if (errorMsg.contains('validation_invalid_email')) {
-      return 'Email invalid or already taken';
+      return "Hmm… that email doesn't look valid";
     } else if (errorMsg.contains('validation_invalid_username')) {
-      return 'Username invalid or already taken';
+      return "Hmm… that username doesn't look valid";
+    } else if (errorMsg.contains('Failed to authenticate.')) {
+      int randomIndex = Random().nextInt(userErrors.length);
+      return userErrors[randomIndex];
     }
-    int randomIndex = Random().nextInt(errors.length);
-    return errors[randomIndex];
+    int randomIndex = Random().nextInt(serverErrors.length);
+    return serverErrors[randomIndex];
   }
 
-  List<String> errors = [
+  List<String> serverErrors = [
     "We are embarassed! Human Error is inevitable, but this is unacceptable. We'll look into the matter now.",
     'There was a glitch in the matrix...',
-    "Oops, you've might have overlooked some fields.",
-    "Less is more, but we need more information before we can proceed.",
+  ];
+  List<String> userErrors = [
+    "Don't worry you definitely typed the correct credentials, it's the keyboard's fault.",
+    "Oops, you might have overlooked some fields.",
+    "The credentials don’t match.",
     "Happens to the best of us, you've might have missed out some fields."
   ];
 }

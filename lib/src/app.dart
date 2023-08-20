@@ -1,12 +1,15 @@
-import 'package:connectopia/src/features/authentication/application/forgot_pwd_bloc/forgot_pwd_bloc.dart';
-import 'package:connectopia/src/features/authentication/application/signin_bloc/signin_bloc.dart';
-import 'package:connectopia/src/features/authentication/application/signup_bloc/signup_bloc.dart';
-import 'package:connectopia/src/features/authentication/data/repository/auth_repo.dart';
-import 'package:connectopia/src/common/app/home.dart';
-import 'package:connectopia/src/routes.dart';
-import 'package:connectopia/src/theme/app_theme.dart';
+import 'package:connectopia/src/features/authentication/presentation/screens/signin.dart';
+import 'package:connectopia/src/features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
+import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'features/authentication/application/forgot_pwd_bloc/forgot_pwd_bloc.dart';
+import 'features/authentication/application/signin_bloc/signin_bloc.dart';
+import 'features/authentication/application/signup_bloc/signup_bloc.dart';
+import 'features/authentication/data/repository/auth_repo.dart';
+import 'routes.dart';
+import 'theme/app_theme.dart';
 
 class Connectopia extends StatelessWidget {
   const Connectopia({super.key});
@@ -20,13 +23,15 @@ class Connectopia extends StatelessWidget {
         BlocProvider<SignupBloc>(create: (context) => SignupBloc(authRepo)),
         BlocProvider<ForgotPwdBloc>(
             create: (context) => ForgotPwdBloc(authRepo)),
+        BlocProvider<ProfileBloc>(create: (context) => ProfileBloc()),
+        BlocProvider<EditProfileBloc>(create: (context) => EditProfileBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Connectopia',
         theme: connectopiaThemeData(context),
-        initialRoute: '/',
-        home: const HomeScreen(),
+        // initialRoute: '/',
+        home: SigninScreen(),
         onGenerateRoute: (settings) => GenerateRoutes.onGenerateRoute(settings),
       ),
     );

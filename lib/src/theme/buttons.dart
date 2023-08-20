@@ -1,5 +1,6 @@
-import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
+
+import 'colors.dart';
 
 class CustomElevetedButton {
   static ElevatedButtonThemeData elevetedButtonThemeData() {

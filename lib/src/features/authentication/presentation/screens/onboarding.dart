@@ -1,6 +1,6 @@
-import 'package:connectopia/src/common/app/logo.dart';
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../common/app/logo.dart';
+import '../../../../constants/sizing.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/animated_flash_title.dart';

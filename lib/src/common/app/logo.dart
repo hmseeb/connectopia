@@ -1,4 +1,4 @@
-import 'package:connectopia/src/constants/assets.dart';
+import '../../constants/assets.dart';
 import 'package:flutter/material.dart';
 
 class AppLogo extends StatelessWidget {

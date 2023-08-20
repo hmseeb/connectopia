@@ -1,14 +1,15 @@
-import 'package:connectopia/src/db/pocketbase.dart';
 import 'package:logger/logger.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../db/pocketbase.dart';
 
 class AuthRepo {
   PocketBase pb = PocketBaseSingleton().pb;
   AuthRepo();
   Logger logger = Logger();
 
-  Future<Object> signin(String email, String password) async {
+  Future<RecordAuth> signin(String email, String password) async {
     try {
       RecordAuth user =
           await pb.collection('users').authWithPassword(email, password);
@@ -18,13 +19,14 @@ class AuthRepo {
     }
   }
 
-  Future<Object> signup(String email, String password, String name) async {
+  Future<RecordModel> signup(
+      String email, String password, String username) async {
     try {
       RecordModel user = await pb.collection('users').create(body: {
         'email': email,
         'password': password,
         'passwordConfirm': password,
-        'username': name,
+        'username': username,
       });
       return user;
     } catch (error) {
@@ -44,7 +46,7 @@ class AuthRepo {
   }
 
   // TODO: Fix not working on real device
-  Future signinWithOAuth(String provider) async {
+  Future<RecordAuth> signinWithOAuth(String provider) async {
     try {
       RecordAuth user = await pb.collection('users').authWithOAuth2(
         provider,
