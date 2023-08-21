@@ -14,6 +14,8 @@ class ErrorHandlerRepo {
     } else if (errorMsg.contains('Failed to authenticate.')) {
       int randomIndex = Random().nextInt(userErrors.length);
       return userErrors[randomIndex];
+    } else if (errorMsg.contains("validation_file_size_limit")) {
+      return "Oops, file-size limit reached, it's not a fan of stretching beyond 5.2 MB!";
     }
     int randomIndex = Random().nextInt(serverErrors.length);
     return serverErrors[randomIndex];

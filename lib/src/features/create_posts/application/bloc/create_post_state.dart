@@ -30,3 +30,20 @@ final class CapturedPhoto extends CreatePostState {
   @override
   List<Object> get props => [capturedPhoto!];
 }
+
+final class CreatingPost extends CreatePostState {}
+
+final class PostCreationFailure extends CreatePostState {
+  final String error;
+
+  const PostCreationFailure(
+    this.error,
+  );
+
+  @override
+  List<Object> get props => [error];
+}
+
+final class CreatedPost extends CreatePostState {}
+
+final class ValidCaptionState extends CreatePostState {}

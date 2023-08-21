@@ -40,6 +40,7 @@ dependencies:
   flutter_glow: ^0.3.0
   font_awesome_flutter: ^10.5.0
   formz: ^0.6.0
+  geocoding: ^2.1.0
   geolocator: ^10.0.0
   gradient_borders: ^1.0.0
   http: ^1.1.0

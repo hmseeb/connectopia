@@ -54,7 +54,6 @@ class PictureBanner extends StatelessWidget {
               child: EditBannerButton(
                 text: 'UPDATE COVER PHOTO',
                 onPressed: () {
-                  debugPrint('Update Banner');
                   context
                       .read<EditProfileBloc>()
                       .add(BannerPickerButtonPressed());

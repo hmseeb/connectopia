@@ -53,3 +53,4 @@ final class AvatarPickerButtonPressed extends EditProfileEvent {
 final class BannerPickerButtonPressed extends EditProfileEvent {
   const BannerPickerButtonPressed();
 }
+

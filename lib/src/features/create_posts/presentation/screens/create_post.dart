@@ -1,7 +1,10 @@
+import 'package:connectopia/src/common/messages/error_snakbar.dart';
+import 'package:connectopia/src/constants/assets.dart';
 import 'package:connectopia/src/features/create_posts/application/bloc/create_post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
@@ -28,92 +31,137 @@ class _PostsScreenState extends State<PostsScreen> {
   }
 
   bool _toggleStory = false;
-  @override
+  bool _enableLocation = false;
+
   Widget build(BuildContext context) {
     final _height = ScreenSize.height(context);
     final _width = ScreenSize.width(context);
     return BlocConsumer<CreatePostBloc, CreatePostState>(
       listener: (context, state) {
-        // TODO: implement listener
+        if (state is PostCreationFailure) {
+          ScaffoldMessenger.of(context).showSnackBar(errorSnack(
+            state.error,
+          ));
+        } else if (state is CreatedPost) {
+          Navigator.pop(context);
+        }
+
+        if (state is PickedImageFromGallery) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            successSnack(
+              'Selected ${state.pickedFile.length} images from gallery',
+            ),
+          );
+        } else if (state is CapturedPhoto) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            successSnack(
+              'Photo captured',
+            ),
+          );
+        }
       },
       builder: (context, state) {
         return Scaffold(
-          body: Container(
-            decoration: BoxDecoration(
-              gradient: Pellete.kBackgroundGradient,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 48,
-                  ),
-                  Row(
+          body: Stack(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  gradient: Pellete.kBackgroundGradient,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Column(
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        icon: Icon(
-                          Icons.arrow_back_ios_new,
-                        ),
+                      const SizedBox(
+                        height: 48,
                       ),
-                      SizedBox(
-                        width: 16,
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: Icon(
+                              Icons.arrow_back_ios_new,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 16,
+                          ),
+                          Text(
+                            'Create',
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Spacer(),
+                          MaterialButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18),
+                            ),
+                            onPressed: () {
+                              context.read<CreatePostBloc>().add(
+                                    CreatePostButtonClickedEvent(
+                                      caption: _captionController.text,
+                                      toggleStory: _toggleStory,
+                                      enableLocation: _enableLocation,
+                                    ),
+                                  );
+                            },
+                            child: Text(
+                              'POST',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            color: state is PickedImageFromGallery ||
+                                    state is CapturedPhoto ||
+                                    state is ValidCaptionState
+                                ? Pellete.kSecondary
+                                : Pellete.kGrey,
+                          ),
+                        ],
                       ),
-                      Text(
-                        'Create',
-                        style: TextStyle(
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      const SizedBox(
+                        height: 16,
                       ),
-                      Spacer(),
-                      MaterialButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(18),
+                      Container(
+                        height: _height * 35,
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: Pellete.kDark,
+                          borderRadius: BorderRadius.circular(8),
                         ),
-                        onPressed: () {},
-                        child: Text(
-                          'POST',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                        child: TextFormField(
+                          onChanged: (value) {
+                            context.read<CreatePostBloc>().add(
+                                  CaptionChangedEvent(value),
+                                );
+                          },
+                          keyboardType: TextInputType.multiline,
+                          controller: _captionController,
+                          onTapOutside: ((event) =>
+                              FocusScope.of(context).unfocus()),
+                          maxLines: 16,
+                          maxLength: 520,
+                          decoration: InputDecoration(
+                            fillColor: Colors.grey[200],
+                            hintText: 'What would you like to say?',
+                            hintStyle: TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
+                            border: InputBorder.none,
                           ),
                         ),
-                        color: Colors.blue,
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  Container(
-                    height: _height * 35,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      color: Pellete.kDark,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: TextFormField(
-                      controller: _captionController,
-                      onTapOutside: ((event) =>
-                          FocusScope.of(context).unfocus()),
-                      maxLines: 16,
-                      maxLength: 520,
-                      decoration: InputDecoration(
-                        fillColor: Colors.grey[200],
-                        hintText: 'What would you like to say?',
-                        hintStyle: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                        border: InputBorder.none,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              if (state is CreatingPost)
+                Center(child: Lottie.asset(Assets.progressIndicator)),
+            ],
           ),
           floatingActionButton: Container(
             width: _width * 70,
@@ -134,7 +182,9 @@ class _PostsScreenState extends State<PostsScreen> {
                   },
                   icon: Icon(
                     IconlyBold.image,
-                    color: Pellete.kWhite,
+                    color: state is PickedImageFromGallery
+                        ? Pellete.kSecondary
+                        : Pellete.kWhite,
                   ),
                 ),
                 IconButton(
@@ -145,7 +195,9 @@ class _PostsScreenState extends State<PostsScreen> {
                   },
                   icon: Icon(
                     IconlyBold.camera,
-                    color: Pellete.kWhite,
+                    color: state is CapturedPhoto
+                        ? Pellete.kSecondary
+                        : Pellete.kWhite,
                   ),
                 ),
                 IconButton(
@@ -153,10 +205,14 @@ class _PostsScreenState extends State<PostsScreen> {
                     context.read<CreatePostBloc>().add(
                           LocationButtonClickedEvent(),
                         );
+                    setState(() {
+                      _enableLocation = !_enableLocation;
+                    });
                   },
                   icon: Icon(
                     IconlyBold.location,
-                    color: Pellete.kWhite,
+                    color:
+                        _enableLocation ? Pellete.kSecondary : Pellete.kWhite,
                   ),
                 ),
                 Spacer(),

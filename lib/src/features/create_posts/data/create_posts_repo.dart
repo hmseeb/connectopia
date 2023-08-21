@@ -1,7 +1,50 @@
+import 'package:connectopia/src/db/pocketbase.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:pocketbase/pocketbase.dart';
 
 class CreatePostsRepo {
-  Future<Position> determinePosition() async {
+  Future createPost(
+    String caption,
+    String? location,
+    bool isStory,
+    List<XFile?> selectedFiles,
+  ) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+    String id = pb.authStore.model.id;
+
+    RecordModel record = await pb.collection('users').getOne(id);
+    final username = record.getStringValue('username');
+
+    final body = <String, dynamic>{
+      "caption": caption,
+      if (location != null) "location": location,
+      "isStory": isStory,
+      "username": username,
+    };
+
+    List<MultipartFile> convertedFiles = [];
+
+    for (var file in selectedFiles) {
+      convertedFiles.add(
+        MultipartFile.fromBytes(
+          'image',
+          await file!.readAsBytes(),
+          filename: file.name,
+        ),
+      );
+    }
+
+    try {
+      await pb.collection('posts').create(body: body, files: convertedFiles);
+    } catch (e) {
+      throw Exception('Error: ${e.toString()}');
+    }
+  }
+
+  Future<Placemark> determineLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -35,6 +78,18 @@ class CreatePostsRepo {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    return await Geolocator.getCurrentPosition();
+    final position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.best,
+    );
+
+    try {
+      List<Placemark> placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+      return placemarks[0];
+    } catch (err) {
+      throw Exception('Error: ${err.toString()}');
+    }
   }
 }
