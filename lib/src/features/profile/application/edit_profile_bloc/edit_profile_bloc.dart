@@ -4,7 +4,6 @@ import 'package:connectopia/src/features/profile/data/repository/profile_repo.da
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 part 'edit_profile_event.dart';
 part 'edit_profile_state.dart';
@@ -64,40 +63,38 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     });
 
     void _handleImagePicker(event, emit) async {
-      if (await Permission.camera.request().isGranted) {
-        // Either the permission was already granted before or the user just granted it.
-        late XFile? pickedImage;
-        try {
-          final ImagePicker imagePicker = ImagePicker();
-          pickedImage = await imagePicker.pickImage(
-            source: ImageSource.gallery,
-          );
-          if (pickedImage != null) {
-            if (event is AvatarPickerButtonPressed) {
-              try {
-                emit(EditProfileLoading());
-                await profileRepo.updateAvatarOrBanner(pickedImage, 'avatar');
-                emit(EditProfileSuccess());
-                emit(EditProfileInitial());
-              } catch (e) {
-                emit(EditProfileFailure(e.toString()));
-              }
-            } else if (event is BannerPickerButtonPressed) {
-              try {
-                emit(EditProfileLoading());
-                await profileRepo.updateAvatarOrBanner(pickedImage, 'banner');
-                emit(EditProfileSuccess());
-                emit(EditProfileInitial());
-              } catch (e) {
-                emit(EditProfileFailure(e.toString()));
-              }
+      // Either the permission was already granted before or the user just granted it.
+      late XFile? pickedImage;
+      try {
+        final ImagePicker imagePicker = ImagePicker();
+        pickedImage = await imagePicker.pickImage(
+          source: ImageSource.gallery,
+        );
+        if (pickedImage != null) {
+          if (event is AvatarPickerButtonPressed) {
+            try {
+              emit(EditProfileLoading());
+              await profileRepo.updateAvatarOrBanner(pickedImage, 'avatar');
+              emit(EditProfileSuccess());
+              emit(EditProfileInitial());
+            } catch (e) {
+              emit(EditProfileFailure(e.toString()));
+            }
+          } else if (event is BannerPickerButtonPressed) {
+            try {
+              emit(EditProfileLoading());
+              await profileRepo.updateAvatarOrBanner(pickedImage, 'banner');
+              emit(EditProfileSuccess());
+              emit(EditProfileInitial());
+            } catch (e) {
+              emit(EditProfileFailure(e.toString()));
             }
           }
-        } catch (e) {
-          Logger logger = Logger();
-          logger.e(e);
-          emit(EditProfileFailure(e.toString()));
         }
+      } catch (e) {
+        Logger logger = Logger();
+        logger.e(e);
+        emit(EditProfileFailure(e.toString()));
       }
     }
 

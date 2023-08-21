@@ -7,7 +7,7 @@ import 'features/authentication/presentation/screens/onboarding.dart';
 import 'features/authentication/presentation/screens/signin.dart';
 import 'features/authentication/presentation/screens/signup.dart';
 import 'features/authentication/presentation/screens/splash_screen.dart';
-import 'features/create_posts/presentation/screens/post_screen.dart';
+import 'features/create_posts/presentation/screens/create_post.dart';
 import 'features/profile/presentation/screens/profile.dart';
 
 class GenerateRoutes {

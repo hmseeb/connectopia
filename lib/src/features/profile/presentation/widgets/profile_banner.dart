@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:iconly/iconly.dart';
-import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class PictureBanner extends StatelessWidget {
   const PictureBanner({
@@ -77,17 +76,15 @@ class PictureBanner extends StatelessWidget {
             width: _height * 10,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: InstaImageViewer(
-                child: avatarUrl.isEmpty
-                    ? Image.asset(
-                        Assets.avatarPlaceholder,
-                        fit: BoxFit.cover,
-                      )
-                    : Image.network(
-                        "${baseUrl}/${userId}/${avatarUrl}",
-                        fit: BoxFit.cover,
-                      ),
-              ),
+              child: avatarUrl.isEmpty
+                  ? Image.asset(
+                      Assets.avatarPlaceholder,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.network(
+                      "${baseUrl}/${userId}/${avatarUrl}",
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
         ),

@@ -1,12 +1,13 @@
 import 'dart:ui';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
-import '../../features/feeds/presentation/screens/feeds.dart';
-import '../../features/profile/presentation/screens/profile.dart';
-import '../../theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:iconly/iconly.dart';
+
+import '../../features/feeds/presentation/screens/feeds.dart';
+import '../../features/profile/presentation/screens/profile.dart';
+import '../../theme/colors.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -21,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> selectedScreens = [
     const FeedsScreen(),
     const UserProfileScreen(isOwnProfile: false),
-    const SizedBox(),
+    const Center(),
     const UserProfileScreen(isOwnProfile: true),
     const UserProfileScreen(isOwnProfile: true),
   ];
