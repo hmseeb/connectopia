@@ -1,4 +1,3 @@
-import 'package:connectopia/src/features/authentication/presentation/screens/signin.dart';
 import 'package:connectopia/src/features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +29,7 @@ class Connectopia extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Connectopia',
         theme: connectopiaThemeData(context),
-        // initialRoute: '/',
-        home: SigninScreen(),
+        initialRoute: '/',
         onGenerateRoute: (settings) => GenerateRoutes.onGenerateRoute(settings),
       ),
     );

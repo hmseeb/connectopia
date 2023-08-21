@@ -33,3 +33,23 @@ class EditProfileBioChangedEvent extends EditProfileEvent {
   @override
   List<Object> get props => [bio];
 }
+
+final class SubmitButtonPressedEvent extends EditProfileEvent {
+  const SubmitButtonPressedEvent({this.username, this.displayName, this.bio});
+  final String? username;
+  final String? displayName;
+  final String? bio;
+}
+
+final class RequestEmailVerification extends EditProfileEvent {
+  const RequestEmailVerification(this.email);
+  final String email;
+}
+
+final class AvatarPickerButtonPressed extends EditProfileEvent {
+  const AvatarPickerButtonPressed();
+}
+
+final class BannerPickerButtonPressed extends EditProfileEvent {
+  const BannerPickerButtonPressed();
+}

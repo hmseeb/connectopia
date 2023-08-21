@@ -1,4 +1,5 @@
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
+import 'package:connectopia/src/common/messages/error_snakbar.dart';
 import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,7 +27,6 @@ class _UserProfileScreenState extends State<UserProfileScreen>
     with TickerProviderStateMixin {
   late final _userTabController;
   late final _personalTabController;
-
   @override
   void initState() {
     super.initState();
@@ -49,11 +49,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
         if (state is ProfileLoadingFailedState) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(state.error),
-            ),
-          );
+          ScaffoldMessenger.of(context).showSnackBar(errorSnack(
+            state.error,
+          ));
         }
       },
       builder: (context, state) {
@@ -62,47 +60,35 @@ class _UserProfileScreenState extends State<UserProfileScreen>
           child: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(
-                child: PictureBanner(
-                  enableEditMode: false,
-                  isOwnProfile: widget.isOwnProfile,
-                ),
+                child: state is ProfileLoadedState
+                    ? PictureBanner(
+                        userId: state.user.id,
+                        isOwnProfile: widget.isOwnProfile,
+                        enableEditMode: false,
+                        avatarUrl: state.user.avatar,
+                        bannerUrl: state.user.banner,
+                      )
+                    : SizedBox(
+                        height: _height * 20,
+                        width: _width,
+                      ),
               ),
               SliverToBoxAdapter(
                 child: Column(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        debugPrint('Change Profile Photo');
-                      },
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          color: Colors.transparent,
-                          height: _height * 5,
-                          width: _height * 10,
-                        ),
-                      ),
-                    ),
-                    GestureDetector(
-                      child: Container(
-                        height: _height * 2,
-                      ),
-                      onTap: () {
-                        debugPrint('Change Profile Photo');
-                      },
-                    ),
+                    SizedBox(height: _height * 8),
                     TitleBadge(
                       username: state is ProfileLoadedState
-                          ? state.user.username
-                          : '',
+                          ? state.user.name
+                          : 'Haseeb Azhar',
                       isVerified: true,
                     ),
                     SizedBox(height: _height * 2),
-
-                    // if bio exists
-                    Bio(
-                      state is ProfileLoadedState ? state.user.bio : '',
-                    ),
+                    if (state is ProfileLoadedState)
+                      if (state.user.bio.isNotEmpty)
+                        Bio(
+                          state.user.bio,
+                        ),
                     SizedBox(height: _height * 2),
                     widget.isOwnProfile
                         ? Row(
@@ -111,8 +97,15 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                               OutlinedProfileButton(
                                   text: 'Edit Profile',
                                   onPressed: () {
-                                    Navigator.pushNamed(
-                                        context, '/edit-profile');
+                                    if (state is ProfileLoadedState) {
+                                      Navigator.pushNamed(
+                                        context,
+                                        '/edit-profile',
+                                        arguments: {
+                                          'user': state.user,
+                                        },
+                                      );
+                                    }
                                   }),
                               SizedBox(width: _width * 2),
                               OutlinedProfileButton(

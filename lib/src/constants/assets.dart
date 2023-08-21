@@ -14,6 +14,12 @@ class Assets {
   static String progressIndicator =
       'assets/animations/lottie/progress_indicator.json';
 
+  static String successAnimation =
+      'assets/animations/lottie/success_animation.json';
+  static String avatarPlaceholder =
+      'assets/images/placeholders/avatar_placeholder.avif';
+  static String bannerPlaceholder =
+      'assets/images/placeholders/banner_placeholder.png';
   static String getRandomAvatar() {
     List<String> avatars = [
       'cat',
@@ -26,7 +32,7 @@ class Assets {
       'shark',
     ];
     int randomIndex = Random().nextInt(avatars.length);
-    return 'assets/images/avatar_placeholders/${avatars[randomIndex]}.png';
+    return 'assets/images/placeholders/${avatars[randomIndex]}.png';
   }
 
   static String get randomImage {

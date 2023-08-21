@@ -9,6 +9,10 @@ class Bio extends StatelessWidget {
     return Text(
       text!,
       textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
+      ),
     );
   }
 }

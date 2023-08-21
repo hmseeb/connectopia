@@ -23,3 +23,16 @@ final class EditProfileFailure extends EditProfileState {
   @override
   List<Object> get props => [error];
 }
+
+final class EmailVerificationSending extends EditProfileState {}
+
+final class EmailVerificationSent extends EditProfileState {}
+
+class ProfileImageState extends EditProfileState {
+  ProfileImageState();
+}
+
+final class PickerError extends EditProfileState {
+  const PickerError(this.error);
+  final String error;
+}

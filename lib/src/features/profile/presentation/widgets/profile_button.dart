@@ -26,7 +26,7 @@ class OutlinedProfileButton extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          border: Border.all(width: 1, color: Pellete.kWhite),
+          border: Border.all(width: 0.5, color: Pellete.kWhite),
         ),
         child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
       ),
@@ -59,6 +59,7 @@ class EditBannerButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           color: Pellete.kBlack.withOpacity(0.5),
+          border: Border.all(color: Pellete.kWhite),
         ),
         child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
       ),

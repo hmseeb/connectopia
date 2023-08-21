@@ -68,8 +68,23 @@ class GenerateRoutes {
         );
       case '/edit-profile':
         return PageRouteBuilder(
-          pageBuilder: (_, animation, secondaryAnimation) =>
-              const EditProfileScreen(),
+          pageBuilder: (_, animation, secondaryAnimation) {
+            final args = settings.arguments as Map<String, dynamic>;
+            return EditProfileScreen(
+              user: args['user'],
+            );
+          },
+          transitionsBuilder: (_, animation, secondaryAnimation, child) {
+            var begin = const Offset(0.0, 1.0);
+            var end = Offset.zero;
+            var curve = Curves.ease;
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
         );
 
       default:

@@ -5,11 +5,11 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../../../db/pocketbase.dart';
 
 class AuthRepo {
-  PocketBase pb = PocketBaseSingleton().pb;
   AuthRepo();
   Logger logger = Logger();
 
   Future<RecordAuth> signin(String email, String password) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
     try {
       RecordAuth user =
           await pb.collection('users').authWithPassword(email, password);
@@ -21,6 +21,7 @@ class AuthRepo {
 
   Future<RecordModel> signup(
       String email, String password, String username) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
     try {
       RecordModel user = await pb.collection('users').create(body: {
         'email': email,
@@ -37,6 +38,7 @@ class AuthRepo {
 
   // TODO: Add SMTP server
   Future sendVerificationEmail(String email) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
     try {
       await pb.collection('users').requestPasswordReset(email);
     } catch (error) {
@@ -47,6 +49,7 @@ class AuthRepo {
 
   // TODO: Fix not working on real device
   Future<RecordAuth> signinWithOAuth(String provider) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
     try {
       RecordAuth user = await pb.collection('users').authWithOAuth2(
         provider,

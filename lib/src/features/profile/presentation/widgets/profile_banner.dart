@@ -1,8 +1,11 @@
 import 'package:connectopia/src/constants/assets.dart';
 import 'package:connectopia/src/constants/sizing.dart';
+import 'package:connectopia/src/features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:connectopia/src/features/profile/presentation/widgets/profile_button.dart';
 import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:iconly/iconly.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 
@@ -11,13 +14,20 @@ class PictureBanner extends StatelessWidget {
     super.key,
     required this.isOwnProfile,
     required this.enableEditMode,
+    required this.avatarUrl,
+    required this.bannerUrl,
+    required this.userId,
   });
 
   final bool isOwnProfile;
   final bool enableEditMode;
+  final String avatarUrl;
+  final String bannerUrl;
+  final String userId;
 
   @override
   Widget build(BuildContext context) {
+    final baseUrl = dotenv.env['BASE_IMAGE_URL'];
     final _height = ScreenSize.height(context);
     final _width = ScreenSize.width(context);
     return Stack(
@@ -27,12 +37,15 @@ class PictureBanner extends StatelessWidget {
           opacity: enableEditMode ? 0.5 : 1,
           child: AspectRatio(
             aspectRatio: 2,
-            child: InstaImageViewer(
-              child: Image.network(
-                Assets.randomImage,
-                fit: BoxFit.cover,
-              ),
-            ),
+            child: bannerUrl.isEmpty
+                ? Image.asset(
+                    Assets.bannerPlaceholder,
+                    fit: BoxFit.cover,
+                  )
+                : Image.network(
+                    "${baseUrl}/${userId}/${bannerUrl}",
+                    fit: BoxFit.cover,
+                  ),
           ),
         ),
         if (enableEditMode)
@@ -41,11 +54,16 @@ class PictureBanner extends StatelessWidget {
               left: _width * 25,
               child: EditBannerButton(
                 text: 'UPDATE COVER PHOTO',
-                onPressed: () {},
+                onPressed: () {
+                  debugPrint('Update Banner');
+                  context
+                      .read<EditProfileBloc>()
+                      .add(BannerPickerButtonPressed());
+                },
               )),
         if (enableEditMode)
           Positioned(
-              top: _height * 4,
+              top: _height * 5,
               child: IconButton(
                   onPressed: () {
                     Navigator.pop(context);
@@ -60,10 +78,15 @@ class PictureBanner extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: InstaImageViewer(
-                child: Image.asset(
-                  Assets.getRandomAvatar(),
-                  fit: BoxFit.contain,
-                ),
+                child: avatarUrl.isEmpty
+                    ? Image.asset(
+                        Assets.avatarPlaceholder,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        "${baseUrl}/${userId}/${avatarUrl}",
+                        fit: BoxFit.cover,
+                      ),
               ),
             ),
           ),
