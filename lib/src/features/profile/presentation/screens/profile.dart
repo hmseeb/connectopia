@@ -81,7 +81,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                       username: state is ProfileLoadedState
                           ? state.user.name
                           : 'Haseeb Azhar',
-                      isVerified: true,
+                      isVerified: state is ProfileLoadedState
+                          ? state.user.verified
+                          : false,
                     ),
                     SizedBox(height: _height * 2),
                     if (state is ProfileLoadedState)

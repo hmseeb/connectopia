@@ -2,11 +2,11 @@ import 'package:connectopia/src/features/profile/presentation/screens/edit_profi
 import 'package:flutter/material.dart';
 
 import 'common/app/home.dart';
-import 'common/splash/splash_screen.dart';
 import 'features/authentication/presentation/screens/access.dart';
 import 'features/authentication/presentation/screens/onboarding.dart';
 import 'features/authentication/presentation/screens/signin.dart';
 import 'features/authentication/presentation/screens/signup.dart';
+import 'features/authentication/presentation/screens/splash_screen.dart';
 import 'features/create_posts/presentation/screens/post_screen.dart';
 import 'features/profile/presentation/screens/profile.dart';
 

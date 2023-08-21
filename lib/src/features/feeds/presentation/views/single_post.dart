@@ -60,7 +60,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               children: [
                 ClipRRect(
@@ -117,11 +117,11 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
             ),
           ),
           SizedBox(
-            height: widget.images == null ? _height * ScreenSize.kSpaceL : 0,
+            height: widget.images == null ? _height * ScreenSize.kSpaceXS : 0,
           ),
           widget.caption != null && widget.images == null
               ? Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: ReadMoreText(
                     widget.caption!,
                     trimLines: 2,
@@ -171,7 +171,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
             height: _height * ScreenSize.kSpaceL,
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -211,11 +211,9 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
               ],
             ),
           ),
-          widget.images != null
-              ? SizedBox()
-              : SizedBox(height: _height * ScreenSize.kSpaceL),
+
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
               "${widget.totalLikes} likes",
               style: TextStyle(
@@ -226,7 +224,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
           ),
           widget.images != null && widget.caption != null
               ? Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(16.0),
                   child: ReadMoreText(
                     '${widget.caption}',
                     trimLines: 1,
