@@ -1,4 +1,6 @@
+import 'package:connectopia/src/features/create_posts/presentation/screens/create_post.dart';
 import 'package:connectopia/src/features/profile/presentation/screens/edit_profile.dart';
+import 'package:connectopia/src/features/profile/presentation/views/single_post_view.dart';
 import 'package:flutter/material.dart';
 
 import 'common/app/home.dart';
@@ -7,7 +9,6 @@ import 'features/authentication/presentation/screens/onboarding.dart';
 import 'features/authentication/presentation/screens/signin.dart';
 import 'features/authentication/presentation/screens/signup.dart';
 import 'features/authentication/presentation/screens/splash_screen.dart';
-import 'features/create_posts/presentation/screens/create_post.dart';
 import 'features/profile/presentation/screens/profile.dart';
 
 class GenerateRoutes {
@@ -52,9 +53,14 @@ class GenerateRoutes {
               const SignupScreen(),
         );
       case '/home':
-        return PageRouteBuilder(
-          pageBuilder: (_, animation, secondaryAnimation) => const HomeScreen(),
-        );
+        {
+          final args = settings.arguments as Map<String, dynamic>;
+          return PageRouteBuilder(
+            pageBuilder: (_, animation, secondaryAnimation) =>
+                HomeScreen(selectedIndex: args['selectedIndex']),
+          );
+        }
+
       case '/profile':
         final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
@@ -63,8 +69,7 @@ class GenerateRoutes {
                 ));
       case '/create-post':
         return PageRouteBuilder(
-          pageBuilder: (_, animation, secondaryAnimation) =>
-              const PostsScreen(),
+          pageBuilder: (_, animation, secondaryAnimation) => const PostScreen(),
         );
       case '/edit-profile':
         return PageRouteBuilder(
@@ -86,6 +91,14 @@ class GenerateRoutes {
             );
           },
         );
+      case '/single-post':
+        {
+          final args = settings.arguments as Map<String, dynamic>;
+          return MaterialPageRoute(
+              builder: (_) => SinglePostView(
+                    post: args['post'],
+                  ));
+        }
 
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());

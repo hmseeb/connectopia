@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-class CreatePostsRepo {
+class CreatePostRepo {
   Future createPost(
     String caption,
     String? location,
@@ -21,7 +21,7 @@ class CreatePostsRepo {
     final body = <String, dynamic>{
       "caption": caption,
       if (location != null) "location": location,
-      "isStory": isStory,
+      "story": isStory,
       "username": username,
     };
 
@@ -40,7 +40,7 @@ class CreatePostsRepo {
     try {
       await pb.collection('posts').create(body: body, files: convertedFiles);
     } catch (e) {
-      throw Exception('Error: ${e.toString()}');
+      throw Exception(e);
     }
   }
 

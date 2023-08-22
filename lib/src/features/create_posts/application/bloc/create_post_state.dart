@@ -1,15 +1,15 @@
 part of 'create_post_bloc.dart';
 
-sealed class CreatePostState extends Equatable {
-  const CreatePostState();
+sealed class CreatePosttate extends Equatable {
+  const CreatePosttate();
 
   @override
   List<Object> get props => [];
 }
 
-final class CreatePostInitial extends CreatePostState {}
+final class CreatePostInitial extends CreatePosttate {}
 
-final class PickedImageFromGallery extends CreatePostState {
+final class PickedImageFromGallery extends CreatePosttate {
   const PickedImageFromGallery({
     required this.pickedFile,
   });
@@ -20,7 +20,7 @@ final class PickedImageFromGallery extends CreatePostState {
   List<Object> get props => [pickedFile];
 }
 
-final class CapturedPhoto extends CreatePostState {
+final class CapturedPhoto extends CreatePosttate {
   const CapturedPhoto({
     required this.capturedPhoto,
   });
@@ -31,9 +31,9 @@ final class CapturedPhoto extends CreatePostState {
   List<Object> get props => [capturedPhoto!];
 }
 
-final class CreatingPost extends CreatePostState {}
+final class CreatingPost extends CreatePosttate {}
 
-final class PostCreationFailure extends CreatePostState {
+final class PostCreationFailure extends CreatePosttate {
   final String error;
 
   const PostCreationFailure(
@@ -44,6 +44,6 @@ final class PostCreationFailure extends CreatePostState {
   List<Object> get props => [error];
 }
 
-final class CreatedPost extends CreatePostState {}
+final class CreatedPost extends CreatePosttate {}
 
-final class ValidCaptionState extends CreatePostState {}
+final class ValidCaptionState extends CreatePosttate {}

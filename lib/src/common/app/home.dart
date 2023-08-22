@@ -10,14 +10,20 @@ import '../../features/profile/presentation/screens/profile.dart';
 import '../../theme/colors.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.selectedIndex});
+  final int selectedIndex;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int selectedIndex = 0;
+  late int selectedIndex;
+  @override
+  void initState() {
+    super.initState();
+    selectedIndex = widget.selectedIndex;
+  }
 
   List<Widget> selectedScreens = [
     const FeedsScreen(),

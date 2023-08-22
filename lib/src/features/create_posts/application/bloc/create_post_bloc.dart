@@ -7,7 +7,7 @@ import 'package:image_picker/image_picker.dart';
 part 'create_post_event.dart';
 part 'create_post_state.dart';
 
-class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
+class CreatePostBloc extends Bloc<CreatePostEvent, CreatePosttate> {
   XFile? pickedFile;
   List<XFile?> pickedFiles = [];
   String? userLocation;
@@ -34,7 +34,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     });
 
     on<LocationButtonClickedEvent>((event, emit) async {
-      CreatePostsRepo repo = CreatePostsRepo();
+      CreatePostRepo repo = CreatePostRepo();
 
       try {
         final location = await repo.determineLocation();
@@ -47,7 +47,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
     on<CreatePostButtonClickedEvent>((event, emit) async {
       emit(CreatingPost());
-      CreatePostsRepo repo = CreatePostsRepo();
+      CreatePostRepo repo = CreatePostRepo();
       if (!event.enableLocation) userLocation = null;
       if (pickedFile != null) pickedFiles.add(pickedFile!);
 
@@ -59,7 +59,6 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         pickedFiles = [];
         userLocation = null;
       } catch (err) {
-        print('Error  s: ${err.toString()}');
         String errorMsg = handleError.handleError(err);
         emit(PostCreationFailure(errorMsg));
         pickedFile = null;

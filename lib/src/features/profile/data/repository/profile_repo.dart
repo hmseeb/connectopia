@@ -17,6 +17,29 @@ class ProfileRepo {
     }
   }
 
+  Future<List<RecordModel>> get post async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+    try {
+      List<RecordModel> record = await pb.collection('posts').getFullList(
+            sort: '-updated',
+          );
+      List<RecordModel> anotherRecord =
+          await pb.collection('posts').getFullList();
+      return record;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  void deletePost(String postId) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+    try {
+      await pb.collection('posts').delete(postId);
+    } catch (e) {
+      throw e;
+    }
+  }
+
   Future<RecordModel> updateProfile(
     String? username,
     String? name,

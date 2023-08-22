@@ -42,7 +42,7 @@ class PictureBanner extends StatelessWidget {
                     fit: BoxFit.cover,
                   )
                 : Image.network(
-                    "${baseUrl}/${userId}/${bannerUrl}",
+                    "${baseUrl}/_pb_users_auth_/${userId}/${bannerUrl}",
                     fit: BoxFit.cover,
                   ),
           ),
@@ -81,7 +81,7 @@ class PictureBanner extends StatelessWidget {
                       fit: BoxFit.cover,
                     )
                   : Image.network(
-                      "${baseUrl}/${userId}/${avatarUrl}",
+                      "${baseUrl}/_pb_users_auth_/${userId}/${avatarUrl}",
                       fit: BoxFit.cover,
                     ),
             ),

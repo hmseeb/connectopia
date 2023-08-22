@@ -20,7 +20,13 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () async {
       PocketBase pocketBase = await _initPocketBase();
       if (pocketBase.authStore.isValid)
-        Navigator.pushReplacementNamed(context, '/home');
+        Navigator.pushReplacementNamed(
+          context,
+          '/home',
+          arguments: {
+            'selectedIndex': 0,
+          },
+        );
       else
         Navigator.pushReplacementNamed(context, '/flash');
     });

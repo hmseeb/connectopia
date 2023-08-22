@@ -30,8 +30,10 @@ environment:
 dependencies:
   autoscale_tabbarview: ^1.0.2
   bloc: ^8.1.2
+  cached_network_image: ^3.2.3
   colorful_safe_area: ^1.0.0
   cupertino_icons: ^1.0.2
+  custom_refresh_indicator: ^2.2.1
   equatable: ^2.0.5
   flutter:
     sdk: flutter

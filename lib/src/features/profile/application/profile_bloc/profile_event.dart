@@ -8,3 +8,8 @@ sealed class ProfileEvent extends Equatable {
 }
 
 final class LoadProfileEvent extends ProfileEvent {}
+
+final class DeletePostButtonPressed extends ProfileEvent {
+  const DeletePostButtonPressed(this.postId);
+  final String postId;
+}

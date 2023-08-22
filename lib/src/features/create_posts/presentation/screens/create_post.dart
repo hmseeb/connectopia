@@ -9,14 +9,14 @@ import 'package:lottie/lottie.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
 
-class PostsScreen extends StatefulWidget {
-  const PostsScreen({super.key});
+class PostScreen extends StatefulWidget {
+  const PostScreen({super.key});
 
   @override
-  State<PostsScreen> createState() => _PostsScreenState();
+  State<PostScreen> createState() => _PostScreenState();
 }
 
-class _PostsScreenState extends State<PostsScreen> {
+class _PostScreenState extends State<PostScreen> {
   late final TextEditingController _captionController;
   @override
   void initState() {
@@ -36,7 +36,7 @@ class _PostsScreenState extends State<PostsScreen> {
   Widget build(BuildContext context) {
     final _height = ScreenSize.height(context);
     final _width = ScreenSize.width(context);
-    return BlocConsumer<CreatePostBloc, CreatePostState>(
+    return BlocConsumer<CreatePostBloc, CreatePosttate>(
       listener: (context, state) {
         if (state is PostCreationFailure) {
           ScaffoldMessenger.of(context).showSnackBar(errorSnack(
@@ -101,13 +101,16 @@ class _PostsScreenState extends State<PostsScreen> {
                               borderRadius: BorderRadius.circular(18),
                             ),
                             onPressed: () {
-                              context.read<CreatePostBloc>().add(
-                                    CreatePostButtonClickedEvent(
-                                      caption: _captionController.text,
-                                      toggleStory: _toggleStory,
-                                      enableLocation: _enableLocation,
-                                    ),
-                                  );
+                              if (state is PickedImageFromGallery ||
+                                  state is CapturedPhoto ||
+                                  state is ValidCaptionState)
+                                context.read<CreatePostBloc>().add(
+                                      CreatePostButtonClickedEvent(
+                                        caption: _captionController.text,
+                                        toggleStory: _toggleStory,
+                                        enableLocation: _enableLocation,
+                                      ),
+                                    );
                             },
                             child: Text(
                               'POST',
@@ -210,7 +213,7 @@ class _PostsScreenState extends State<PostsScreen> {
                     });
                   },
                   icon: Icon(
-                    IconlyBold.location,
+                    _enableLocation ? Icons.location_on : Icons.location_off,
                     color:
                         _enableLocation ? Pellete.kSecondary : Pellete.kWhite,
                   ),
