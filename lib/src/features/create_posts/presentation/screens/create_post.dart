@@ -1,13 +1,13 @@
-import '../../../../common/messages/error_snakbar.dart';
-import '../../../../constants/assets.dart';
-import '../../application/bloc/create_post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../common/messages/error_snakbar.dart';
+import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
+import '../../application/bloc/create_post_bloc.dart';
 
 class PostScreen extends StatefulWidget {
   const PostScreen({super.key});
@@ -185,7 +185,7 @@ class _PostScreenState extends State<PostScreen> {
                   },
                   icon: Icon(
                     IconlyBold.image,
-                    color: state is PickedImageFromGallery
+                    color: context.read<CreatePostBloc>().pickedFiles.length > 0
                         ? Pellete.kSecondary
                         : Pellete.kWhite,
                   ),
@@ -198,7 +198,7 @@ class _PostScreenState extends State<PostScreen> {
                   },
                   icon: Icon(
                     IconlyBold.camera,
-                    color: state is CapturedPhoto
+                    color: context.read<CreatePostBloc>().pickedFile != null
                         ? Pellete.kSecondary
                         : Pellete.kWhite,
                   ),

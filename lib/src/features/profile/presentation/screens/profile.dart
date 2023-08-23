@@ -2,6 +2,7 @@ import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iconly/iconly.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -58,6 +59,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
         }
       },
       builder: (context, state) {
+        // TODO: Refactor the skeletonizer
         return Skeletonizer(
           enabled: state is ProfileLoadingState,
           child: CustomRefreshIndicator(
@@ -88,9 +90,12 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                     children: [
                       SizedBox(height: _height * 8),
                       TitleBadge(
-                        username: state is ProfileLoadedState
+                        name: state is ProfileLoadedState
                             ? state.user.name
-                            : 'Haseeb Azhar',
+                            : 'Haseeb',
+                        username: state is ProfileLoadedState
+                            ? state.user.username
+                            : 'haseeb',
                         isVerified: state is ProfileLoadedState
                             ? state.user.verified
                             : false,
@@ -121,10 +126,22 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                       }
                                     }),
                                 SizedBox(width: _width * 2),
-                                OutlinedProfileButton(
-                                    state: state,
-                                    text: 'Share Profile',
-                                    onPressed: () {}),
+                                IconButton(
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, '/account-settings',
+                                          arguments: {
+                                            "username":
+                                                state is ProfileLoadedState
+                                                    ? state.user.name.isEmpty
+                                                        ? state.user.username
+                                                        : state.user.name
+                                                    : 'haseeb',
+                                          });
+                                    },
+                                    icon: Icon(
+                                      IconlyLight.setting,
+                                    )),
                               ],
                             )
                           : Row(

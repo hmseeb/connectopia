@@ -34,7 +34,13 @@ class GridPostView extends StatelessWidget {
                 },
                 child: Container(
                   color: Colors.transparent,
-                  child: Center(child: Text(posts[index].caption)),
+                  child: Center(
+                      child: Text(
+                    posts[index].caption.length > 30
+                        ? posts[index].caption.substring(0, 30) + '...'
+                        : posts[index].caption,
+                    textAlign: TextAlign.center,
+                  )),
                 ),
               );
             return Stack(
@@ -53,7 +59,7 @@ class GridPostView extends StatelessWidget {
                     decoration: BoxDecoration(
                       image: DecorationImage(
                         image: NetworkImage(
-                            '${dotenv.env['BASE_IMAGE_URL']}/${posts[index].collectionId}/${posts[index].id}/${posts[index].image[0]}/'),
+                            '${dotenv.env['POCKETBASE_URL']}/api/files/${posts[index].collectionId}/${posts[index].id}/${posts[index].image[0]}/'),
                         fit: BoxFit.cover,
                       ),
                     ),

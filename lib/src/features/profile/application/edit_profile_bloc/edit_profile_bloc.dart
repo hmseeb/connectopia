@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
-import '../../../authentication/data/repository/validation_repo.dart';
-import '../../data/repository/profile_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
+
+import '../../../authentication/data/repository/validation_repo.dart';
+import '../../data/repository/profile_repo.dart';
 
 part 'edit_profile_event.dart';
 part 'edit_profile_state.dart';
@@ -29,11 +30,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
 
     on<EditProfileDisplayNameChangedEvent>((event, emit) {
       displayName = event.name;
-      if (displayName.isNotEmpty) {
-        emit(EditCanSubmit());
-      } else {
-        emit(EditProfileInitial());
-      }
+      emit(EditCanSubmit());
     });
     on<EditProfileBioChangedEvent>((event, emit) {
       bio = event.bio;

@@ -1,6 +1,4 @@
-import 'features/create_posts/presentation/screens/create_post.dart';
-import 'features/profile/presentation/screens/edit_profile.dart';
-import 'features/profile/presentation/views/single_post_view.dart';
+import 'package:connectopia/src/features/profile/presentation/screens/account_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'common/app/home.dart';
@@ -9,7 +7,10 @@ import 'features/authentication/presentation/screens/onboarding.dart';
 import 'features/authentication/presentation/screens/signin.dart';
 import 'features/authentication/presentation/screens/signup.dart';
 import 'features/authentication/presentation/screens/splash_screen.dart';
+import 'features/create_posts/presentation/screens/create_post.dart';
+import 'features/profile/presentation/screens/edit_profile.dart';
 import 'features/profile/presentation/screens/profile.dart';
+import 'features/profile/presentation/views/single_post_view.dart';
 
 class GenerateRoutes {
   static onGenerateRoute(RouteSettings settings) {
@@ -99,6 +100,14 @@ class GenerateRoutes {
                     post: args['post'],
                   ));
         }
+      case '/account-settings':
+        return PageRouteBuilder(
+            pageBuilder: (_, animation, secondaryAnimation) {
+          final args = settings.arguments as Map<String, dynamic>;
+          return AccountSettingsPage(
+            username: args['username'],
+          );
+        });
 
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());

@@ -15,7 +15,10 @@ class SinglePostView extends StatelessWidget {
         gradient: Pellete.kBackgroundGradient,
       ),
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('POST'),
+          centerTitle: true,
+        ),
         body: SingleChildScrollView(
           child: SinglePostTemplate(
             post: post,

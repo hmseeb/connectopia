@@ -1,7 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import '../../../../common/messages/error_snakbar.dart';
-import '../../../profile/application/profile_bloc/profile_bloc.dart';
-import '../../../profile/domain/models/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,9 +9,12 @@ import 'package:lottie/lottie.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../../../../common/messages/error_snakbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
+import '../../../profile/application/profile_bloc/profile_bloc.dart';
+import '../../../profile/domain/models/post.dart';
 
 class SinglePostTemplate extends StatefulWidget {
   const SinglePostTemplate({
@@ -47,7 +47,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
 
   @override
   Widget build(BuildContext context) {
-    String baseUrl = dotenv.env['BASE_IMAGE_URL']!;
+    String baseUrl = dotenv.env['POCKETBASE_URL']! + '/api/files';
     final _height = ScreenSize.height(context);
     final _width = ScreenSize.width(context);
 
