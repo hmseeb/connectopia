@@ -31,7 +31,6 @@ class _SearchScreenState extends State<SearchScreen>
   @override
   Widget build(BuildContext context) {
     final _height = ScreenSize.height(context);
-    final _width = ScreenSize.width(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: SingleChildScrollView(

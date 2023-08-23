@@ -1,6 +1,7 @@
-import 'shared_prefs.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pocketbase/pocketbase.dart';
+
+import 'shared_prefs.dart';
 
 class PocketBaseSingleton {
   static PocketBase? _pocketBase;
