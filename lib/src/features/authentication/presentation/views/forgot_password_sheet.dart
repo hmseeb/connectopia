@@ -1,15 +1,15 @@
-import '../../../../common/messages/error_snakbar.dart';
-import '../../../../constants/assets.dart';
-import '../../../../constants/sizing.dart';
-import '../../application/forgot_pwd_bloc/forgot_pwd_bloc.dart';
-import '../widgets/auth_text_field.dart';
-import '../widgets/common_sheet.dart';
-import '../widgets/field_title.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../common/messages/error_snakbar.dart';
+import '../../../../constants/assets.dart';
+import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
+import '../../application/forgot_pwd_bloc/forgot_pwd_bloc.dart';
+import '../widgets/auth_text_field.dart';
+import '../widgets/common_sheet.dart';
+import '../widgets/field_title.dart';
 
 Future<dynamic> forgetPasswordBottomSheet(
     BuildContext context, TextEditingController emailController) {

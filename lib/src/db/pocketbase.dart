@@ -1,4 +1,4 @@
-import 'package:connectopia/src/db/shared_prefs.dart';
+import 'shared_prefs.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pocketbase/pocketbase.dart';
 

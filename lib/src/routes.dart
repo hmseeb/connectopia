@@ -1,6 +1,6 @@
-import 'package:connectopia/src/features/create_posts/presentation/screens/create_post.dart';
-import 'package:connectopia/src/features/profile/presentation/screens/edit_profile.dart';
-import 'package:connectopia/src/features/profile/presentation/views/single_post_view.dart';
+import 'features/create_posts/presentation/screens/create_post.dart';
+import 'features/profile/presentation/screens/edit_profile.dart';
+import 'features/profile/presentation/views/single_post_view.dart';
 import 'package:flutter/material.dart';
 
 import 'common/app/home.dart';

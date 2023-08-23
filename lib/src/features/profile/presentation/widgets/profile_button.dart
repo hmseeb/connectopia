@@ -1,6 +1,6 @@
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../constants/sizing.dart';
+import '../../application/profile_bloc/profile_bloc.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class OutlinedProfileButton extends StatelessWidget {

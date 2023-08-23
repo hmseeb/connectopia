@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:connectopia/src/common/messages/error_snakbar.dart';
-import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
-import 'package:connectopia/src/features/profile/domain/models/post.dart';
+import '../../../../common/messages/error_snakbar.dart';
+import '../../../profile/application/profile_bloc/profile_bloc.dart';
+import '../../../profile/domain/models/post.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

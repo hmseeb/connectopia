@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/features/authentication/data/repository/validation_repo.dart';
-import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
+import '../../../authentication/data/repository/validation_repo.dart';
+import '../../data/repository/profile_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';

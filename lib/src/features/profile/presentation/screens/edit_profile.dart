@@ -1,10 +1,10 @@
-import 'package:connectopia/src/common/messages/error_snakbar.dart';
-import 'package:connectopia/src/constants/assets.dart';
-import 'package:connectopia/src/features/authentication/presentation/widgets/field_title.dart';
-import 'package:connectopia/src/features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
-import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
-import 'package:connectopia/src/features/profile/domain/models/user.dart';
-import 'package:connectopia/src/features/profile/presentation/widgets/profile_banner.dart';
+import '../../../../common/messages/error_snakbar.dart';
+import '../../../../constants/assets.dart';
+import '../../../authentication/presentation/widgets/field_title.dart';
+import '../../application/edit_profile_bloc/edit_profile_bloc.dart';
+import '../../application/profile_bloc/profile_bloc.dart';
+import '../../domain/models/user.dart';
+import '../widgets/profile_banner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';

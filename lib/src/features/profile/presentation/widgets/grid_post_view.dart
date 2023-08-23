@@ -1,6 +1,7 @@
-import 'package:connectopia/src/features/profile/domain/models/post.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+import '../../domain/models/post.dart';
 
 class GridPostView extends StatelessWidget {
   const GridPostView({super.key, required this.posts});

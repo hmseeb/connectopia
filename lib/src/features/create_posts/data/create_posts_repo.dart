@@ -1,4 +1,4 @@
-import 'package:connectopia/src/db/pocketbase.dart';
+import '../../../db/pocketbase.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart';

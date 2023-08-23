@@ -1,6 +1,7 @@
-import 'colors.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
+
+import 'colors.dart';
 
 class PinputTheme {
   static final defaultPinTheme = PinTheme(

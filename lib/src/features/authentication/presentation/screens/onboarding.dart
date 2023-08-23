@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+
 import '../../../../common/app/logo.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
-import 'package:flutter/material.dart';
-
 import '../widgets/animated_flash_title.dart';
 
 class OnboardScreen extends StatefulWidget {

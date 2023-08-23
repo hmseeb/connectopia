@@ -1,15 +1,15 @@
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
-import 'package:connectopia/src/common/messages/error_snakbar.dart';
-import 'package:connectopia/src/constants/assets.dart';
-import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../../common/messages/error_snakbar.dart';
+import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
+import '../../application/profile_bloc/profile_bloc.dart';
 import '../widgets/grid_post_view.dart';
 import '../widgets/info_col.dart';
 import '../widgets/message_button.dart';
@@ -149,7 +149,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           InfoColumn(
-                            title: 'Post',
+                            title: 'Posts',
                             value: state is ProfileLoadedState
                                 ? state.posts.length.toString()
                                 : '20',
@@ -160,7 +160,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                           ),
                           InfoColumn(
                             title: 'Following',
-                            value: '6',
+                            value: '2.6K',
                           ),
                         ],
                       ),

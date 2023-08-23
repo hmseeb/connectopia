@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+
 import '../../data/repository/auth_repo.dart';
 import '../../data/repository/validation_repo.dart';
-import 'package:equatable/equatable.dart';
 
 part 'forgot_pwd_event.dart';
 part 'forgot_pwd_state.dart';

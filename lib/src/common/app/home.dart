@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import '../../features/search_users/presentation/screens/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:iconly/iconly.dart';
@@ -27,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Widget> selectedScreens = [
     const FeedsScreen(),
-    const UserProfileScreen(isOwnProfile: false),
+    const SearchScreen(),
     const Center(),
     const UserProfileScreen(isOwnProfile: true),
     const UserProfileScreen(isOwnProfile: true),

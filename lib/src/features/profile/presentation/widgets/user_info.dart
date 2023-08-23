@@ -1,4 +1,4 @@
-import 'package:connectopia/src/constants/sizing.dart';
+import '../../../../constants/sizing.dart';
 import 'package:flutter/material.dart';
 
 class TitleBadge extends StatelessWidget {

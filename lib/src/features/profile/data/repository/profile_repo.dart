@@ -1,7 +1,10 @@
-import 'package:connectopia/src/db/pocketbase.dart';
-import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:pocketbase/pocketbase.dart';
+
+import '../../../../db/pocketbase.dart';
 
 class ProfileRepo {
   Future<RecordModel> get user async {
@@ -17,14 +20,32 @@ class ProfileRepo {
     }
   }
 
+  Future<String> encodeBase64(XFile? file) async {
+    if (file == null) {
+      return '';
+    }
+    Uint8List imagebytes = await file.readAsBytes();
+    String base64string = base64.encode(imagebytes);
+    return base64string;
+  }
+
+  // decode base64 string to image
+  static Uint8List decodeBase64(String base64string) {
+    if (base64string.isEmpty) {
+      return Uint8List(0);
+    }
+
+    Uint8List decodedByte = base64.decode(base64string);
+
+    return decodedByte;
+  }
+
   Future<List<RecordModel>> get post async {
     PocketBase pb = await PocketBaseSingleton.instance;
     try {
       List<RecordModel> record = await pb.collection('posts').getFullList(
             sort: '-updated',
           );
-      List<RecordModel> anotherRecord =
-          await pb.collection('posts').getFullList();
       return record;
     } catch (e) {
       throw e;
@@ -81,12 +102,9 @@ class ProfileRepo {
       final id = pb.authStore.model.id;
       final record = await pb.collection('users').update(
         id,
-        files: [
-          await http.MultipartFile.fromPath(
-            field,
-            pickedImage!.path,
-          ),
-        ],
+        body: {
+          field: await encodeBase64(pickedImage),
+        },
       );
       return record;
     } catch (e) {

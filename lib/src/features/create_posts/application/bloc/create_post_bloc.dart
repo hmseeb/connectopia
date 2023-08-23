@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/common/data/errors_repo.dart';
-import 'package:connectopia/src/features/create_posts/data/create_posts_repo.dart';
+import '../../../../common/data/errors_repo.dart';
+import '../../data/create_posts_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 

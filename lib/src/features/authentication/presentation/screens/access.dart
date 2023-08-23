@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
+import '../../../../theme/colors.dart';
 import '../views/custom_paint.dart';
 import '../widgets/connection_avatar.dart';
-import '../../../../theme/colors.dart';
-import 'package:flutter/material.dart';
 
 class AccessScreen extends StatelessWidget {
   const AccessScreen({super.key});

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:connectopia/src/db/pocketbase.dart';
+import '../../../../db/pocketbase.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:rive/rive.dart';

@@ -1,6 +1,6 @@
-import 'package:connectopia/src/common/messages/error_snakbar.dart';
-import 'package:connectopia/src/constants/assets.dart';
-import 'package:connectopia/src/features/create_posts/application/bloc/create_post_bloc.dart';
+import '../../../../common/messages/error_snakbar.dart';
+import '../../../../constants/assets.dart';
+import '../../application/bloc/create_post_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';

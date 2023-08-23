@@ -1,12 +1,13 @@
-import 'package:connectopia/src/constants/assets.dart';
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
-import 'package:connectopia/src/features/profile/presentation/widgets/profile_button.dart';
-import 'package:connectopia/src/theme/colors.dart';
+import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:iconly/iconly.dart';
+
+import '../../../../constants/assets.dart';
+import '../../../../constants/sizing.dart';
+import '../../../../theme/colors.dart';
+import '../../application/edit_profile_bloc/edit_profile_bloc.dart';
+import 'profile_button.dart';
 
 class PictureBanner extends StatelessWidget {
   const PictureBanner({
@@ -26,7 +27,6 @@ class PictureBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseUrl = dotenv.env['BASE_IMAGE_URL'];
     final _height = ScreenSize.height(context);
     final _width = ScreenSize.width(context);
     return Stack(
@@ -35,17 +35,16 @@ class PictureBanner extends StatelessWidget {
         Opacity(
           opacity: enableEditMode ? 0.5 : 1,
           child: AspectRatio(
-            aspectRatio: 2,
-            child: bannerUrl.isEmpty
-                ? Image.asset(
-                    Assets.bannerPlaceholder,
-                    fit: BoxFit.cover,
-                  )
-                : Image.network(
-                    "${baseUrl}/_pb_users_auth_/${userId}/${bannerUrl}",
-                    fit: BoxFit.cover,
-                  ),
-          ),
+              aspectRatio: 2,
+              child: bannerUrl.isEmpty
+                  ? Image.asset(
+                      Assets.bannerPlaceholder,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.memory(
+                      ProfileRepo.decodeBase64(bannerUrl),
+                      fit: BoxFit.cover,
+                    )),
         ),
         if (enableEditMode)
           Positioned(
@@ -80,8 +79,8 @@ class PictureBanner extends StatelessWidget {
                       Assets.avatarPlaceholder,
                       fit: BoxFit.cover,
                     )
-                  : Image.network(
-                      "${baseUrl}/_pb_users_auth_/${userId}/${avatarUrl}",
+                  : Image.memory(
+                      ProfileRepo.decodeBase64(avatarUrl),
                       fit: BoxFit.cover,
                     ),
             ),

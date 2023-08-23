@@ -1,5 +1,5 @@
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../constants/sizing.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ProfileMessageButton extends StatelessWidget {

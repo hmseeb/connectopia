@@ -1,6 +1,6 @@
-import 'package:connectopia/src/features/create_posts/application/bloc/create_post_bloc.dart';
-import 'package:connectopia/src/features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
-import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
+import 'features/create_posts/application/bloc/create_post_bloc.dart';
+import 'features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
+import 'features/profile/application/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

@@ -1,8 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/common/data/errors_repo.dart';
-import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
-import 'package:connectopia/src/features/profile/domain/models/post.dart';
-import 'package:connectopia/src/features/profile/domain/models/user.dart';
+import '../../../../common/data/errors_repo.dart';
+import '../../data/repository/profile_repo.dart';
+import '../../domain/models/post.dart';
+import '../../domain/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 part 'profile_event.dart';
