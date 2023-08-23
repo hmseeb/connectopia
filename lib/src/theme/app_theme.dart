@@ -13,15 +13,15 @@ ThemeData connectopiaThemeData(BuildContext context) {
       backgroundColor: Colors.transparent,
     ),
     textTheme: Theme.of(context).textTheme.apply(
-          bodyColor: Pellete.kWhite,
-          displayColor: Pellete.kWhite,
+          bodyColor: Pellet.kWhite,
+          displayColor: Pellet.kWhite,
         ),
     scaffoldBackgroundColor: Colors.transparent,
     elevatedButtonTheme: CustomElevetedButton.elevetedButtonThemeData(),
     fontFamily: 'Heebo',
     colorScheme: const ColorScheme.dark().copyWith(
-      primary: Pellete.kPrimary,
-      secondary: Pellete.kSecondary,
+      primary: Pellet.kPrimary,
+      secondary: Pellet.kSecondary,
     ),
   );
 }

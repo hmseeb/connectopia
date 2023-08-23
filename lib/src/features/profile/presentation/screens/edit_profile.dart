@@ -1,17 +1,18 @@
-import '../../../../common/messages/error_snakbar.dart';
-import '../../../../constants/assets.dart';
-import '../../../authentication/presentation/widgets/field_title.dart';
-import '../../application/edit_profile_bloc/edit_profile_bloc.dart';
-import '../../application/profile_bloc/profile_bloc.dart';
-import '../../domain/models/user.dart';
-import '../widgets/profile_banner.dart';
+import '../widgets/edit_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
 
+import '../../../../common/messages/error_snackbar.dart';
+import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
+import '../../../authentication/presentation/widgets/field_title.dart';
+import '../../application/edit_profile_bloc/edit_profile_bloc.dart';
+import '../../application/profile_bloc/profile_bloc.dart';
+import '../../domain/models/user.dart';
+import '../widgets/profile_banner.dart';
 
 class EditProfileScreen extends StatefulWidget {
   const EditProfileScreen({super.key, required this.user});
@@ -72,7 +73,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Container(
                 height: _height * 100,
                 decoration: BoxDecoration(
-                  gradient: Pellete.kBackgroundGradient,
+                  gradient: Pellet.kBackgroundGradient,
                 ),
                 child: SingleChildScrollView(
                   child: Column(
@@ -94,7 +95,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         child: Align(
                           alignment: Alignment.center,
                           child: Container(
-                            color: Pellete.kDark.withOpacity(0),
+                            color: Pellet.kDark.withOpacity(0),
                             width: _width * 22,
                             height: _height * 5,
                           ),
@@ -155,7 +156,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                               ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
-                                color: Pellete.kDark,
+                                color: Pellet.kDark,
                               ),
                               child: Row(
                                 mainAxisAlignment:
@@ -166,7 +167,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                       ? Text(
                                           'VERIFIED',
                                           style: TextStyle(
-                                            color: Pellete.kBlue,
+                                            color: Pellet.kBlue,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         )
@@ -189,8 +190,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                                           is EmailVerificationSent ||
                                                       state
                                                           is EmailVerificationSending
-                                                  ? Pellete.kGrey
-                                                  : Pellete.kBlue,
+                                                  ? Pellet.kGrey
+                                                  : Pellet.kBlue,
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
@@ -229,53 +230,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             child: Icon(Icons.check),
             backgroundColor:
                 state is EditCanSubmit || state is ProfileImageState
-                    ? Pellete.kBlue
-                    : Pellete.kGrey,
+                    ? Pellet.kBlue
+                    : Pellet.kGrey,
           ),
         );
       },
-    );
-  }
-}
-
-class EditProfileTextField extends StatelessWidget {
-  const EditProfileTextField({
-    super.key,
-    required this.hintText,
-    this.isBio = false,
-    required this.controller,
-    required this.onChanged,
-  });
-
-  final String hintText;
-  final bool isBio;
-  final TextEditingController controller;
-  final Function(String) onChanged;
-  @override
-  Widget build(BuildContext context) {
-    final _width = ScreenSize.width(context);
-    return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: _width * 5,
-        vertical: 5,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Pellete.kDark,
-      ),
-      child: TextField(
-        controller: controller,
-        onChanged: onChanged,
-        onTapOutside: ((event) => FocusScope.of(context).unfocus()),
-        maxLines: isBio ? 3 : 1,
-        maxLength: isBio ? 420 : null,
-        scrollPadding:
-            EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
-        decoration: InputDecoration(
-          hintText: hintText,
-          border: InputBorder.none,
-        ),
-      ),
     );
   }
 }

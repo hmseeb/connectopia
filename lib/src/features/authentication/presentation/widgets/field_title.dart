@@ -13,7 +13,7 @@ class TextFieldTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(color: Pellete.kWhite, fontWeight: FontWeight.bold),
+      style: TextStyle(color: Pellet.kWhite, fontWeight: FontWeight.bold),
     );
   }
 }

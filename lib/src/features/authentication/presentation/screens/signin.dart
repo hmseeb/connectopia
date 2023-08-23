@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../../common/messages/error_snakbar.dart';
+import '../../../../common/messages/error_snackbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
@@ -50,7 +50,7 @@ class _SigninScreenState extends State<SigninScreen> {
     final _width = ScreenSize.width(context);
     return Container(
       decoration: const BoxDecoration(
-        gradient: Pellete.kBackgroundGradient,
+        gradient: Pellet.kBackgroundGradient,
       ),
       child: Scaffold(
         appBar: AppBar(
@@ -79,7 +79,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     return AuthTextField(
                         suffixIcon:
                             state is ValidEmailState || state is ValidState
-                                ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                                ? Icon(Icons.check_box, color: Pellet.kPrimary)
                                 : null,
                         hintText: 'Username or email',
                         controller: _emailController,
@@ -138,7 +138,6 @@ class _SigninScreenState extends State<SigninScreen> {
                         errorSnack(state.error),
                       );
                     } else if (state is SigninSuccessState) {
-                      // TODO: Navigate to home screen
                       Navigator.pushReplacementNamed(context, '/home',
                           arguments: {
                             "selectedIndex": 0,

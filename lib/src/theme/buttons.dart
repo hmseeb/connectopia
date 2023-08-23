@@ -6,8 +6,8 @@ class CustomElevetedButton {
   static ElevatedButtonThemeData elevetedButtonThemeData() {
     return ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        foregroundColor: Pellete.kWhite,
-        backgroundColor: Pellete.kPrimary,
+        foregroundColor: Pellet.kWhite,
+        backgroundColor: Pellet.kPrimary,
         textStyle: const TextStyle(
           fontSize: 21,
           fontWeight: FontWeight.bold,

@@ -15,7 +15,7 @@ class AccessScreen extends StatelessWidget {
     final _width = MediaQuery.of(context).size.width / 100;
     return Container(
       decoration: const BoxDecoration(
-        gradient: Pellete.kBackgroundGradient,
+        gradient: Pellet.kBackgroundGradient,
       ),
       child: Scaffold(
         body: Padding(

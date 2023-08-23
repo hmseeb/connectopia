@@ -12,7 +12,7 @@ class SinglePostView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: Pellete.kBackgroundGradient,
+        gradient: Pellet.kBackgroundGradient,
       ),
       child: Scaffold(
         appBar: AppBar(

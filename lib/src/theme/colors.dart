@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Pellete {
+class Pellet {
   static const Color kPrimary = Color(0xFFF22CAC);
   static const Color kSecondary = Color(0xFF53ABFF);
   static const Color kTertiary = Color(0xFFACDF3A);

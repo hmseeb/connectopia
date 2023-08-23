@@ -1,4 +1,4 @@
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../constants/sizing.dart';
@@ -41,7 +41,7 @@ class TitleBadge extends StatelessWidget {
               ),
               Text(
                 '@$username',
-                style: TextStyle(color: Pellete.kGrey),
+                style: TextStyle(color: Pellet.kGrey),
               ),
             ],
           ),

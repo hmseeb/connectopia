@@ -7,11 +7,13 @@ sealed class CreatePostEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class GallaryButtonClickedEvent extends CreatePostEvent {}
+final class GalleryButtonClickedEvent extends CreatePostEvent {}
 
 final class CameraButtonClickedEvent extends CreatePostEvent {}
 
-final class LocationButtonClickedEvent extends CreatePostEvent {}
+final class LocationButtonClickedEvent extends CreatePostEvent {
+  const LocationButtonClickedEvent();
+}
 
 final class ToggleStoryButtonClickedEvent extends CreatePostEvent {}
 

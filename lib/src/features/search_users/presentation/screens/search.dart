@@ -1,10 +1,10 @@
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
-import 'package:connectopia/src/features/search_users/presentation/widgets/page_title.dart';
-import 'package:connectopia/src/features/search_users/presentation/widgets/search_prople_list.dart';
-import 'package:connectopia/src/features/search_users/presentation/widgets/search_text_field.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../constants/sizing.dart';
+import '../widgets/page_title.dart';
+import '../widgets/search_prople_list.dart';
+import '../widgets/search_text_field.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});

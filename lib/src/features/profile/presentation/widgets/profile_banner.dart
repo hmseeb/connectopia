@@ -1,4 +1,4 @@
-import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
+import '../../data/repository/profile_repo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iconly/iconly.dart';
@@ -93,12 +93,12 @@ class PictureBanner extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
-                color: Pellete.kDark.withOpacity(0.5),
+                color: Pellet.kDark.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(100),
               ),
               child: Icon(
                 IconlyBold.camera,
-                color: Pellete.kWhite,
+                color: Pellet.kWhite,
                 size: 16,
               ),
             ),

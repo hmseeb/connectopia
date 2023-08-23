@@ -1,4 +1,4 @@
-import 'package:connectopia/src/features/profile/application/profile_settings/profile_settings_bloc.dart';
+import 'features/profile/application/profile_settings/profile_settings_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

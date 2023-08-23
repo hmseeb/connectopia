@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import '../../../../db/pocketbase.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:rive/rive.dart';
 
 import '../../../../constants/assets.dart';
+import '../../../../db/pocketbase.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

@@ -1,20 +1,23 @@
 import 'package:bloc/bloc.dart';
-import '../../../../common/data/errors_repo.dart';
-import '../../data/create_posts_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../../../../common/data/errors_repo.dart';
+import '../../data/create_posts_repo.dart';
 
 part 'create_post_event.dart';
 part 'create_post_state.dart';
 
-class CreatePostBloc extends Bloc<CreatePostEvent, CreatePosttate> {
+class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   XFile? pickedFile;
   List<XFile?> pickedFiles = [];
   String? userLocation;
+  bool enableLocation = false;
+  bool enableStory = false;
   ErrorHandlerRepo handleError = ErrorHandlerRepo();
 
   CreatePostBloc() : super(CreatePostInitial()) {
-    on<GallaryButtonClickedEvent>((event, emit) async {
+    on<GalleryButtonClickedEvent>((event, emit) async {
       pickedFiles = [];
       pickedFile = null;
       final picker = ImagePicker();
@@ -35,7 +38,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePosttate> {
 
     on<LocationButtonClickedEvent>((event, emit) async {
       CreatePostRepo repo = CreatePostRepo();
-
+      enableLocation = !enableLocation;
+      emit(ToggleLocation(enableLocation));
       try {
         final location = await repo.determineLocation();
         userLocation = '${location.locality}, ${location.country}';
@@ -43,6 +47,11 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePosttate> {
         String errorMsg = handleError.handleError(err);
         emit(PostCreationFailure(errorMsg));
       }
+    });
+
+    on<ToggleStoryButtonClickedEvent>((event, emit) async {
+      enableStory = !enableStory;
+      emit(ToggleStory(enableStory));
     });
 
     on<CreatePostButtonClickedEvent>((event, emit) async {

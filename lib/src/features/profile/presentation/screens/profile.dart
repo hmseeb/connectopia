@@ -1,12 +1,13 @@
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
+import '../widgets/fake_grid_view.dart';
+import '../widgets/settings_icon.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iconly/iconly.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../common/messages/error_snakbar.dart';
+import '../../../../common/messages/error_snackbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
@@ -59,7 +60,6 @@ class _UserProfileScreenState extends State<UserProfileScreen>
         }
       },
       builder: (context, state) {
-        // TODO: Refactor the skeletonizer
         return Skeletonizer(
           enabled: state is ProfileLoadingState,
           child: CustomRefreshIndicator(
@@ -81,7 +81,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                           height: _height * 20,
                           width: _width,
                           decoration: BoxDecoration(
-                            color: Pellete.kDark,
+                            color: Pellet.kDark,
                           ),
                         ),
                 ),
@@ -126,22 +126,14 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                       }
                                     }),
                                 SizedBox(width: _width * 2),
-                                IconButton(
-                                    onPressed: () {
-                                      Navigator.pushNamed(
-                                          context, '/account-settings',
-                                          arguments: {
-                                            "username":
-                                                state is ProfileLoadedState
-                                                    ? state.user.name.isEmpty
-                                                        ? state.user.username
-                                                        : state.user.name
-                                                    : 'haseeb',
-                                          });
-                                    },
-                                    icon: Icon(
-                                      IconlyLight.setting,
-                                    )),
+                                SettingsIconButton(
+                                  name: state is ProfileLoadedState
+                                      ? state.user.name
+                                      : '',
+                                  username: state is ProfileLoadedState
+                                      ? state.user.username
+                                      : '',
+                                ),
                               ],
                             )
                           : Row(
@@ -196,9 +188,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                           controller: widget.isOwnProfile
                               ? _personalTabController
                               : _userTabController,
-                          indicatorColor: Pellete.kWhite,
-                          labelColor: Pellete.kWhite,
-                          unselectedLabelColor: Pellete.kWhite.withOpacity(0.5),
+                          indicatorColor: Pellet.kWhite,
+                          labelColor: Pellet.kWhite,
+                          unselectedLabelColor: Pellet.kWhite.withOpacity(0.5),
                           tabs: [
                             Tab(
                               icon: Icon(Icons.grid_on),
@@ -256,32 +248,6 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                 return Lottie.asset(Assets.progressIndicator);
               },
             ),
-          ),
-        );
-      },
-    );
-  }
-}
-
-class FakeGridView extends StatelessWidget {
-  const FakeGridView({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: EdgeInsets.zero,
-      shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: 12,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 2,
-        mainAxisSpacing: 2,
-      ),
-      itemBuilder: (context, index) {
-        return DecoratedBox(
-          decoration: BoxDecoration(
-            color: Pellete.kDark,
           ),
         );
       },

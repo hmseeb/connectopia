@@ -1,4 +1,4 @@
-import 'package:connectopia/src/features/profile/presentation/screens/account_settings.dart';
+import 'features/profile/presentation/screens/account_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'common/app/home.dart';

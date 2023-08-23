@@ -18,16 +18,16 @@ class PinputTheme {
   );
 
   static final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-    border: Border.all(color: Pellete.kSecondary),
+    border: Border.all(color: Pellet.kSecondary),
     borderRadius: BorderRadius.circular(8),
   );
 
   static final submittedPinTheme = defaultPinTheme.copyWith(
     textStyle: defaultPinTheme.textStyle!.copyWith(
-      color: Pellete.kWhite,
+      color: Pellet.kWhite,
     ),
     decoration: defaultPinTheme.decoration!.copyWith(
-      color: Pellete.kPrimary,
+      color: Pellet.kPrimary,
     ),
   );
 

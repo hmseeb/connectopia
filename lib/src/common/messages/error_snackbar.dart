@@ -9,7 +9,7 @@ SnackBar errorSnack(String error) {
     content: Center(
         child: Text(
       error,
-      style: TextStyle(color: Pellete.kWhite, fontWeight: FontWeight.bold),
+      style: TextStyle(color: Pellet.kWhite, fontWeight: FontWeight.bold),
     )),
     backgroundColor: Colors.red,
   );
@@ -21,8 +21,8 @@ SnackBar successSnack(String message) {
     content: Center(
         child: Text(
       message,
-      style: TextStyle(color: Pellete.kWhite, fontWeight: FontWeight.bold),
+      style: TextStyle(color: Pellet.kWhite, fontWeight: FontWeight.bold),
     )),
-    backgroundColor: Pellete.kSecondary,
+    backgroundColor: Pellet.kSecondary,
   );
 }

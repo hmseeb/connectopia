@@ -49,7 +49,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                       style: TextStyle(
                         fontSize: _width * ScreenSize.kSpaceXL,
                         fontWeight: FontWeight.bold,
-                        color: Pellete.kWhite,
+                        color: Pellet.kWhite,
                       ),
                     ),
                     GestureDetector(
@@ -62,7 +62,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                       },
                       child: Icon(
                         IconlyLight.chat,
-                        color: Pellete.kWhite,
+                        color: Pellet.kWhite,
                       ),
                     )
                   ],
@@ -86,7 +86,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
             style: TextStyle(
               fontSize: _width * ScreenSize.kSpaceXL,
               fontWeight: FontWeight.bold,
-              color: Pellete.kWhite,
+              color: Pellet.kWhite,
             ),
           ),
         ),

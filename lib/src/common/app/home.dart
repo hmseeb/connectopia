@@ -1,13 +1,13 @@
 import 'dart:ui';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
-import '../../features/search_users/presentation/screens/search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../features/feeds/presentation/screens/feeds.dart';
 import '../../features/profile/presentation/screens/profile.dart';
+import '../../features/search_users/presentation/screens/search.dart';
 import '../../theme/colors.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: Pellete.kBackgroundGradient,
+        gradient: Pellet.kBackgroundGradient,
       ),
       child: ColorfulSafeArea(
         color: Colors.transparent,
@@ -57,7 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     activeIcon: GlowIcon(
                       IconlyBold.home,
-                      glowColor: Pellete.kWhite,
+                      glowColor: Pellet.kWhite,
                     ),
                     label: 'Home',
                   ),
@@ -65,7 +65,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(IconlyLight.search),
                     activeIcon: GlowIcon(
                       IconlyBold.search,
-                      glowColor: Pellete.kWhite,
+                      glowColor: Pellet.kWhite,
                     ),
                     label: 'Search',
                   ),
@@ -73,11 +73,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Container(
                       child: Icon(
                         Icons.add,
-                        color: Pellete.kWhite,
+                        color: Pellet.kWhite,
                       ),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Pellete.kSecondary,
+                        color: Pellet.kSecondary,
                       ),
                     ),
                     label: 'Add',
@@ -86,7 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(IconlyLight.notification),
                     activeIcon: GlowIcon(
                       IconlyBold.notification,
-                      glowColor: Pellete.kWhite,
+                      glowColor: Pellet.kWhite,
                     ),
                     label: 'Notifications',
                   ),
@@ -94,18 +94,18 @@ class _HomeScreenState extends State<HomeScreen> {
                     icon: Icon(IconlyLight.profile),
                     activeIcon: GlowIcon(
                       IconlyBold.profile,
-                      glowColor: Pellete.kWhite,
+                      glowColor: Pellet.kWhite,
                     ),
                     label: 'Profile',
                   ),
                 ],
-                selectedItemColor: Pellete.kWhite,
-                unselectedItemColor: Pellete.kGrey,
+                selectedItemColor: Pellet.kWhite,
+                unselectedItemColor: Pellet.kGrey,
                 type: BottomNavigationBarType.fixed,
                 showUnselectedLabels: false,
                 showSelectedLabels: false,
                 backgroundColor:
-                    Pellete.kBackgroundGradient.colors[1].withOpacity(0.5),
+                    Pellet.kBackgroundGradient.colors[1].withOpacity(0.5),
                 elevation: 0,
                 currentIndex: selectedIndex,
                 onTap: (index) {

@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/db/pocketbase.dart';
+import '../../../../db/pocketbase.dart';
 import 'package:equatable/equatable.dart';
 
 part 'profile_settings_event.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../../common/messages/error_snakbar.dart';
+import '../../../../common/messages/error_snackbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
@@ -25,7 +25,7 @@ Future<dynamic> forgetPasswordBottomSheet(
             topLeft: Radius.circular(32),
             topRight: Radius.circular(32),
           ),
-          gradient: Pellete.kBackgroundGradient,
+          gradient: Pellet.kBackgroundGradient,
         ),
         child: SingleChildScrollView(
           child: Padding(
@@ -56,7 +56,7 @@ Future<dynamic> forgetPasswordBottomSheet(
                       hintText: 'Enter your email',
                       controller: emailController,
                       suffixIcon: state is ValidEmailState
-                          ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                          ? Icon(Icons.check_box, color: Pellet.kPrimary)
                           : null,
                     );
                   },

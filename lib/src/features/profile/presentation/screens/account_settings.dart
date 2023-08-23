@@ -1,7 +1,8 @@
-import 'package:connectopia/src/common/messages/error_snakbar.dart';
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/features/profile/application/profile_settings/profile_settings_bloc.dart';
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../common/messages/error_snackbar.dart';
+import '../../../../constants/sizing.dart';
+import '../../application/profile_settings/profile_settings_bloc.dart';
+import '../widgets/signout_button.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,7 @@ class AccountSettingsPage extends StatelessWidget {
           children: [
             Container(
               decoration: const BoxDecoration(
-                gradient: Pellete.kBackgroundGradient,
+                gradient: Pellet.kBackgroundGradient,
               ),
               child: Scaffold(
                 appBar: AppBar(
@@ -42,28 +43,13 @@ class AccountSettingsPage extends StatelessWidget {
                   child: Column(
                     children: [
                       Spacer(),
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Pellete.kDark,
-                        ),
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.logout,
-                            color: Colors.red,
-                          ),
-                          title: Text('Sign Out',
-                              style: TextStyle(color: Colors.red)),
-                          onTap: () {
-                            context
-                                .read<AccountSettings>()
-                                .add(const SignOutButtonPressedEvent());
-                          },
-                          trailing: Text(
-                            username,
-                            style: TextStyle(color: Pellete.kGrey),
-                          ),
-                        ),
+                      SignoutButton(
+                        username: username,
+                        onTap: () {
+                          context
+                              .read<AccountSettings>()
+                              .add(const SignOutButtonPressedEvent());
+                        },
                       ),
                       SizedBox(height: _height * 5),
                     ],

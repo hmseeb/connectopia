@@ -1,8 +1,8 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/features/authentication/data/repository/auth_repo.dart';
 import 'package:connectopia/src/common/data/errors_repo.dart';
+import 'package:connectopia/src/features/authentication/data/repository/auth_repo.dart';
 import 'package:connectopia/src/features/authentication/data/repository/validation_repo.dart';
 import 'package:equatable/equatable.dart';
 

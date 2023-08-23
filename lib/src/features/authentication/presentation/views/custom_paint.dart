@@ -29,7 +29,7 @@ class RPSCustomPainter extends CustomPainter {
     // Layer 1
 
     Paint paintStroke0 = Paint()
-      ..color = Pellete.kPrimary
+      ..color = Pellet.kPrimary
       ..style = PaintingStyle.stroke
       ..strokeWidth = size.width * 0.00
       ..strokeCap = StrokeCap.butt

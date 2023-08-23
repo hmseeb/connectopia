@@ -16,8 +16,7 @@ class TextFieldQButton extends StatelessWidget {
       onTap: onTapped,
       child: Text(
         title,
-        style:
-            TextStyle(color: Pellete.kSecondary, fontWeight: FontWeight.bold),
+        style: TextStyle(color: Pellet.kSecondary, fontWeight: FontWeight.bold),
       ),
     );
   }

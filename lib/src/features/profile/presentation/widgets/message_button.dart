@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
-import 'package:flutter/material.dart';
 
 class ProfileMessageButton extends StatelessWidget {
   const ProfileMessageButton({
@@ -23,7 +24,7 @@ class ProfileMessageButton extends StatelessWidget {
           vertical: _height * 1,
         ),
         decoration: BoxDecoration(
-          gradient: Pellete.kFlashBackgroundGradient,
+          gradient: Pellet.kFlashBackgroundGradient,
           borderRadius: BorderRadius.circular(100),
         ),
         child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),

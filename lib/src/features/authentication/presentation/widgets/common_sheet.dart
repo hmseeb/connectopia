@@ -36,7 +36,7 @@ class DragHandle extends StatelessWidget {
       width: 50,
       height: 5,
       decoration: BoxDecoration(
-        color: Pellete.kWhite.withOpacity(0.5),
+        color: Pellet.kWhite.withOpacity(0.5),
         borderRadius: BorderRadius.circular(32),
       ),
     );

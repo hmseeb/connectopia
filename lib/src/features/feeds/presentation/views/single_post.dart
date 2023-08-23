@@ -9,7 +9,7 @@ import 'package:lottie/lottie.dart';
 import 'package:readmore/readmore.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../../../../common/messages/error_snakbar.dart';
+import '../../../../common/messages/error_snackbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
@@ -104,7 +104,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                             if (widget.post.location.isNotEmpty)
                               Icon(
                                 IconlyLight.location,
-                                color: Pellete.kBlue,
+                                color: Pellet.kBlue,
                                 size: _width * ScreenSize.kSpaceL,
                               ),
                             if (widget.post.location.isNotEmpty)
@@ -113,7 +113,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                                   Text(
                                     " ${widget.post.location}",
                                     style: TextStyle(
-                                      color: Pellete.kBlue,
+                                      color: Pellet.kBlue,
                                       fontSize: _width * ScreenSize.kSpaceL,
                                     ),
                                   ),
@@ -123,7 +123,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                             Text(
                               "${formatedDate}",
                               style: TextStyle(
-                                color: Pellete.kGrey,
+                                color: Pellet.kGrey,
                                 fontSize: _width * ScreenSize.kSpaceL,
                               ),
                             ),
@@ -191,23 +191,21 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                         trimMode: TrimMode.Line,
                         style: TextStyle(
                           fontSize: _width * ScreenSize.kSpaceXXL + 2,
-                          color: Pellete.kWhite,
+                          color: Pellet.kWhite,
                         ),
                         trimCollapsedText: 'read more',
                         trimExpandedText: ' show less',
                         moreStyle: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Pellete.kBlue),
+                            color: Pellet.kBlue),
                         lessStyle: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: Pellete.kBlue),
+                            color: Pellet.kBlue),
                       ),
                     )
                   : SizedBox(),
-
-              // TODO: Add images
               widget.post.image.isNotEmpty
                   ? AspectRatio(
                       aspectRatio: 4 / 5,
@@ -258,7 +256,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                             controller: _pageController, // PageController
                             count: widget.post.image.length,
                             effect: ScaleEffect(
-                              activeDotColor: Pellete.kSecondary,
+                              activeDotColor: Pellet.kSecondary,
                               dotWidth: 8,
                               dotHeight: 8,
                             ), // your preferred effect
@@ -304,7 +302,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                     )
                   : SizedBox(),
               // TODO: Remove divider after implementing list view
-              Divider(color: Pellete.kGrey, thickness: 0.1),
+              Divider(color: Pellet.kGrey, thickness: 0.1),
             ],
           ),
         );
@@ -324,7 +322,7 @@ class PostBottomIcon extends StatelessWidget {
       children: [
         Icon(
           icon,
-          color: Pellete.kWhite,
+          color: Pellet.kWhite,
           size: _width * ScreenSize.kSpaceXXL,
         ),
         SizedBox(

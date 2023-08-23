@@ -1,5 +1,5 @@
-import 'package:connectopia/src/constants/sizing.dart';
-import 'package:connectopia/src/theme/colors.dart';
+import '../../../../constants/sizing.dart';
+import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class SearchTextField extends StatelessWidget {
@@ -12,7 +12,7 @@ class SearchTextField extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20),
       height: _height * 5,
       decoration: BoxDecoration(
-          color: Pellete.kDark.withOpacity(
+          color: Pellet.kDark.withOpacity(
             0.5,
           ),
           borderRadius: BorderRadius.circular(32)),

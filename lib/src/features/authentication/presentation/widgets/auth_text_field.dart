@@ -32,8 +32,8 @@ class _AuthTextFieldState extends State<AuthTextField> {
         borderRadius: BorderRadius.circular(32),
         border: const GradientBoxBorder(
           gradient: LinearGradient(colors: [
-            Pellete.kPrimary,
-            Pellete.kSecondary,
+            Pellet.kPrimary,
+            Pellet.kSecondary,
           ]),
           width: 2,
         ),
@@ -48,7 +48,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
         controller: widget.controller,
         onTapOutside: (event) => FocusScope.of(context).unfocus(),
         decoration: InputDecoration(
-          suffixIconColor: Pellete.kSecondary,
+          suffixIconColor: Pellet.kSecondary,
           suffixIcon: widget.suffixIcon,
           hintText: widget.hintText,
           hintStyle: TextStyle(color: Colors.grey),
@@ -56,7 +56,7 @@ class _AuthTextFieldState extends State<AuthTextField> {
             borderRadius: BorderRadius.circular(32),
             borderSide: BorderSide.none,
           ),
-          fillColor: Pellete.kDark,
+          fillColor: Pellet.kDark,
           filled: true,
         ),
       ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 
-import '../../../../common/messages/error_snakbar.dart';
+import '../../../../common/messages/error_snackbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
@@ -48,7 +48,7 @@ class _SignupScreenState extends State<SignupScreen> {
     final _width = ScreenSize.width(context);
     return Container(
       decoration: const BoxDecoration(
-        gradient: Pellete.kBackgroundGradient,
+        gradient: Pellet.kBackgroundGradient,
       ),
       child: Scaffold(
         appBar: AppBar(
@@ -81,7 +81,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             .add(EmailChangedEvent(value));
                       },
                       suffixIcon: context.read<SignupBloc>().isValidEmail
-                          ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                          ? Icon(Icons.check_box, color: Pellet.kPrimary)
                           : null,
                       hintText: 'Enter your email',
                       controller: _emailController,
@@ -128,7 +128,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             .add(UsernameChangedEvent(value));
                       },
                       suffixIcon: context.read<SignupBloc>().isValidUsername
-                          ? Icon(Icons.check_box, color: Pellete.kPrimary)
+                          ? Icon(Icons.check_box, color: Pellet.kPrimary)
                           : null,
                       hintText: 'Enter your username',
                       controller: _usernameController,
@@ -145,7 +145,6 @@ class _SignupScreenState extends State<SignupScreen> {
                     } else if (state is SignupSuccessState) {
                       ScaffoldMessenger.of(context).showSnackBar(
                           successSnack('Account created successfully'));
-                      //TODO: Navigate to home on successs
                       Navigator.pushReplacementNamed(context, '/signin');
                     }
                   },

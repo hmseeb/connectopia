@@ -1,7 +1,8 @@
-import '../../../../constants/sizing.dart';
-import '../../application/profile_bloc/profile_bloc.dart';
-import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../constants/sizing.dart';
+import '../../../../theme/colors.dart';
+import '../../application/profile_bloc/profile_bloc.dart';
 
 class OutlinedProfileButton extends StatelessWidget {
   const OutlinedProfileButton({
@@ -31,8 +32,8 @@ class OutlinedProfileButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
           border: state is ProfileLoadingState
-              ? Border.all(color: Pellete.kBlack)
-              : Border.all(color: Pellete.kWhite),
+              ? Border.all(color: Pellet.kBlack)
+              : Border.all(color: Pellet.kWhite),
         ),
         child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
       ),
@@ -64,8 +65,8 @@ class EditBannerButton extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          color: Pellete.kBlack.withOpacity(0.5),
-          border: Border.all(color: Pellete.kWhite),
+          color: Pellet.kBlack.withOpacity(0.5),
+          border: Border.all(color: Pellet.kWhite),
         ),
         child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
       ),
