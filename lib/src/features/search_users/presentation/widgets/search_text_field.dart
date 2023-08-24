@@ -1,9 +1,13 @@
-import '../../../../constants/sizing.dart';
-import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../constants/sizing.dart';
+import '../../../../theme/colors.dart';
+
 class SearchTextField extends StatelessWidget {
-  const SearchTextField({super.key});
+  const SearchTextField(
+      {super.key, required this.controller, required this.onChanged});
+  final TextEditingController controller;
+  final Function(String) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +21,8 @@ class SearchTextField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(32)),
       child: TextField(
-        onTapOutside: ((event) => FocusScope.of(context).unfocus()),
+        onChanged: onChanged,
+        controller: controller,
         decoration: InputDecoration(
           hintText: 'Search for people, post, media etc...',
           border: InputBorder.none,

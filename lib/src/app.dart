@@ -1,4 +1,4 @@
-import 'features/profile/application/profile_settings/profile_settings_bloc.dart';
+import 'package:connectopia/src/features/search_users/application/bloc/search_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,6 +9,7 @@ import 'features/authentication/data/repository/auth_repo.dart';
 import 'features/create_posts/application/bloc/create_post_bloc.dart';
 import 'features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
 import 'features/profile/application/profile_bloc/profile_bloc.dart';
+import 'features/profile/application/profile_settings/profile_settings_bloc.dart';
 import 'routes.dart';
 import 'theme/app_theme.dart';
 
@@ -28,6 +29,7 @@ class Connectopia extends StatelessWidget {
         BlocProvider<EditProfileBloc>(create: (context) => EditProfileBloc()),
         BlocProvider<CreatePostBloc>(create: (context) => CreatePostBloc()),
         BlocProvider<AccountSettings>(create: (context) => AccountSettings()),
+        BlocProvider<SearchBloc>(create: (context) => SearchBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

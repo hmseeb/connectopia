@@ -15,3 +15,8 @@ final class DeletePostButtonPressed extends ProfileEvent {
   const DeletePostButtonPressed(this.postId);
   final String postId;
 }
+
+final class ReportPostButtonPressed extends ProfileEvent {
+  const ReportPostButtonPressed(this.postId);
+  final String postId;
+}

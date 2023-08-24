@@ -20,10 +20,11 @@ class SinglePostTemplate extends StatefulWidget {
   const SinglePostTemplate({
     super.key,
     required this.post,
+    required this.isOwnPost,
   }) : super();
 
   final Post post;
-
+  final bool isOwnPost;
   @override
   State<SinglePostTemplate> createState() => _SinglePostTemplateState();
 }
@@ -142,14 +143,20 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                                 actions: [
                                   CupertinoActionSheetAction(
                                     onPressed: () {
-                                      context.read<ProfileBloc>().add(
-                                            DeletePostButtonPressed(
-                                              widget.post.id,
-                                            ),
-                                          );
+                                      widget.isOwnPost
+                                          ? context.read<ProfileBloc>().add(
+                                                DeletePostButtonPressed(
+                                                  widget.post.id,
+                                                ),
+                                              )
+                                          : context.read<ProfileBloc>().add(
+                                                ReportPostButtonPressed(
+                                                  widget.post.id,
+                                                ),
+                                              );
                                     },
                                     child: Text(
-                                      'Delete',
+                                      widget.isOwnPost ? 'Delete' : 'Report',
                                       style: TextStyle(color: Colors.red),
                                     ),
                                   ),

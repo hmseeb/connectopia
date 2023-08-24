@@ -94,6 +94,26 @@ class ProfileRepo {
     }
   }
 
+  Future<bool> updateProfilePrivacy(bool togglePrivacy) async {
+    togglePrivacy = !togglePrivacy;
+    PocketBase pb = await PocketBaseSingleton.instance;
+    final body = <String, dynamic>{
+      "id": pb.authStore.model.id,
+      "emailVisibility": togglePrivacy,
+    };
+
+    try {
+      final id = pb.authStore.model.id;
+      await pb.collection('users').update(
+            id,
+            body: body,
+          );
+      return togglePrivacy;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   Future requestVerification(String email) async {
     PocketBase pb = await PocketBaseSingleton.instance;
     try {

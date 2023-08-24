@@ -35,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final username = widget.user.username ?? 'NaN';
     List<Widget> selectedScreens = [
       FeedsScreen(
         user: widget.user,

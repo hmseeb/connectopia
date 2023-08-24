@@ -1,5 +1,6 @@
-import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../theme/colors.dart';
 
 class SignoutButton extends StatelessWidget {
   const SignoutButton({

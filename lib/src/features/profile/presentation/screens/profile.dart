@@ -118,6 +118,11 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                 ),
                                 SizedBox(width: _width * 2),
                                 SettingsIconButton(
+                                  emailVisibility: state is ProfileLoadedState
+                                      ? state.user.emailVisibility
+                                          ? true
+                                          : false
+                                      : false,
                                   name: state is ProfileLoadedState
                                       ? state.user.name
                                       : 'Haseeb Azhar',

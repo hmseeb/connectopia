@@ -5,8 +5,9 @@ import '../../../feeds/presentation/views/single_post.dart';
 import '../../domain/models/post.dart';
 
 class SinglePostView extends StatelessWidget {
-  const SinglePostView({super.key, required this.post});
+  const SinglePostView({super.key, required this.post, required this.isOwnPost});
   final Post post;
+  final bool isOwnPost;
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +23,7 @@ class SinglePostView extends StatelessWidget {
         body: SingleChildScrollView(
           child: SinglePostTemplate(
             post: post,
+            isOwnPost: isOwnPost,
           ),
         ),
       ),

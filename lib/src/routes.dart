@@ -101,6 +101,7 @@ class GenerateRoutes {
           return MaterialPageRoute(
               builder: (_) => SinglePostView(
                     post: args['post'],
+                    isOwnPost: args['isOwnPost'],
                   ));
         }
       case '/account-settings':
@@ -109,6 +110,7 @@ class GenerateRoutes {
           final args = settings.arguments as Map<String, dynamic>;
           return AccountSettingsPage(
             username: args['username'],
+            emailVisibility: args['emailVisibility'],
           );
         });
 

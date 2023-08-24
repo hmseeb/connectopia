@@ -55,6 +55,7 @@ class GridPostView extends StatelessWidget {
                       '/single-post',
                       arguments: {
                         'post': posts[index],
+                        'isOwnPost': true,
                       },
                     );
                   },
