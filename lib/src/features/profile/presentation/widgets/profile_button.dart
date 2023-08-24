@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
-import '../../application/profile_bloc/profile_bloc.dart';
 
 class OutlinedProfileButton extends StatelessWidget {
   const OutlinedProfileButton({
     super.key,
     required this.text,
     required this.onPressed,
-    required this.state,
+    this.showOutline,
   });
 
   final String text;
   final Function() onPressed;
+  final bool? showOutline;
   // Looked bad with default skeletonizer
-  final ProfileState state;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +30,10 @@ class OutlinedProfileButton extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(100),
-          border: state is ProfileLoadingState
-              ? Border.all(color: Pellet.kBlack)
-              : Border.all(color: Pellet.kWhite),
+          border: Border.all(
+            color: Pellet.kWhite,
+            width: showOutline ?? true ? 1 : 0,
+          ),
         ),
         child: Text(text, style: TextStyle(fontWeight: FontWeight.bold)),
       ),

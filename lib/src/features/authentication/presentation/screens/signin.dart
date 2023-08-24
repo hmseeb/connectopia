@@ -138,10 +138,10 @@ class _SigninScreenState extends State<SigninScreen> {
                         errorSnack(state.error),
                       );
                     } else if (state is SigninSuccessState) {
-                      Navigator.pushReplacementNamed(context, '/home',
-                          arguments: {
-                            "selectedIndex": 0,
-                          });
+                      Navigator.pushReplacementNamed(
+                        context,
+                        '/',
+                      );
                     }
                   },
                   builder: (context, state) {

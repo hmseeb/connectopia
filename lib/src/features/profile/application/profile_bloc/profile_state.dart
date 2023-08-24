@@ -12,9 +12,9 @@ final class ProfileInitial extends ProfileState {}
 final class ProfileLoadingState extends ProfileState {}
 
 final class ProfileLoadedState extends ProfileState {
-  ProfileLoadedState(this.user, this.posts);
-  final User user;
+  ProfileLoadedState(this.posts, this.user);
   final List<Post> posts;
+  final User user;
 }
 
 final class ProfileLoadingFailedState extends ProfileState {

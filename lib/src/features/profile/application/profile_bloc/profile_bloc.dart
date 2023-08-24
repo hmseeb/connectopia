@@ -1,10 +1,10 @@
 import 'package:bloc/bloc.dart';
+import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 import '../../../../common/data/errors_repo.dart';
 import '../../data/repository/profile_repo.dart';
 import '../../domain/models/post.dart';
-import '../../domain/models/user.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
@@ -14,30 +14,31 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ErrorHandlerRepo handleError = ErrorHandlerRepo();
 
   ProfileBloc() : super(ProfileInitial()) {
-    on<LoadProfileEvent>((event, emit) async {
+    on<LoadUserProfile>((event, emit) async {
       emit(ProfileLoadingState());
       try {
-        final user_record = await repo.user;
-        User user = User.fromRecord(user_record);
-        final post_record = await repo.post;
+        final post_record = await repo.posts;
         List<Post> posts =
             post_record.map((post) => Post.fromRecord(post)).toList();
-        emit(ProfileLoadedState(user, posts));
+        User user = User.fromRecord(await repo.user);
+        emit(ProfileLoadedState(posts, user));
       } catch (e) {
         String errorMsg = handleError.handleError(e);
         emit(ProfileLoadingFailedState(errorMsg));
       }
     });
 
-    on<DeletePostButtonPressed>((event, emit) {
-      emit(ProfileLoadingState());
-      try {
-        repo.deletePost(event.postId);
-        emit(ProfilePostDeletedState());
-      } catch (e) {
-        String errorMsg = handleError.handleError(e);
-        emit(ProfileLoadingFailedState(errorMsg));
-      }
-    },);
+    on<DeletePostButtonPressed>(
+      (event, emit) {
+        emit(ProfileLoadingState());
+        try {
+          repo.deletePost(event.postId);
+          emit(ProfilePostDeletedState());
+        } catch (e) {
+          String errorMsg = handleError.handleError(e);
+          emit(ProfileLoadingFailedState(errorMsg));
+        }
+      },
+    );
   }
 }

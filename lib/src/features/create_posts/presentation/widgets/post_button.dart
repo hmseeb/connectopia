@@ -1,7 +1,8 @@
-import '../../application/bloc/create_post_bloc.dart';
-import '../../../../theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../theme/colors.dart';
+import '../../application/bloc/create_post_bloc.dart';
 
 class PostButton extends StatelessWidget {
   const PostButton({
@@ -28,7 +29,7 @@ class PostButton extends StatelessWidget {
       onPressed: () {
         if (state is PickedImageFromGallery ||
             state is CapturedPhoto ||
-            state is ValidCaptionState)
+            state is ValidSubmitState)
           context.read<CreatePostBloc>().add(
                 CreatePostButtonClickedEvent(
                   caption: _captionController.text,
@@ -45,7 +46,7 @@ class PostButton extends StatelessWidget {
       ),
       color: state is PickedImageFromGallery ||
               state is CapturedPhoto ||
-              state is ValidCaptionState
+              state is ValidSubmitState
           ? Pellet.kSecondary
           : Pellet.kGrey,
     );

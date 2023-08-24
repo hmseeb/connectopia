@@ -1,4 +1,4 @@
-import '../widgets/edit_text_field.dart';
+import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,8 +10,8 @@ import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
 import '../../../authentication/presentation/widgets/field_title.dart';
 import '../../application/edit_profile_bloc/edit_profile_bloc.dart';
-import '../../application/profile_bloc/profile_bloc.dart';
 import '../../domain/models/user.dart';
+import '../widgets/edit_text_field.dart';
 import '../widgets/profile_banner.dart';
 
 class EditProfileScreen extends StatefulWidget {
@@ -23,6 +23,7 @@ class EditProfileScreen extends StatefulWidget {
 }
 
 class _EditProfileScreenState extends State<EditProfileScreen> {
+  late User user = widget.user;
   XFile? avatar, banner;
   late TextEditingController _usernameController;
   late TextEditingController _displayNameController;
@@ -32,13 +33,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   void initState() {
     super.initState();
     _usernameController = TextEditingController(
-      text: widget.user.username,
+      text: user.username,
     );
     _displayNameController = TextEditingController(
-      text: widget.user.name,
+      text: user.name,
     );
     _bioController = TextEditingController(
-      text: widget.user.bio,
+      text: user.bio,
     );
   }
 
@@ -56,11 +57,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     final _width = ScreenSize.width(context);
     return BlocConsumer<EditProfileBloc, EditProfileState>(
       listener: (context, state) {
-        if (state is EditProfileSuccess) {
-          context.read<ProfileBloc>().add(LoadProfileEvent());
+        if (state is AvatarUpdateSuccess) {
           Navigator.pop(context);
-        }
-        if (state is EditProfileFailure) {
+        } else if (state is BannerUpdateSuccess) {
+          Navigator.pop(context);
+        } else if (state is EditProfileSuccess) {
+          user = state.user;
+          Navigator.pop(context);
+        } else if (state is EditProfileLoading) {
+          context.read<ProfileBloc>().add(LoadUserProfile());
+        } else if (state is EditProfileFailure) {
           ScaffoldMessenger.of(context).showSnackBar(errorSnack(
             state.error,
           ));
@@ -80,9 +86,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       PictureBanner(
-                        avatarUrl: widget.user.avatar,
-                        bannerUrl: widget.user.banner,
-                        userId: widget.user.id,
+                        avatarUrl: user.avatar,
+                        bannerUrl: user.banner,
+                        userId: user.id,
                         enableEditMode: true,
                         isOwnProfile: true,
                       ),
@@ -163,7 +169,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text('ID VERIFICATION'),
-                                  widget.user.verified
+                                  user.verified
                                       ? Text(
                                           'VERIFIED',
                                           style: TextStyle(
@@ -175,7 +181,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           onTap: () {
                                             context.read<EditProfileBloc>().add(
                                                   RequestEmailVerification(
-                                                    widget.user.email,
+                                                    user.email,
                                                   ),
                                                 );
                                           },

@@ -1,6 +1,4 @@
-import '../views/floating_buttons.dart';
-import '../widgets/create_post_appbar.dart';
-import '../widgets/create_post_text.dart';
+import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -10,9 +8,14 @@ import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
 import '../../application/bloc/create_post_bloc.dart';
+import '../views/floating_buttons.dart';
+import '../widgets/create_post_appbar.dart';
+import '../widgets/create_post_text.dart';
 
 class PostScreen extends StatefulWidget {
-  const PostScreen({super.key});
+  const PostScreen({super.key, required this.username});
+
+  final String username;
 
   @override
   State<PostScreen> createState() => _PostScreenState();
@@ -43,6 +46,7 @@ class _PostScreenState extends State<PostScreen> {
           ));
         } else if (state is CreatedPost) {
           Navigator.pop(context);
+          context.read<ProfileBloc>().add(LoadUserProfile());
         }
 
         if (state is PickedImageFromGallery) {

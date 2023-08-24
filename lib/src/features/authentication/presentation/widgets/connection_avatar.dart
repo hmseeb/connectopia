@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class ConnectionAvatar extends StatelessWidget {
@@ -15,10 +16,8 @@ class ConnectionAvatar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(45),
-        child: Image.network(
-          img,
-          width: 50, // Make sure width and height are the same
-          height: 50,
+        child: CachedNetworkImage(
+          imageUrl: img,
           fit: BoxFit.cover,
         ),
       ),

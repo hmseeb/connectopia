@@ -1,3 +1,4 @@
+import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
 
@@ -5,7 +6,8 @@ import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
 
 class FeedsScreen extends StatefulWidget {
-  const FeedsScreen({super.key});
+  const FeedsScreen({super.key, required this.user});
+  final User user;
 
   @override
   State<FeedsScreen> createState() => _FeedsScreenState();
@@ -45,7 +47,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Good Mornin',
+                      'Good Morning, ${widget.user.name.isEmpty ? widget.user.username : widget.user.name}!',
                       style: TextStyle(
                         fontSize: _width * ScreenSize.kSpaceXL,
                         fontWeight: FontWeight.bold,

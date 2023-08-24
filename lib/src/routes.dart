@@ -1,4 +1,3 @@
-import 'features/profile/presentation/screens/account_settings.dart';
 import 'package:flutter/material.dart';
 
 import 'common/app/home.dart';
@@ -8,15 +7,18 @@ import 'features/authentication/presentation/screens/signin.dart';
 import 'features/authentication/presentation/screens/signup.dart';
 import 'features/authentication/presentation/screens/splash_screen.dart';
 import 'features/create_posts/presentation/screens/create_post.dart';
+import 'features/profile/presentation/screens/account_settings.dart';
 import 'features/profile/presentation/screens/edit_profile.dart';
-import 'features/profile/presentation/screens/profile.dart';
 import 'features/profile/presentation/views/single_post_view.dart';
 
 class GenerateRoutes {
   static onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return PageRouteBuilder(
+          pageBuilder: (_, animation, secondaryAnimation) =>
+              const SplashScreen(),
+        );
       case '/flash':
         return PageRouteBuilder(
           pageBuilder: (_, animation, secondaryAnimation) =>
@@ -57,21 +59,22 @@ class GenerateRoutes {
         {
           final args = settings.arguments as Map<String, dynamic>;
           return PageRouteBuilder(
-            pageBuilder: (_, animation, secondaryAnimation) =>
-                HomeScreen(selectedIndex: args['selectedIndex']),
+            pageBuilder: (_, animation, secondaryAnimation) => HomeScreen(
+              selectedIndex: args['selectedIndex'],
+              user: args['user'],
+            ),
           );
         }
 
-      case '/profile':
-        final args = settings.arguments as Map<String, dynamic>;
-        return MaterialPageRoute(
-            builder: (_) => UserProfileScreen(
-                  isOwnProfile: args['isOwnProfile'],
-                ));
       case '/create-post':
-        return PageRouteBuilder(
-          pageBuilder: (_, animation, secondaryAnimation) => const PostScreen(),
-        );
+        {
+          final args = settings.arguments as Map<String, dynamic>;
+          return PageRouteBuilder(
+            pageBuilder: (_, animation, secondaryAnimation) => PostScreen(
+              username: args['username'],
+            ),
+          );
+        }
       case '/edit-profile':
         return PageRouteBuilder(
           pageBuilder: (_, animation, secondaryAnimation) {

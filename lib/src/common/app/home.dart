@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:iconly/iconly.dart';
@@ -11,8 +12,14 @@ import '../../features/search_users/presentation/screens/search.dart';
 import '../../theme/colors.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key, required this.selectedIndex});
+  const HomeScreen({
+    super.key,
+    required this.selectedIndex,
+    required this.user,
+  });
   final int selectedIndex;
+  final User user;
+  // final List<Post> posts;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -26,15 +33,22 @@ class _HomeScreenState extends State<HomeScreen> {
     selectedIndex = widget.selectedIndex;
   }
 
-  List<Widget> selectedScreens = [
-    const FeedsScreen(),
-    const SearchScreen(),
-    const Center(),
-    const UserProfileScreen(isOwnProfile: true),
-    const UserProfileScreen(isOwnProfile: true),
-  ];
   @override
   Widget build(BuildContext context) {
+    final username = widget.user.username ?? 'NaN';
+    List<Widget> selectedScreens = [
+      FeedsScreen(
+        user: widget.user,
+      ),
+      const SearchScreen(),
+      const Center(),
+      UserProfileScreen(
+        isOwnProfile: true,
+      ),
+      UserProfileScreen(
+        isOwnProfile: true,
+      ),
+    ];
     return Container(
       decoration: BoxDecoration(
         gradient: Pellet.kBackgroundGradient,
@@ -110,7 +124,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 currentIndex: selectedIndex,
                 onTap: (index) {
                   if (index == 2) {
-                    Navigator.pushNamed(context, '/create-post');
+                    Navigator.pushNamed(
+                      context,
+                      '/create-post',
+                      arguments: {
+                        'username': widget.user.username,
+                      },
+                    );
                   } else {
                     setState(() {
                       selectedIndex = index;

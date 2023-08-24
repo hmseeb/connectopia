@@ -14,6 +14,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
   String? userLocation;
   bool enableLocation = false;
   bool enableStory = false;
+  String caption = '';
   ErrorHandlerRepo handleError = ErrorHandlerRepo();
 
   CreatePostBloc() : super(CreatePostInitial()) {
@@ -40,6 +41,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       CreatePostRepo repo = CreatePostRepo();
       enableLocation = !enableLocation;
       emit(ToggleLocation(enableLocation));
+      if (pickedFile != null || pickedFiles.isNotEmpty || caption.isNotEmpty)
+        emit(ValidSubmitState());
       try {
         final location = await repo.determineLocation();
         userLocation = '${location.locality}, ${location.country}';
@@ -52,6 +55,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
     on<ToggleStoryButtonClickedEvent>((event, emit) async {
       enableStory = !enableStory;
       emit(ToggleStory(enableStory));
+      if (pickedFile != null || pickedFiles.isNotEmpty || caption.isNotEmpty)
+        emit(ValidSubmitState());
     });
 
     on<CreatePostButtonClickedEvent>((event, emit) async {
@@ -67,19 +72,22 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         pickedFile = null;
         pickedFiles = [];
         userLocation = null;
+        caption = '';
       } catch (err) {
         String errorMsg = handleError.handleError(err);
         emit(PostCreationFailure(errorMsg));
         pickedFile = null;
         pickedFiles = [];
         userLocation = null;
+        caption = '';
       }
     });
 
     on<CaptionChangedEvent>((event, emit) {
-      if (event.caption.isNotEmpty)
-        emit(ValidCaptionState());
-      else
+      if (event.caption.isNotEmpty) {
+        caption = event.caption;
+        emit(ValidSubmitState());
+      } else
         emit(CreatePostInitial());
     });
   }

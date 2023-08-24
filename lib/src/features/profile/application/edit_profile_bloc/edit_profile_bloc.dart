@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
@@ -39,13 +40,15 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
 
     on<SubmitButtonPressedEvent>((event, emit) async {
       emit(EditProfileLoading());
-      await profileRepo
-          .updateProfile(event.username, event.displayName, event.bio)
-          .then((value) {
-        emit(EditProfileSuccess());
-      }).catchError((e) {
+      try {
+        await profileRepo.updateProfile(
+            event.username, event.displayName, event.bio);
+        final record = await profileRepo.user;
+        User user = User.fromRecord(record);
+        emit(EditProfileSuccess(user));
+      } catch (e) {
         emit(EditProfileFailure(e.toString()));
-      });
+      }
     });
 
     on<RequestEmailVerification>((event, emit) async {
@@ -72,7 +75,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
             try {
               emit(EditProfileLoading());
               await profileRepo.updateAvatarOrBanner(pickedImage, 'avatar');
-              emit(EditProfileSuccess());
+              emit(AvatarUpdateSuccess());
               emit(EditProfileInitial());
             } catch (e) {
               emit(EditProfileFailure(e.toString()));
@@ -81,7 +84,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
             try {
               emit(EditProfileLoading());
               await profileRepo.updateAvatarOrBanner(pickedImage, 'banner');
-              emit(EditProfileSuccess());
+              emit(BannerUpdateSuccess());
+
               emit(EditProfileInitial());
             } catch (e) {
               emit(EditProfileFailure(e.toString()));

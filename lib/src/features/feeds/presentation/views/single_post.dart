@@ -143,8 +143,10 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                                   CupertinoActionSheetAction(
                                     onPressed: () {
                                       context.read<ProfileBloc>().add(
-                                          DeletePostButtonPressed(
-                                              widget.post.id));
+                                            DeletePostButtonPressed(
+                                              widget.post.id,
+                                            ),
+                                          );
                                     },
                                     child: Text(
                                       'Delete',

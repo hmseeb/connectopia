@@ -40,11 +40,19 @@ class ProfileRepo {
     return decodedByte;
   }
 
-  Future<List<RecordModel>> get post async {
+  Future<List<RecordModel>> get posts async {
     PocketBase pb = await PocketBaseSingleton.instance;
+
     try {
+      final id = pb.authStore.model.id;
+      final field = await pb.collection('users').getOne(
+            id,
+          );
+      final username = field.getStringValue('username');
+
       List<RecordModel> record = await pb.collection('posts').getFullList(
             sort: '-updated',
+            filter: 'username = "$username"',
           );
       return record;
     } catch (e) {

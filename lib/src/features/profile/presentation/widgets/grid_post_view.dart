@@ -1,15 +1,20 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectopia/src/constants/sizing.dart';
+import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../domain/models/post.dart';
 
 class GridPostView extends StatelessWidget {
-  const GridPostView({super.key, required this.posts});
+  const GridPostView({super.key, required this.posts, required this.user});
 
   final List<Post> posts;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
+    final _height = ScreenSize.height(context);
     return Column(
       children: [
         GridView.builder(
@@ -27,9 +32,7 @@ class GridPostView extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     '/single-post',
-                    arguments: {
-                      'post': posts[index],
-                    },
+                    arguments: {'post': posts[index], 'user': user},
                   );
                 },
                 child: Container(
@@ -55,14 +58,11 @@ class GridPostView extends StatelessWidget {
                       },
                     );
                   },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                            '${dotenv.env['POCKETBASE_URL']}/api/files/${posts[index].collectionId}/${posts[index].id}/${posts[index].image[0]}/'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
+                  child: CachedNetworkImage(
+                    imageUrl:
+                        '${dotenv.env['POCKETBASE_URL']}/api/files/${posts[index].collectionId}/${posts[index].id}/${posts[index].image[0]}/',
+                    fit: BoxFit.cover,
+                    height: _height * 15,
                   ),
                 ),
                 if (posts[index].image.length > 1)

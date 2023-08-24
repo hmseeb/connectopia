@@ -46,7 +46,8 @@ final class PostCreationFailure extends CreatePostState {
 
 final class CreatedPost extends CreatePostState {}
 
-final class ValidCaptionState extends CreatePostState {}
+final class ValidSubmitState extends CreatePostState {}
+
 final class ToggleLocation extends CreatePostState {
   final bool toggleLocation;
 
@@ -55,6 +56,7 @@ final class ToggleLocation extends CreatePostState {
   @override
   List<Object> get props => [toggleLocation];
 }
+
 final class ToggleStory extends CreatePostState {
   final bool toggleStory;
 

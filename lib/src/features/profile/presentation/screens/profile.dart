@@ -1,13 +1,11 @@
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
-import '../widgets/fake_grid_view.dart';
-import '../widgets/settings_icon.dart';
+import 'package:connectopia/src/features/profile/presentation/widgets/fake_grid_view.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../../common/messages/error_snackbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
@@ -17,11 +15,15 @@ import '../widgets/info_col.dart';
 import '../widgets/message_button.dart';
 import '../widgets/profile_banner.dart';
 import '../widgets/profile_button.dart';
+import '../widgets/settings_icon.dart';
 import '../widgets/user_bio.dart';
 import '../widgets/user_info.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key, required this.isOwnProfile});
+  const UserProfileScreen({
+    super.key,
+    required this.isOwnProfile,
+  });
   final bool isOwnProfile;
 
   @override
@@ -35,9 +37,9 @@ class _UserProfileScreenState extends State<UserProfileScreen>
   @override
   void initState() {
     super.initState();
+    context.read<ProfileBloc>().add(LoadUserProfile());
     _userTabController = TabController(length: 2, vsync: this);
     _personalTabController = TabController(length: 4, vsync: this);
-    context.read<ProfileBloc>().add(LoadProfileEvent());
   }
 
   @override
@@ -51,40 +53,26 @@ class _UserProfileScreenState extends State<UserProfileScreen>
   Widget build(BuildContext context) {
     final _height = ScreenSize.height(context);
     final _width = ScreenSize.width(context);
-    return BlocConsumer<ProfileBloc, ProfileState>(
-      listener: (context, state) {
-        if (state is ProfileLoadingFailedState) {
-          ScaffoldMessenger.of(context).showSnackBar(errorSnack(
-            state.error,
-          ));
-        }
-      },
+    return BlocBuilder<ProfileBloc, ProfileState>(
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is ProfileLoadingState,
           child: CustomRefreshIndicator(
             onRefresh: () async {
-              context.read<ProfileBloc>().add(LoadProfileEvent());
+              context.read<ProfileBloc>().add(LoadUserProfile());
             },
             child: CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
-                  child: state is ProfileLoadedState
-                      ? PictureBanner(
-                          userId: state.user.id,
-                          isOwnProfile: widget.isOwnProfile,
-                          enableEditMode: false,
-                          avatarUrl: state.user.avatar,
-                          bannerUrl: state.user.banner,
-                        )
-                      : Container(
-                          height: _height * 20,
-                          width: _width,
-                          decoration: BoxDecoration(
-                            color: Pellet.kDark,
-                          ),
-                        ),
-                ),
+                    child: PictureBanner(
+                  userId: state is ProfileLoadedState ? state.user.id : '',
+                  isOwnProfile: widget.isOwnProfile,
+                  enableEditMode: false,
+                  avatarUrl:
+                      state is ProfileLoadedState ? state.user.avatar : '',
+                  bannerUrl:
+                      state is ProfileLoadedState ? state.user.banner : '',
+                )),
                 SliverToBoxAdapter(
                   child: Column(
                     children: [
@@ -92,7 +80,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                       TitleBadge(
                         name: state is ProfileLoadedState
                             ? state.user.name
-                            : 'Haseeb',
+                            : 'Haseeb Azhar',
                         username: state is ProfileLoadedState
                             ? state.user.username
                             : 'haseeb',
@@ -112,27 +100,30 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 OutlinedProfileButton(
-                                    text: 'Edit Profile',
-                                    state: state,
-                                    onPressed: () {
-                                      if (state is ProfileLoadedState) {
-                                        Navigator.pushNamed(
-                                          context,
-                                          '/edit-profile',
-                                          arguments: {
-                                            'user': state.user,
-                                          },
-                                        );
-                                      }
-                                    }),
+                                  showOutline: state is ProfileLoadedState
+                                      ? true
+                                      : false,
+                                  text: 'Edit Profile',
+                                  onPressed: () {
+                                    Navigator.pushNamed(
+                                      context,
+                                      '/edit-profile',
+                                      arguments: {
+                                        'user': state is ProfileLoadedState
+                                            ? state.user
+                                            : null
+                                      },
+                                    );
+                                  },
+                                ),
                                 SizedBox(width: _width * 2),
                                 SettingsIconButton(
                                   name: state is ProfileLoadedState
                                       ? state.user.name
-                                      : '',
+                                      : 'Haseeb Azhar',
                                   username: state is ProfileLoadedState
                                       ? state.user.username
-                                      : '',
+                                      : 'haseeb',
                                 ),
                               ],
                             )
@@ -145,7 +136,6 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                 ),
                                 SizedBox(width: _width * 2),
                                 OutlinedProfileButton(
-                                  state: state,
                                   onPressed: () {},
                                   text: 'Following',
                                 ),
@@ -158,11 +148,10 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           InfoColumn(
-                            title: 'Posts',
-                            value: state is ProfileLoadedState
-                                ? state.posts.length.toString()
-                                : '20',
-                          ),
+                              title: 'Posts',
+                              value: state is ProfileLoadedState
+                                  ? state.posts.length.toString()
+                                  : '99'),
                           InfoColumn(
                             title: 'Followers',
                             value: '1.4M',
@@ -215,26 +204,21 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                     children: [
                       Column(
                         children: [
-                          state is ProfileLoadedState
-                              ? GridPostView(posts: state.posts)
-                              : FakeGridView(),
-                          // To avoid the unreadable last post
-                          SizedBox(
-                            height: _height * 12,
-                          ),
+                          if (state is ProfileLoadedState) ...[
+                            GridPostView(
+                              posts: state.posts,
+                              user: state.user,
+                            ),
+                            SizedBox(
+                              height: _height * 12,
+                            ),
+                          ] else
+                            FakeGridView(),
                         ],
                       ),
-                      GridPostView(
-                          posts:
-                              state is ProfileLoadedState ? state.posts : []),
-                      if (widget.isOwnProfile)
-                        GridPostView(
-                            posts:
-                                state is ProfileLoadedState ? state.posts : []),
-                      if (widget.isOwnProfile)
-                        GridPostView(
-                            posts:
-                                state is ProfileLoadedState ? state.posts : []),
+                      SizedBox(),
+                      if (widget.isOwnProfile) SizedBox(),
+                      if (widget.isOwnProfile) SizedBox(),
                     ],
                     controller: widget.isOwnProfile
                         ? _personalTabController

@@ -7,7 +7,9 @@ sealed class ProfileEvent extends Equatable {
   List<Object> get props => [];
 }
 
-final class LoadProfileEvent extends ProfileEvent {}
+final class LoadUserProfile extends ProfileEvent {
+  const LoadUserProfile();
+}
 
 final class DeletePostButtonPressed extends ProfileEvent {
   const DeletePostButtonPressed(this.postId);
