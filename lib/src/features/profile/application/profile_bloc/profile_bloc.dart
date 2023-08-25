@@ -20,7 +20,8 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         final post_record = await repo.posts;
         List<Post> posts =
             post_record.map((post) => Post.fromRecord(post)).toList();
-        User user = User.fromRecord(await repo.user);
+
+        User user = posts.first.expand.user;
         emit(ProfileLoadedState(posts, user));
       } catch (e) {
         String errorMsg = handleError.handleError(e);

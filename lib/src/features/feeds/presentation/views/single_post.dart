@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -77,13 +78,11 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(100),
-                      child: Image.asset(
-                        Assets.getRandomAvatar(),
-                        height: _height * ScreenSize.kSpaceXL,
-                        width: _height * ScreenSize.kSpaceXL,
-                        fit: BoxFit.cover,
+                    CircleAvatar(
+                      backgroundImage: MemoryImage(
+                        ProfileRepo.decodeBase64(
+                          widget.post.expand.user.avatar,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -94,7 +93,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          widget.post.username,
+                          widget.post.expand.user.name,
                           style: TextStyle(
                             fontSize: _width * ScreenSize.kSpaceXL,
                             fontWeight: FontWeight.bold,

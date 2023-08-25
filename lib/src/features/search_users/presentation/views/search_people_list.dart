@@ -70,17 +70,51 @@ class PeopleSearchListView extends StatelessWidget {
                     );
                   },
                 )
-              : state is SearchInitial
-                  ? HintColumn(
-                      text: 'Search for people',
-                      icon: IconlyLight.user_1,
-                    )
-                  : HintColumn(
-                      text: 'No people found',
-                      icon: FontAwesomeIcons.solidFaceMeh,
-                    ),
+              : state is SearchLoading
+                  ? FakeListView()
+                  : state is SearchInitial
+                      ? HintColumn(
+                          text: 'Search for people',
+                          icon: IconlyLight.user_1,
+                        )
+                      : HintColumn(
+                          text: 'No people found',
+                          icon: FontAwesomeIcons.solidFaceMeh,
+                        ),
         );
       },
+    );
+  }
+}
+
+class FakeListView extends StatelessWidget {
+  const FakeListView({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemBuilder: (context, index) {
+        return ListTile(
+          leading: CircleAvatar(
+            radius: 20,
+            backgroundColor: Pellet.kDark,
+          ),
+          title: Text('Haseeb Azhar'),
+          trailing: FilledButton(
+            style: ButtonStyle(
+              fixedSize: MaterialStateProperty.all(Size(100, 32)),
+            ),
+            child: Text(
+              'Add',
+            ),
+            onPressed: () {},
+          ),
+        );
+      },
+      itemCount: 10,
+      padding: EdgeInsets.zero,
     );
   }
 }

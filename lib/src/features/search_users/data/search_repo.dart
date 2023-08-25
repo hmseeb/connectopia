@@ -7,7 +7,7 @@ class SearchRepo {
 
     try {
       final record = pb.collection('users').getList(
-            filter: 'name = "$query"',
+            filter: 'name = "$query" || username = "$query"',
           );
       return record;
     } catch (e) {

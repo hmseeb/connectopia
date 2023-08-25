@@ -1,6 +1,8 @@
-import 'package:connectopia/src/constants/assets.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectopia/src/features/profile/presentation/widgets/fake_grid_view.dart';
 import 'package:connectopia/src/features/search_users/application/bloc/search_bloc.dart';
 import 'package:connectopia/src/features/search_users/presentation/widgets/hint_col.dart';
+import 'package:connectopia/src/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -41,28 +43,47 @@ class MediaGridView extends StatelessWidget {
                           );
                         },
                         child: Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: state is SearchLoadedState
-                                  ? NetworkImage(
-                                      '${dotenv.env['POCKETBASE_URL']}/api/files/${state.posts[index].collectionId}/${state.posts[index].id}/${state.posts[index].image[0]}/',
-                                    )
-                                  : Image.asset(Assets.avatarPlaceholder).image,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                            decoration: BoxDecoration(),
+                            child: state is SearchLoadedState &&
+                                    state.posts[index].image.isEmpty
+                                ? DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Pellet.kDark,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        state.posts[index].caption,
+                                        style: TextStyle(
+                                          color: Pellet.kWhite,
+                                          fontSize: 12,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        softWrap: true,
+                                      ),
+                                    ),
+                                  )
+                                : state is SearchLoadedState
+                                    ? CachedNetworkImage(
+                                        imageUrl:
+                                            '${dotenv.env['POCKETBASE_URL']}/api/files/${state.posts[index].collectionId}/${state.posts[index].id}/${state.posts[index].image[0]}/',
+                                        fit: BoxFit.cover,
+                                      )
+                                    : SizedBox()),
                       );
                     })
-                : state is SearchInitial
-                    ? HintColumn(
-                        text: 'Search for media',
-                        icon: IconlyLight.image_2,
-                      )
-                    : HintColumn(
-                        text: 'No media found',
-                        icon: FontAwesomeIcons.solidFaceMeh,
-                      ));
+                : state is SearchLoading
+                    ? FakeGridView()
+                    : state is SearchInitial
+                        ? HintColumn(
+                            text: 'Search for media',
+                            icon: IconlyLight.image_2,
+                          )
+                        : HintColumn(
+                            text: 'No media found',
+                            icon: FontAwesomeIcons.solidFaceMeh,
+                          ));
       },
     );
   }

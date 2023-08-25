@@ -16,14 +16,11 @@ class CreatePostRepo {
     PocketBase pb = await PocketBaseSingleton.instance;
     String id = pb.authStore.model.id;
 
-    RecordModel record = await pb.collection('users').getOne(id);
-    final username = record.getStringValue('username');
-
     final body = <String, dynamic>{
       "caption": caption,
       if (location != null) "location": location,
       "story": isStory,
-      "username": username,
+      "user": id
     };
 
     List<MultipartFile> convertedFiles = [];

@@ -44,15 +44,10 @@ class ProfileRepo {
     PocketBase pb = await PocketBaseSingleton.instance;
 
     try {
-      final id = pb.authStore.model.id;
-      final field = await pb.collection('users').getOne(
-            id,
-          );
-      final username = field.getStringValue('username');
-
       List<RecordModel> record = await pb.collection('posts').getFullList(
             sort: '-updated',
-            filter: 'username = "$username"',
+            filter: 'user = "${pb.authStore.model.id}"',
+            expand: 'user',
           );
       return record;
     } catch (e) {
