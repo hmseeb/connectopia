@@ -22,7 +22,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
             post_record.map((post) => Post.fromRecord(post)).toList();
         late final User user;
         if (posts.isEmpty) {
-          emit(ProfileNoPostFound());
           final user_record = await repo.user;
           user = User.fromRecord(user_record);
         } else {
@@ -39,6 +38,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       List<Post> posts = event.posts!;
       User user = event.user!;
       emit(ProfileLoadedState(posts, user));
+    });
+
+    on<FollowButtonPressed>((event, emit) async {
+      emit(FollowingLoadingState());
+      try {
+        await repo.followUser(event.id);
+        emit(FollowedSuccessfulState());
+      } catch (e) {
+        String errorMsg = handleError.handleError(e);
+        emit(FollowedFailedState(errorMsg));
+      }
     });
 
     on<DeletePostButtonPressed>(

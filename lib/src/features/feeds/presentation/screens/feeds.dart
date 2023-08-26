@@ -1,3 +1,4 @@
+import 'package:connectopia/src/features/feeds/data/feeds_repo.dart';
 import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -47,7 +48,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Good Morning, ${widget.user.name.isEmpty ? widget.user.username : widget.user.name}!',
+                      '${FeedsRepo.getGreeting()}, ${widget.user.name.isEmpty ? widget.user.username : widget.user.name}',
                       style: TextStyle(
                         fontSize: _width * ScreenSize.kSpaceXL,
                         fontWeight: FontWeight.bold,

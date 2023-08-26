@@ -112,10 +112,10 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                   TitleBadge(
                     name: state is ProfileLoadedState
                         ? state.user.name
-                        : 'Haseeb Azhar',
+                        : 'John Doe',
                     username: state is ProfileLoadedState
                         ? state.user.username
-                        : 'haseeb',
+                        : 'john',
                     isVerified: state is ProfileLoadedState
                         ? state.user.verified
                         : false,
@@ -156,10 +156,10 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                                   : false,
                               name: state is ProfileLoadedState
                                   ? state.user.name
-                                  : 'Haseeb Azhar',
+                                  : 'John Doe',
                               username: state is ProfileLoadedState
                                   ? state.user.username
-                                  : 'haseeb',
+                                  : 'john',
                             ),
                           ],
                         )
@@ -172,8 +172,16 @@ class _UserProfileScreenState extends State<UserProfileScreen>
                             ),
                             SizedBox(width: _width * 2),
                             OutlinedProfileButton(
-                              onPressed: () {},
-                              text: 'Following',
+                              onPressed: () {
+                                state is ProfileLoadedState
+                                    ? context.read<ProfileBloc>().add(
+                                          FollowButtonPressed(
+                                            state.user.id,
+                                          ),
+                                        )
+                                    : null;
+                              },
+                              text: 'Follow',
                             ),
                             SizedBox(width: _width * 2),
                             Icon(Icons.more_vert_outlined),

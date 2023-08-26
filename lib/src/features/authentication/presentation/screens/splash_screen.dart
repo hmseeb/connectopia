@@ -51,7 +51,7 @@ class _SplashScreenState extends State<SplashScreen> {
       );
       final int totalLoadingTime =
           DateTime.now().difference(startTime).inMilliseconds;
-      print('Total loading time: $totalLoadingTime ms');
+      print('Total loading time: ${totalLoadingTime}ms');
     } else {
       Future.delayed(Duration(seconds: 3), () {
         Navigator.pushReplacementNamed(context, '/flash');

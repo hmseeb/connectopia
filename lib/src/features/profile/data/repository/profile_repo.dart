@@ -55,6 +55,51 @@ class ProfileRepo {
     }
   }
 
+  Future<void> followUser(String userId) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+    try {
+      final data = {
+        "follower": pb.authStore.model.id,
+        "following": userId,
+      };
+      final record = await pb.collection('followers').create(
+            body: data,
+          );
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<List<RecordModel>> getUserFollowers() async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+
+    try {
+      List<RecordModel> record = await pb.collection('posts').getFullList(
+            sort: '-updated',
+            filter: 'following = "${pb.authStore.model.id}"',
+            expand: 'follower,following',
+          );
+      return record;
+    } catch (e) {
+      throw e;
+    }
+  }
+
+  Future<List<RecordModel>> getUserFollowings() async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+
+    try {
+      List<RecordModel> record = await pb.collection('posts').getFullList(
+            sort: '-updated',
+            filter: 'follower = "${pb.authStore.model.id}"',
+            expand: 'follower,following',
+          );
+      return record;
+    } catch (e) {
+      throw e;
+    }
+  }
+
   void deletePost(String postId) async {
     PocketBase pb = await PocketBaseSingleton.instance;
     try {

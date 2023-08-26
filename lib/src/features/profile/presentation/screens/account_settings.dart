@@ -1,5 +1,7 @@
+import 'package:connectopia/src/constants/assets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../../../common/messages/error_snackbar.dart';
 import '../../../../constants/sizing.dart';
@@ -78,13 +80,15 @@ class _AccountSettingsPageState extends State<AccountSettingsPage> {
                                   ),
                                 );
                           },
-                          trailing: state is TogglePrivacySuccess
-                              ? state.togglePrivacy
-                                  ? AccountPrivacyBlueText('Public')
-                                  : AccountPrivacyBlueText('Private')
-                              : emailVisibility
-                                  ? AccountPrivacyBlueText('Public')
-                                  : AccountPrivacyBlueText('Private'),
+                          trailing: state is TogglePrivacyLoading
+                              ? Lottie.asset(Assets.progressIndicator)
+                              : state is TogglePrivacySuccess
+                                  ? state.togglePrivacy
+                                      ? AccountPrivacyBlueText('Public')
+                                      : AccountPrivacyBlueText('Private')
+                                  : emailVisibility
+                                      ? AccountPrivacyBlueText('Public')
+                                      : AccountPrivacyBlueText('Private'),
                         ),
                       ),
                       Spacer(),

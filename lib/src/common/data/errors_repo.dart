@@ -22,7 +22,7 @@ class ErrorHandlerRepo {
   }
 
   List<String> serverErrors = [
-    "We are embarassed! Human Error is inevitable, but this is unacceptable. We'll look into the matter now.",
+    "We are embarrassed! Human Error is inevitable, but this is unacceptable. We'll look into the matter now.",
     'There was a glitch in the matrix...',
   ];
   List<String> userErrors = [

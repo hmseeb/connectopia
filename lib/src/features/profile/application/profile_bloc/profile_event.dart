@@ -11,6 +11,11 @@ final class LoadPersonalProfile extends ProfileEvent {
   const LoadPersonalProfile();
 }
 
+final class FollowButtonPressed extends ProfileEvent {
+  const FollowButtonPressed(this.id);
+  final String id;
+}
+
 final class LoadUserProfile extends ProfileEvent {
   const LoadUserProfile(this.posts, this.user);
   final List<Post>? posts;
