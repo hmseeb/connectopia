@@ -10,7 +10,8 @@ import '../views/search_people_list.dart';
 import '../widgets/search_text_field.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  const SearchScreen({super.key, required this.userId});
+  final String userId;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -75,7 +76,9 @@ class _SearchScreenState extends State<SearchScreen>
                     ),
                     SizedBox(
                       height: _height * 69,
-                      child: MediaGridView(),
+                      child: MediaGridView(
+                        userId: widget.userId,
+                      ),
                     ),
                   ],
                 )

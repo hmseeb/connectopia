@@ -16,15 +16,19 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
   SearchBloc() : super(SearchInitial()) {
     on<SearchUsersEvent>((event, emit) async {
       try {
-        if (event.query.isEmpty) return emit(SearchInitial());
-        emit(SearchLoading());
+        if (event.query.isEmpty)
+          return emit(SearchInitial());
+        else
+          emit(SearchLoading());
         ResultList<RecordModel> usersRecord =
             await _searchRepo.searchUsers(event.query);
         List<User> users =
             usersRecord.items.map((e) => User.fromRecord(e)).toList();
-        final postsRecord = await _searchRepo.searchPosts(event.query);
-        List<Post> posts =
-            postsRecord.items.map((e) => Post.fromRecord(e)).toList();
+
+        List<RecordModel> postsRecord =
+            await _searchRepo.searchPosts(event.query);
+        List<Post> posts = postsRecord.map((e) => Post.fromRecord(e)).toList();
+
         if (posts.isNotEmpty)
           hasFoundMedia = true;
         else

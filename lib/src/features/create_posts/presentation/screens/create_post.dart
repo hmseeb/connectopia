@@ -46,7 +46,7 @@ class _PostScreenState extends State<PostScreen> {
           ));
         } else if (state is CreatedPost) {
           Navigator.pop(context);
-          context.read<ProfileBloc>().add(LoadUserProfile());
+          context.read<ProfileBloc>().add(LoadPersonalProfile());
         }
 
         if (state is PickedImageFromGallery) {

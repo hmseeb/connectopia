@@ -12,8 +12,7 @@ final class EditProfileInitial extends EditProfileState {}
 final class EditProfileLoading extends EditProfileState {}
 
 final class EditProfileSuccess extends EditProfileState {
-  const EditProfileSuccess(this.user);
-  final User user;
+  const EditProfileSuccess();
 }
 
 final class BannerUpdateSuccess extends EditProfileState {}

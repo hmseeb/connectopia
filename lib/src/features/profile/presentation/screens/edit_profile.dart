@@ -62,10 +62,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         } else if (state is BannerUpdateSuccess) {
           Navigator.pop(context);
         } else if (state is EditProfileSuccess) {
-          user = state.user;
           Navigator.pop(context);
+          context.read<ProfileBloc>().add(LoadPersonalProfile());
         } else if (state is EditProfileLoading) {
-          context.read<ProfileBloc>().add(LoadUserProfile());
+          context.read<ProfileBloc>().add(LoadPersonalProfile());
         } else if (state is EditProfileFailure) {
           ScaffoldMessenger.of(context).showSnackBar(errorSnack(
             state.error,

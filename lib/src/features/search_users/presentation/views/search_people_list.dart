@@ -1,5 +1,6 @@
 import 'package:connectopia/src/constants/assets.dart';
 import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
+import 'package:connectopia/src/features/profile/presentation/screens/profile.dart';
 import 'package:connectopia/src/features/search_users/application/bloc/search_bloc.dart';
 import 'package:connectopia/src/features/search_users/presentation/widgets/hint_col.dart';
 import 'package:flutter/material.dart';
@@ -17,21 +18,38 @@ class PeopleSearchListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _width = ScreenSize.width(context);
-    return BlocConsumer<SearchBloc, SearchState>(
-      listener: (context, state) {
-        if (state is SearchLoadedState) {}
-      },
+    return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Skeletonizer(
           enabled: state is SearchLoading,
           containersColor: Pellet.kDark,
           child: context.read<SearchBloc>().hasFoundUsers
               ? ListView.builder(
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   itemCount:
                       state is SearchLoadedState ? state.users.length : 10,
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
                     return ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 8,
+                      ),
+                      onTap: () {
+                        state is SearchLoadedState
+                            ? Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => UserProfileScreen(
+                                    isOwnProfile: false,
+                                    user: state.users[index],
+                                    posts: state.posts,
+                                  ),
+                                ),
+                              )
+                            : null;
+                      },
                       leading: CircleAvatar(
                         radius: 20,
                         backgroundColor: Pellet.kDark,
@@ -41,30 +59,25 @@ class PeopleSearchListView extends StatelessWidget {
                                 state.users[index].avatar))
                             : Image.asset(Assets.avatarPlaceholder).image,
                       ),
-                      title: Text(state is SearchLoadedState
-                          ? state.users[index].name.isEmpty
+                      title: state is SearchLoadedState
+                          ? Text(state.users[index].name.isEmpty
                               ? state.users[index].username
-                              : state.users[index].name
-                          : 'User Name'),
-                      trailing: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).pushNamed('/profile');
-                        },
-                        child: Container(
-                          width: _width * 25,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(32),
-                            color: index % 2 == 0
-                                ? Pellet.kSecondary
-                                : Pellet.kDark.withOpacity(0.5),
+                              : state.users[index].name)
+                          : SizedBox(),
+                      trailing: Container(
+                        width: _width * 25,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(32),
+                          gradient: Pellet.kFlashBackgroundGradient,
+                        ),
+                        child: Text(
+                          'View',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
                           ),
-                          child: Text(index % 2 == 0 ? 'Add' : 'Remove',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              )),
                         ),
                       ),
                     );
@@ -78,8 +91,8 @@ class PeopleSearchListView extends StatelessWidget {
                           icon: IconlyLight.user_1,
                         )
                       : HintColumn(
-                          text: 'No people found',
-                          icon: FontAwesomeIcons.solidFaceMeh,
+                          text: 'No users found',
+                          icon: FontAwesomeIcons.faceMehBlank,
                         ),
         );
       },
@@ -102,19 +115,15 @@ class FakeListView extends StatelessWidget {
             backgroundColor: Pellet.kDark,
           ),
           title: Text('Haseeb Azhar'),
-          trailing: FilledButton(
-            style: ButtonStyle(
-              fixedSize: MaterialStateProperty.all(Size(100, 32)),
-            ),
-            child: Text(
-              'Add',
-            ),
-            onPressed: () {},
+          trailing: Text(
+            'View',
           ),
         );
       },
       itemCount: 10,
-      padding: EdgeInsets.zero,
+      padding: EdgeInsets.symmetric(
+        vertical: 16,
+      ),
     );
   }
 }

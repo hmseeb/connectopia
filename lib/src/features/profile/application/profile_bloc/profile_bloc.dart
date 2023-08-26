@@ -14,19 +14,31 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ErrorHandlerRepo handleError = ErrorHandlerRepo();
 
   ProfileBloc() : super(ProfileInitial()) {
-    on<LoadUserProfile>((event, emit) async {
+    on<LoadPersonalProfile>((event, emit) async {
       emit(ProfileLoadingState());
       try {
         final post_record = await repo.posts;
         List<Post> posts =
             post_record.map((post) => Post.fromRecord(post)).toList();
-
-        User user = posts.first.expand.user;
+        late final User user;
+        if (posts.isEmpty) {
+          emit(ProfileNoPostFound());
+          final user_record = await repo.user;
+          user = User.fromRecord(user_record);
+        } else {
+          user = posts.first.expand.user;
+        }
         emit(ProfileLoadedState(posts, user));
       } catch (e) {
         String errorMsg = handleError.handleError(e);
         emit(ProfileLoadingFailedState(errorMsg));
       }
+    });
+    on<LoadUserProfile>((event, emit) async {
+      emit(ProfileLoadingState());
+      List<Post> posts = event.posts!;
+      User user = event.user!;
+      emit(ProfileLoadedState(posts, user));
     });
 
     on<DeletePostButtonPressed>(
@@ -34,7 +46,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         emit(ProfileLoadingState());
         try {
           repo.deletePost(event.postId);
-          emit(ProfilePostDeletedState());
+          emit(ProfilePostDeletedState(event.user));
         } catch (e) {
           String errorMsg = handleError.handleError(e);
           emit(ProfileLoadingFailedState(errorMsg));

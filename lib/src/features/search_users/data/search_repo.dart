@@ -7,7 +7,8 @@ class SearchRepo {
 
     try {
       final record = pb.collection('users').getList(
-            filter: 'name = "$query" || username = "$query"',
+            filter:
+                'name = "$query" || username = "$query" && id != "${pb.authStore.model.id}"',
           );
       return record;
     } catch (e) {
@@ -15,13 +16,15 @@ class SearchRepo {
     }
   }
 
-  Future<ResultList<RecordModel>> searchPosts(String query) async {
+  Future<List<RecordModel>> searchPosts(String query) async {
     PocketBase pb = await PocketBaseSingleton.instance;
 
     try {
-      final record =
-          pb.collection('posts').getList(filter: 'caption = "$query"');
-
+      List<RecordModel> record = await pb.collection('posts').getFullList(
+            sort: '-updated',
+            filter: 'caption = "$query"',
+            expand: 'user',
+          );
       return record;
     } catch (e) {
       throw e;

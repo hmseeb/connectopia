@@ -21,6 +21,7 @@ class SearchTextField extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(32)),
       child: TextField(
+        onTapOutside: (event) => FocusScope.of(context).unfocus(),
         onChanged: onChanged,
         controller: controller,
         decoration: InputDecoration(

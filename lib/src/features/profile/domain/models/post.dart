@@ -58,7 +58,8 @@ class Expand {
   Expand({
     required this.user,
   });
-  factory Expand.fromRecord(RecordModel record) => Expand.fromJson(record.toJson());
+  factory Expand.fromRecord(RecordModel record) =>
+      Expand.fromJson(record.toJson());
 
   factory Expand.fromJson(Map<String, dynamic> json) => _$ExpandFromJson(json);
 

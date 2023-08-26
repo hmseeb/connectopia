@@ -11,8 +11,8 @@ import 'package:iconly/iconly.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 class MediaGridView extends StatelessWidget {
-  const MediaGridView({super.key});
-
+  const MediaGridView({super.key, required this.userId});
+  final String userId;
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchBloc, SearchState>(
@@ -38,7 +38,9 @@ class MediaGridView extends StatelessWidget {
                               'post': state is SearchLoadedState
                                   ? state.posts[index]
                                   : null,
-                              'isOwnPost': false,
+                              'isOwnPost': state is SearchLoadedState
+                                  ? state.posts[index].expand.user.id == userId
+                                  : null,
                             },
                           );
                         },
@@ -82,7 +84,7 @@ class MediaGridView extends StatelessWidget {
                           )
                         : HintColumn(
                             text: 'No media found',
-                            icon: FontAwesomeIcons.solidFaceMeh,
+                            icon: FontAwesomeIcons.faceMehBlank,
                           ));
       },
     );

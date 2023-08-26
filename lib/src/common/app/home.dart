@@ -39,11 +39,11 @@ class _HomeScreenState extends State<HomeScreen> {
       FeedsScreen(
         user: widget.user,
       ),
-      const SearchScreen(),
-      const Center(),
-      UserProfileScreen(
-        isOwnProfile: true,
+      SearchScreen(
+        userId: widget.user.id,
       ),
+      const Center(),
+      const Center(),
       UserProfileScreen(
         isOwnProfile: true,
       ),

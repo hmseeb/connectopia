@@ -18,6 +18,7 @@ class GridPostView extends StatelessWidget {
     return Column(
       children: [
         GridView.builder(
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           itemCount: posts.length,
@@ -32,7 +33,10 @@ class GridPostView extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     '/single-post',
-                    arguments: {'post': posts[index], 'user': user},
+                    arguments: {
+                      'post': posts[index],
+                      'isOwnPost': user.id == posts[index].expand.user.id,
+                    },
                   );
                 },
                 child: Container(
@@ -55,7 +59,7 @@ class GridPostView extends StatelessWidget {
                       '/single-post',
                       arguments: {
                         'post': posts[index],
-                        'isOwnPost': true,
+                        'isOwnPost': user.id == posts[index].expand.user.id
                       },
                     );
                   },

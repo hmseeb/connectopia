@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
+import 'package:connectopia/src/features/profile/presentation/screens/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -65,7 +66,8 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
         }
         if (state is ProfilePostDeletedState) {
           Navigator.pushNamed(context, '/home', arguments: {
-            'selectedIndex': 3,
+            'selectedIndex': 4,
+            'user': state.user,
           });
         }
       },
@@ -88,48 +90,65 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                     SizedBox(
                       width: _width * ScreenSize.kSpaceL,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.post.expand.user.name,
-                          style: TextStyle(
-                            fontSize: _width * ScreenSize.kSpaceXL,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Row(
-                          children: [
-                            if (widget.post.location.isNotEmpty)
-                              Icon(
-                                IconlyLight.location,
-                                color: Pellet.kBlue,
-                                size: _width * ScreenSize.kSpaceL,
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) {
+                            return BlocProvider.value(
+                              value: context.read<ProfileBloc>(),
+                              child: UserProfileScreen(
+                                isOwnProfile: false,
+                                user: widget.post.expand.user,
+                                posts: [],
                               ),
-                            if (widget.post.location.isNotEmpty)
-                              Row(
-                                children: [
-                                  Text(
-                                    " ${widget.post.location}",
-                                    style: TextStyle(
-                                      color: Pellet.kBlue,
-                                      fontSize: _width * ScreenSize.kSpaceL,
-                                    ),
-                                  ),
-                                  Text(' • '),
-                                ],
-                              ),
-                            Text(
-                              "${formatedDate}",
-                              style: TextStyle(
-                                color: Pellet.kGrey,
-                                fontSize: _width * ScreenSize.kSpaceL,
-                              ),
+                            );
+                          }),
+                        );
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.post.expand.user.name,
+                            style: TextStyle(
+                              fontSize: _width * ScreenSize.kSpaceXL,
+                              fontWeight: FontWeight.bold,
                             ),
-                          ],
-                        )
-                      ],
+                          ),
+                          Row(
+                            children: [
+                              if (widget.post.location.isNotEmpty)
+                                Icon(
+                                  IconlyLight.location,
+                                  color: Pellet.kBlue,
+                                  size: _width * ScreenSize.kSpaceL,
+                                ),
+                              if (widget.post.location.isNotEmpty)
+                                Row(
+                                  children: [
+                                    Text(
+                                      " ${widget.post.location}",
+                                      style: TextStyle(
+                                        color: Pellet.kBlue,
+                                        fontSize: _width * ScreenSize.kSpaceL,
+                                      ),
+                                    ),
+                                    Text(' • '),
+                                  ],
+                                ),
+                              Text(
+                                "${formatedDate}",
+                                style: TextStyle(
+                                  color: Pellet.kGrey,
+                                  fontSize: _width * ScreenSize.kSpaceL,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                     Spacer(),
                     GestureDetector(
@@ -145,8 +164,8 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                                       widget.isOwnPost
                                           ? context.read<ProfileBloc>().add(
                                                 DeletePostButtonPressed(
-                                                  widget.post.id,
-                                                ),
+                                                    widget.post.id,
+                                                    widget.post.expand.user),
                                               )
                                           : context.read<ProfileBloc>().add(
                                                 ReportPostButtonPressed(
@@ -155,6 +174,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                                               );
                                     },
                                     child: Text(
+                                      // TODO: Make sure
                                       widget.isOwnPost ? 'Delete' : 'Report',
                                       style: TextStyle(color: Colors.red),
                                     ),

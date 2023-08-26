@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:logger/logger.dart';
@@ -43,9 +42,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       try {
         await profileRepo.updateProfile(
             event.username, event.displayName, event.bio);
-        final record = await profileRepo.user;
-        User user = User.fromRecord(record);
-        emit(EditProfileSuccess(user));
+        emit(EditProfileSuccess());
       } catch (e) {
         emit(EditProfileFailure(e.toString()));
       }

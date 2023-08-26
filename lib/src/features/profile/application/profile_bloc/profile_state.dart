@@ -11,6 +11,8 @@ final class ProfileInitial extends ProfileState {}
 
 final class ProfileLoadingState extends ProfileState {}
 
+final class ProfileNoPostFound extends ProfileState {}
+
 final class ProfileLoadedState extends ProfileState {
   ProfileLoadedState(this.posts, this.user);
   final List<Post> posts;
@@ -28,5 +30,6 @@ final class ProfilePostDeletionFailure extends ProfileState {
 }
 
 final class ProfilePostDeletedState extends ProfileState {
-  ProfilePostDeletedState();
+  ProfilePostDeletedState(this.user);
+  final User user;
 }
