@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
-import 'package:connectopia/src/features/profile/presentation/screens/profile.dart';
+import 'package:connectopia/src/features/profile/presentation/screens/user_profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,7 +15,7 @@ import '../../../../common/messages/error_snackbar.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
-import '../../../profile/application/profile_bloc/profile_bloc.dart';
+import '../../../profile/application/personal_profile_bloc/personal_profile_bloc.dart';
 import '../../../profile/domain/models/post.dart';
 
 class SinglePostTemplate extends StatefulWidget {
@@ -23,10 +23,12 @@ class SinglePostTemplate extends StatefulWidget {
     super.key,
     required this.post,
     required this.isOwnPost,
-  }) : super();
+    required this.posts,
+  });
 
   final Post post;
   final bool isOwnPost;
+  final List<Post> posts;
   @override
   State<SinglePostTemplate> createState() => _SinglePostTemplateState();
 }
@@ -55,7 +57,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
     final _width = ScreenSize.width(context);
 
     DateTime dateTime = widget.post.created;
-    String formatedDate = "${dateTime.day}/${dateTime.month}/${dateTime.year}";
+    String formattedDate = "${dateTime.day}/${dateTime.month}/${dateTime.year}";
 
     return BlocConsumer<ProfileBloc, ProfileState>(
       listener: (context, state) {
@@ -98,9 +100,8 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                             return BlocProvider.value(
                               value: context.read<ProfileBloc>(),
                               child: UserProfileScreen(
-                                isOwnProfile: false,
                                 user: widget.post.expand.user,
-                                posts: [],
+                                posts: widget.posts,
                               ),
                             );
                           }),
@@ -139,7 +140,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                                   ],
                                 ),
                               Text(
-                                "${formatedDate}",
+                                "${formattedDate}",
                                 style: TextStyle(
                                   color: Pellet.kGrey,
                                   fontSize: _width * ScreenSize.kSpaceL,

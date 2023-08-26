@@ -102,6 +102,7 @@ class GenerateRoutes {
               builder: (_) => SinglePostView(
                     post: args['post'],
                     isOwnPost: args['isOwnPost'],
+                    posts: args['posts'],
                   ));
         }
       case '/account-settings':

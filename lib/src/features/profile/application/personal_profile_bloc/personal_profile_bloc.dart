@@ -6,8 +6,8 @@ import '../../../../common/data/errors_repo.dart';
 import '../../data/repository/profile_repo.dart';
 import '../../domain/models/post.dart';
 
-part 'profile_event.dart';
-part 'profile_state.dart';
+part 'personal_profile_event.dart';
+part 'personal_profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
   ProfileRepo repo = ProfileRepo();
@@ -37,13 +37,24 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       emit(ProfileLoadingState());
       List<Post> posts = event.posts!;
       User user = event.user!;
-      emit(ProfileLoadedState(posts, user));
+      bool isFollowing = await repo.isFollowing(event.id!);
+      emit(ProfileLoadedState(posts, user, isFollowing: isFollowing));
     });
 
     on<FollowButtonPressed>((event, emit) async {
       emit(FollowingLoadingState());
       try {
         await repo.followUser(event.id);
+        emit(FollowedSuccessfulState());
+      } catch (e) {
+        String errorMsg = handleError.handleError(e);
+        emit(FollowedFailedState(errorMsg));
+      }
+    });
+    on<UnfollowButtonPressed>((event, emit) async {
+      emit(FollowingLoadingState());
+      try {
+        await repo.unfollow(event.id);
         emit(FollowedSuccessfulState());
       } catch (e) {
         String errorMsg = handleError.handleError(e);

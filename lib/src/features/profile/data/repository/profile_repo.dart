@@ -62,7 +62,7 @@ class ProfileRepo {
         "follower": pb.authStore.model.id,
         "following": userId,
       };
-      final record = await pb.collection('followers').create(
+      await pb.collection('followers').create(
             body: data,
           );
     } catch (e) {
@@ -70,9 +70,26 @@ class ProfileRepo {
     }
   }
 
-  Future<List<RecordModel>> getUserFollowers() async {
+  Future<void> unfollow(String userId) async {
     PocketBase pb = await PocketBaseSingleton.instance;
+    try {
+      final record = await pb.collection('followers').getList(
+            filter:
+                'follower = "${pb.authStore.model.id}" && following = "$userId"',
+          );
+      await pb.collection('followers').delete(
+            record.items.first.id,
+          );
+    } catch (e) {
+      throw e;
+    }
+  }
 
+  Future<List<RecordModel>> getUserFollowers(String? id) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+    if (id == null) {
+      id = pb.authStore.model.id;
+    }
     try {
       List<RecordModel> record = await pb.collection('posts').getFullList(
             sort: '-updated',
@@ -83,6 +100,23 @@ class ProfileRepo {
     } catch (e) {
       throw e;
     }
+  }
+
+  Future<bool> isFollowing(String userId) async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+    try {
+      final record = await pb.collection('followers').getFullList(
+            sort: '-updated',
+            filter:
+                'follower = "${pb.authStore.model.id}" && following = "$userId"',
+          );
+      if (record.isEmpty) {
+        return false;
+      }
+    } catch (e) {
+      throw e;
+    }
+    return true;
   }
 
   Future<List<RecordModel>> getUserFollowings() async {

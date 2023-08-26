@@ -1,4 +1,4 @@
-part of 'profile_bloc.dart';
+part of 'personal_profile_bloc.dart';
 
 sealed class ProfileState extends Equatable {
   const ProfileState();
@@ -21,9 +21,10 @@ final class FollowedFailedState extends ProfileState {
 }
 
 final class ProfileLoadedState extends ProfileState {
-  ProfileLoadedState(this.posts, this.user);
+  ProfileLoadedState(this.posts, this.user, {this.isFollowing});
   final List<Post> posts;
   final User user;
+  final bool? isFollowing;
 }
 
 final class ProfileLoadingFailedState extends ProfileState {

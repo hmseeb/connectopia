@@ -1,4 +1,4 @@
-import 'package:connectopia/src/features/profile/application/profile_bloc/profile_bloc.dart';
+import 'package:connectopia/src/features/profile/application/personal_profile_bloc/personal_profile_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';

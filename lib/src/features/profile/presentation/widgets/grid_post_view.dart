@@ -34,6 +34,7 @@ class GridPostView extends StatelessWidget {
                     context,
                     '/single-post',
                     arguments: {
+                      'posts': posts,
                       'post': posts[index],
                       'isOwnPost': user.id == posts[index].expand.user.id,
                     },
@@ -58,6 +59,7 @@ class GridPostView extends StatelessWidget {
                       context,
                       '/single-post',
                       arguments: {
+                        'posts': posts,
                         'post': posts[index],
                         'isOwnPost': user.id == posts[index].expand.user.id
                       },

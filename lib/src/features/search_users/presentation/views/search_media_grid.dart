@@ -35,6 +35,9 @@ class MediaGridView extends StatelessWidget {
                           Navigator.of(context).pushNamed(
                             '/single-post',
                             arguments: {
+                              'posts': state is SearchLoadedState
+                                  ? state.posts
+                                  : null,
                               'post': state is SearchLoadedState
                                   ? state.posts[index]
                                   : null,

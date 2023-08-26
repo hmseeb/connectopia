@@ -1,6 +1,7 @@
 {
       "cmake.sourceDirectory": "/Users/hmseeb/connectopia/linux",
       "cSpell.words": [
+            "autoscale",
             "connectopia",
             "signin",
             "Signout"

@@ -2,12 +2,12 @@ import 'dart:ui';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:connectopia/src/features/profile/domain/models/user.dart';
+import 'package:connectopia/src/features/profile/presentation/screens/personal_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../features/feeds/presentation/screens/feeds.dart';
-import '../../features/profile/presentation/screens/profile.dart';
 import '../../features/search_users/presentation/screens/search.dart';
 import '../../theme/colors.dart';
 
@@ -42,11 +42,13 @@ class _HomeScreenState extends State<HomeScreen> {
       SearchScreen(
         userId: widget.user.id,
       ),
-      const Center(),
-      const Center(),
-      UserProfileScreen(
-        isOwnProfile: true,
+      const Center(
+        child: Text('Add'),
       ),
+      const Center(
+        child: Text('Notifications'),
+      ),
+      PersonalProfileScreen(),
     ];
     return Container(
       decoration: BoxDecoration(

@@ -1,6 +1,6 @@
 import 'package:connectopia/src/constants/assets.dart';
 import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
-import 'package:connectopia/src/features/profile/presentation/screens/profile.dart';
+import 'package:connectopia/src/features/profile/presentation/screens/user_profile.dart';
 import 'package:connectopia/src/features/search_users/application/bloc/search_bloc.dart';
 import 'package:connectopia/src/features/search_users/presentation/widgets/hint_col.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +42,6 @@ class PeopleSearchListView extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => UserProfileScreen(
-                                    isOwnProfile: false,
                                     user: state.users[index],
                                     posts: state.posts,
                                   ),

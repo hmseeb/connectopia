@@ -8,7 +8,7 @@ import 'features/authentication/application/signup_bloc/signup_bloc.dart';
 import 'features/authentication/data/repository/auth_repo.dart';
 import 'features/create_posts/application/bloc/create_post_bloc.dart';
 import 'features/profile/application/edit_profile_bloc/edit_profile_bloc.dart';
-import 'features/profile/application/profile_bloc/profile_bloc.dart';
+import 'features/profile/application/personal_profile_bloc/personal_profile_bloc.dart';
 import 'features/profile/application/profile_settings/profile_settings_bloc.dart';
 import 'routes.dart';
 import 'theme/app_theme.dart';
