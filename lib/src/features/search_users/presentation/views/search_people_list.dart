@@ -13,11 +13,13 @@ import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
 
 class PeopleSearchListView extends StatelessWidget {
-  const PeopleSearchListView({super.key});
+  const PeopleSearchListView({super.key, required this.id});
+  final String id;
 
   @override
   Widget build(BuildContext context) {
     final _width = ScreenSize.width(context);
+    final _height = ScreenSize.height(context);
     return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Skeletonizer(
@@ -31,6 +33,16 @@ class PeopleSearchListView extends StatelessWidget {
                       state is SearchLoadedState ? state.users.length : 10,
                   padding: EdgeInsets.zero,
                   itemBuilder: (context, index) {
+                    if (state is SearchLoadedState &&
+                        id == state.users[index].id) {
+                      return SizedBox(
+                        height: _height * 70,
+                        child: HintColumn(
+                          text: 'No users found',
+                          icon: FontAwesomeIcons.faceMehBlank,
+                        ),
+                      );
+                    }
                     return ListTile(
                       contentPadding: EdgeInsets.symmetric(
                         horizontal: 16,

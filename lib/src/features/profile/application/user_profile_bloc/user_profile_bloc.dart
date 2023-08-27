@@ -7,11 +7,12 @@ part 'user_profile_event.dart';
 part 'user_profile_state.dart';
 
 class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
+  bool isFollowing = false;
   ProfileRepo repo = ProfileRepo();
   ErrorHandlerRepo handleError = ErrorHandlerRepo();
   UserProfileBloc() : super(UserProfileInitial()) {
     on<LoadUserProfile>((event, emit) async {
-      bool isFollowing = await repo.isFollowing(event.id!);
+      isFollowing = await repo.isFollowing(event.id!);
       emit(UserProfileLoadedState(isFollowing));
     });
 

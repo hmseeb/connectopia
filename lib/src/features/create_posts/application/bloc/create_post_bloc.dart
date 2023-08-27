@@ -71,14 +71,12 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         emit(CreatedPost());
         pickedFile = null;
         pickedFiles = [];
-        userLocation = null;
         caption = '';
       } catch (err) {
         String errorMsg = handleError.handleError(err);
         emit(PostCreationFailure(errorMsg));
         pickedFile = null;
         pickedFiles = [];
-        userLocation = null;
         caption = '';
       }
     });

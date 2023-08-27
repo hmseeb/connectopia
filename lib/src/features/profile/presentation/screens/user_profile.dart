@@ -33,12 +33,12 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen>
     with TickerProviderStateMixin {
   late final _userTabController;
-  bool isFollowing = false;
+  late bool isFollowing;
 
   @override
   void initState() {
     super.initState();
-
+    isFollowing = context.read<UserProfileBloc>().isFollowing;
     context.read<UserProfileBloc>().add(LoadUserProfile(widget.user.id));
     _userTabController = TabController(length: 2, vsync: this);
   }
@@ -63,7 +63,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
         }
 
         if (state is UserProfileLoadedState) {
-          isFollowing = state.isFollowing ?? false;
+          isFollowing = state.isFollowing!;
         }
       },
       builder: (context, state) {

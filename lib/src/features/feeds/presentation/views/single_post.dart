@@ -94,18 +94,20 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) {
-                            return BlocProvider.value(
-                              value: context.read<ProfileBloc>(),
-                              child: UserProfileScreen(
-                                user: widget.post.expand.user,
-                                posts: widget.posts,
-                              ),
-                            );
-                          }),
-                        );
+                        widget.isOwnPost
+                            ? null
+                            : Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) {
+                                  return BlocProvider.value(
+                                    value: context.read<ProfileBloc>(),
+                                    child: UserProfileScreen(
+                                      user: widget.post.expand.user,
+                                      posts: widget.posts,
+                                    ),
+                                  );
+                                }),
+                              );
                       },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

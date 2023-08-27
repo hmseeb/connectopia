@@ -69,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen>
                   children: [
                     SizedBox(
                       height: _height * 69,
-                      child: PeopleSearchListView(),
+                      child: PeopleSearchListView(id: widget.userId),
                     ),
                     SizedBox(
                       height: _height * 69,
