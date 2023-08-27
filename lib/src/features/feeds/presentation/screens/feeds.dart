@@ -88,7 +88,6 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   },
                 ),
               ),
-              
             ],
           ),
         ),

@@ -4,6 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:connectopia/src/common/data/errors_repo.dart';
 import 'package:connectopia/src/features/authentication/data/repository/auth_repo.dart';
 import 'package:connectopia/src/features/authentication/data/repository/validation_repo.dart';
+import 'package:connectopia/src/features/feeds/data/feeds_repo.dart';
+import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
+import 'package:connectopia/src/features/profile/domain/models/post.dart';
+import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 part 'signin_event.dart';
@@ -31,14 +35,26 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
     });
 
     on<SigninButtonPressed>((event, emit) async {
-      emit(SigninLoadingState());
-      final userData = await authRepo
-          .signin(event.email, event.password)
-          .then((value) => emit(SigninSuccessState()))
-          .onError((error, stackTrace) {
-        String errorMsg = errorHandler.handleError(error);
-        emit(SigninFailureState(errorMsg));
-      });
+      try {
+        emit(SigninLoadingState());
+        AuthRepo authRepo = AuthRepo();
+        await authRepo.signin(event.email, event.password);
+        ProfileRepo profileRepo = ProfileRepo();
+        FeedsRepo feedsRepo = FeedsRepo();
+        late List<Post> posts;
+        User user = User.fromRecord(await profileRepo.user);
+        final record = await feedsRepo.followingPosts;
+        if (record.isEmpty) {
+          posts = [];
+        } else {
+          posts = record.map((post) => Post.fromRecord(post)).toList();
+        }
+        emit(SigninSuccessState(user, posts));
+      } catch (e) {
+        ErrorHandlerRepo errorHandler = ErrorHandlerRepo();
+        String errorMsg = errorHandler.handleError(e);
+        SigninFailureState(errorMsg);
+      }
     });
 
     on<SigninWithGoogleButtonPressed>((event, emit) async {

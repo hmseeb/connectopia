@@ -18,8 +18,6 @@ final class UnfollowButtonPressed extends UserProfileEvent {
 }
 
 final class LoadUserProfile extends UserProfileEvent {
-  const LoadUserProfile(this.posts, this.user, this.id);
-  final List<Post>? posts;
-  final User? user;
+  const LoadUserProfile(this.id);
   final String? id;
 }

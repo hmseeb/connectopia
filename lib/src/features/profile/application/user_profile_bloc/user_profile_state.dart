@@ -13,9 +13,7 @@ final class UserProfileInitial extends UserProfileState {}
 final class UserProfileLoadingState extends UserProfileState {}
 
 final class UserProfileLoadedState extends UserProfileState {
-  UserProfileLoadedState(this.posts, this.user, {this.isFollowing});
-  final List<Post> posts;
-  final User user;
+  UserProfileLoadedState(this.isFollowing);
   final bool? isFollowing;
 }
 

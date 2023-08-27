@@ -39,9 +39,7 @@ class _UserProfileScreenState extends State<UserProfileScreen>
   void initState() {
     super.initState();
 
-    context
-        .read<UserProfileBloc>()
-        .add(LoadUserProfile(widget.posts, widget.user, widget.user.id));
+    context.read<UserProfileBloc>().add(LoadUserProfile(widget.user.id));
     _userTabController = TabController(length: 2, vsync: this);
   }
 

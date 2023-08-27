@@ -15,7 +15,11 @@ class ValidEmailState extends SigninState {}
 
 class SigninLoadingState extends SigninState {}
 
-class SigninSuccessState extends SigninState {}
+class SigninSuccessState extends SigninState {
+  final User user;
+  final List<Post> posts;
+  SigninSuccessState(this.user, this.posts);
+}
 
 class SigninFailureState extends SigninState {
   final String error;

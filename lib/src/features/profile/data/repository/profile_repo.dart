@@ -34,15 +34,12 @@ class ProfileRepo {
     if (base64string.isEmpty) {
       return Uint8List(0);
     }
-
     Uint8List decodedByte = base64.decode(base64string);
-
     return decodedByte;
   }
 
   Future<List<RecordModel>> get personalPosts async {
     PocketBase pb = await PocketBaseSingleton.instance;
-
     try {
       List<RecordModel> record = await pb.collection('posts').getFullList(
             sort: '-updated',

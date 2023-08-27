@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectopia/src/common/data/errors_repo.dart';
 import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
-import 'package:connectopia/src/features/profile/domain/models/post.dart';
-import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:equatable/equatable.dart';
 
 part 'user_profile_event.dart';
@@ -13,11 +11,8 @@ class UserProfileBloc extends Bloc<UserProfileEvent, UserProfileState> {
   ErrorHandlerRepo handleError = ErrorHandlerRepo();
   UserProfileBloc() : super(UserProfileInitial()) {
     on<LoadUserProfile>((event, emit) async {
-      emit(UserProfileLoadingState());
-      List<Post> posts = event.posts!;
-      User user = event.user!;
       bool isFollowing = await repo.isFollowing(event.id!);
-      emit(UserProfileLoadedState(posts, user, isFollowing: isFollowing));
+      emit(UserProfileLoadedState(isFollowing));
     });
 
     on<FollowButtonPressed>((event, emit) async {

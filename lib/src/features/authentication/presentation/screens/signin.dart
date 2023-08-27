@@ -48,35 +48,52 @@ class _SigninScreenState extends State<SigninScreen> {
   Widget build(BuildContext context) {
     final _height = ScreenSize.height(context);
     final _width = ScreenSize.width(context);
-    return Container(
-      decoration: const BoxDecoration(
-        gradient: Pellet.kBackgroundGradient,
-      ),
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: AppBarTitle(
-            title: 'Sign In',
+    return BlocConsumer<SigninBloc, SigninState>(
+      listener: (context, state) {
+        if (state is SigninFailureState) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            errorSnack(state.error),
+          );
+        } else if (state is SigninSuccessState) {
+          Navigator.pushReplacementNamed(
+            context,
+            '/home',
+            arguments: {
+              'selectedIndex': 0,
+              'user': state.user,
+              'posts': state.posts
+            },
+          );
+        }
+      },
+      builder: (context, state) {
+        return Container(
+          decoration: const BoxDecoration(
+            gradient: Pellet.kBackgroundGradient,
           ),
-        ),
-        body: Padding(
-          padding: EdgeInsets.all(_height * ScreenSize.kSpaceL),
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AuthServiceWrapper(height: _height, width: _width),
-                SizedBox(height: _height * 4),
-                OrDivider(),
-                SizedBox(height: _height * 3),
-                TextFieldTitle(title: 'Email'),
-                SizedBox(height: _height * 1),
-                BlocBuilder<SigninBloc, SigninState>(
-                  builder: (context, state) {
-                    return AuthTextField(
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              title: AppBarTitle(
+                title: 'Sign In',
+              ),
+            ),
+            body: Padding(
+              padding: EdgeInsets.all(_height * ScreenSize.kSpaceL),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AuthServiceWrapper(height: _height, width: _width),
+                    SizedBox(height: _height * 4),
+                    OrDivider(),
+                    SizedBox(height: _height * 3),
+                    TextFieldTitle(title: 'Email'),
+                    SizedBox(height: _height * 1),
+                    AuthTextField(
                         suffixIcon:
                             state is ValidEmailState || state is ValidState
                                 ? Icon(Icons.check_box, color: Pellet.kPrimary)
@@ -90,15 +107,11 @@ class _SigninScreenState extends State<SigninScreen> {
                                   _passwordController.text,
                                 ),
                               );
-                        });
-                  },
-                ),
-                SizedBox(height: _height * 3),
-                TextFieldTitle(title: 'Password'),
-                SizedBox(height: _height * 1),
-                BlocBuilder<SigninBloc, SigninState>(
-                  builder: (context, state) {
-                    return AuthTextField(
+                        }),
+                    SizedBox(height: _height * 3),
+                    TextFieldTitle(title: 'Password'),
+                    SizedBox(height: _height * 1),
+                    AuthTextField(
                         obscureText: _isPasswordInvisible,
                         suffixIcon: GestureDetector(
                           onTap: () {
@@ -119,33 +132,17 @@ class _SigninScreenState extends State<SigninScreen> {
                                   _passwordController.text,
                                 ),
                               );
-                        });
-                  },
-                ),
-                SizedBox(height: _height * 1),
-                SizedBox(height: _height * 2),
-                TextFieldQButton(
-                    title: 'Forgotten Password?',
-                    onTapped: () {
-                      forgetPasswordBottomSheet(
-                          context, _forgotPasswordEmailController);
-                    }),
-                SizedBox(height: _height * 6),
-                BlocConsumer<SigninBloc, SigninState>(
-                  listener: (context, state) {
-                    if (state is SigninFailureState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        errorSnack(state.error),
-                      );
-                    } else if (state is SigninSuccessState) {
-                      Navigator.pushReplacementNamed(
-                        context,
-                        '/',
-                      );
-                    }
-                  },
-                  builder: (context, state) {
-                    return ElevatedButton(
+                        }),
+                    SizedBox(height: _height * 1),
+                    SizedBox(height: _height * 2),
+                    TextFieldQButton(
+                        title: 'Forgotten Password?',
+                        onTapped: () {
+                          forgetPasswordBottomSheet(
+                              context, _forgotPasswordEmailController);
+                        }),
+                    SizedBox(height: _height * 6),
+                    ElevatedButton(
                       onPressed: state is ValidState
                           ? () {
                               context.read<SigninBloc>().add(
@@ -159,28 +156,28 @@ class _SigninScreenState extends State<SigninScreen> {
                       child: state is SigninLoadingState
                           ? Lottie.asset(Assets.progressIndicator)
                           : const Text('Sign In'),
-                    );
-                  },
-                ),
-                SizedBox(height: _height * 3),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextFieldTitle(title: 'Don\'t have an account? '),
-                    TextFieldQButton(
-                        title: 'Sign Up',
-                        onTapped: () {
-                          context.read<SigninBloc>().add(PageChangeEvent());
-                          Navigator.pushReplacementNamed(
-                              context, '/animated-signup');
-                        }),
+                    ),
+                    SizedBox(height: _height * 3),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextFieldTitle(title: 'Don\'t have an account? '),
+                        TextFieldQButton(
+                            title: 'Sign Up',
+                            onTapped: () {
+                              context.read<SigninBloc>().add(PageChangeEvent());
+                              Navigator.pushReplacementNamed(
+                                  context, '/animated-signup');
+                            }),
+                      ],
+                    ),
                   ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
