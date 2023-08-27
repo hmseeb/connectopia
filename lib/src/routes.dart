@@ -62,6 +62,7 @@ class GenerateRoutes {
             pageBuilder: (_, animation, secondaryAnimation) => HomeScreen(
               selectedIndex: args['selectedIndex'],
               user: args['user'],
+              posts: args['posts'],
             ),
           );
         }

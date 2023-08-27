@@ -6,3 +6,5 @@ sealed class FeedsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+final class ValidUserAuthEvent extends FeedsEvent {}

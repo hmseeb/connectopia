@@ -38,10 +38,7 @@ class _SearchScreenState extends State<SearchScreen>
   @override
   Widget build(BuildContext context) {
     final _height = ScreenSize.height(context);
-    return BlocConsumer<SearchBloc, SearchState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+    return BlocBuilder<SearchBloc, SearchState>(
       builder: (context, state) {
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),

@@ -47,29 +47,29 @@ class AccessScreen extends StatelessWidget {
                     ],
                   ),
                   Positioned(
-                    top: 30,
-                    left: -20,
+                    top: 50,
+                    left: 5,
                     child: ConnectionAvatar(
                       img: Assets.person1,
                     ),
                   ),
                   Positioned(
-                    top: 30,
-                    right: -20,
+                    top: 40,
+                    right: 10,
                     child: ConnectionAvatar(
                       img: Assets.person2,
                     ),
                   ),
                   Positioned(
-                    bottom: 20,
-                    left: -20,
+                    bottom: 50,
+                    left: 0,
                     child: ConnectionAvatar(
                       img: Assets.person3,
                     ),
                   ),
                   Positioned(
-                    bottom: 20,
-                    right: -20,
+                    bottom: 40,
+                    right: 0,
                     child: ConnectionAvatar(
                       img: Assets.person4,
                     ),

@@ -9,11 +9,13 @@ class OutlinedProfileButton extends StatelessWidget {
     required this.text,
     required this.onPressed,
     this.showOutline,
+    this.backgroundColor,
   });
 
   final String text;
   final Function() onPressed;
   final bool? showOutline;
+  final Color? backgroundColor;
   // Looked bad with default skeletonizer
 
   @override
@@ -29,6 +31,7 @@ class OutlinedProfileButton extends StatelessWidget {
           vertical: _height * 1,
         ),
         decoration: BoxDecoration(
+          color: backgroundColor ?? null,
           borderRadius: BorderRadius.circular(100),
           border: Border.all(
             color: Pellet.kWhite,

@@ -12,15 +12,9 @@ class ConnectionAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 45,
+      radius: 30,
       backgroundColor: Colors.transparent,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(45),
-        child: CachedNetworkImage(
-          imageUrl: img,
-          fit: BoxFit.cover,
-        ),
-      ),
+      backgroundImage: CachedNetworkImageProvider(img),
     );
   }
 }

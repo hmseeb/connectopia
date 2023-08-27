@@ -1,4 +1,5 @@
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
+import 'package:connectopia/src/features/profile/application/personal_profile_bloc/personal_profile_bloc.dart';
 import 'package:connectopia/src/features/profile/presentation/widgets/fake_grid_view.dart';
 import 'package:connectopia/src/features/search_users/presentation/widgets/hint_col.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
@@ -11,7 +12,6 @@ import 'package:skeletonizer/skeletonizer.dart';
 import '../../../../constants/assets.dart';
 import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
-import '../../application/profile_bloc/profile_bloc.dart';
 import '../widgets/grid_post_view.dart';
 import '../widgets/info_col.dart';
 import '../widgets/profile_banner.dart';

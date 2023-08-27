@@ -181,7 +181,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                           onTap: () {
                                             context.read<EditProfileBloc>().add(
                                                   RequestEmailVerification(
-                                                    user.email,
+                                                    'user.email',
                                                   ),
                                                 );
                                           },

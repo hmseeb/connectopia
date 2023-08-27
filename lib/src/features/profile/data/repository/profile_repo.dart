@@ -40,7 +40,7 @@ class ProfileRepo {
     return decodedByte;
   }
 
-  Future<List<RecordModel>> get posts async {
+  Future<List<RecordModel>> get personalPosts async {
     PocketBase pb = await PocketBaseSingleton.instance;
 
     try {

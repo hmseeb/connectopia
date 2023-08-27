@@ -1,4 +1,6 @@
 import 'package:connectopia/src/features/feeds/data/feeds_repo.dart';
+import 'package:connectopia/src/features/feeds/presentation/views/single_post.dart';
+import 'package:connectopia/src/features/profile/domain/models/post.dart';
 import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:iconly/iconly.dart';
@@ -7,8 +9,9 @@ import '../../../../constants/sizing.dart';
 import '../../../../theme/colors.dart';
 
 class FeedsScreen extends StatefulWidget {
-  const FeedsScreen({super.key, required this.user});
+  const FeedsScreen({super.key, required this.user, required this.posts});
   final User user;
+  final List<Post> posts;
 
   @override
   State<FeedsScreen> createState() => _FeedsScreenState();
@@ -71,15 +74,21 @@ class _FeedsScreenState extends State<FeedsScreen> {
                   ],
                 ),
               ),
+              SizedBox(height: _height * 2),
               SizedBox(
-                height: _height * 3,
+                height: _height * 90,
+                child: ListView.builder(
+                  itemCount: widget.posts.length,
+                  itemBuilder: (context, index) {
+                    return SinglePostTemplate(
+                      post: widget.posts[index],
+                      isOwnPost: false,
+                      posts: widget.posts,
+                    );
+                  },
+                ),
               ),
-              // TODO: Add Single Post List View
-
-              // To avoid the unreadable last post
-              SizedBox(
-                height: _height * 10,
-              ),
+              
             ],
           ),
         ),

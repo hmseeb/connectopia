@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:connectopia/src/features/profile/domain/models/post.dart';
 import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:connectopia/src/features/profile/presentation/screens/personal_profile.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +17,11 @@ class HomeScreen extends StatefulWidget {
     super.key,
     required this.selectedIndex,
     required this.user,
+    this.posts,
   });
   final int selectedIndex;
   final User user;
-  // final List<Post> posts;
+  final List<Post>? posts;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -38,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Widget> selectedScreens = [
       FeedsScreen(
         user: widget.user,
+        posts: widget.posts!,
       ),
       SearchScreen(
         userId: widget.user.id,

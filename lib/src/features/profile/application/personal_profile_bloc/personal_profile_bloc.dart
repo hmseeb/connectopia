@@ -17,7 +17,7 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<LoadPersonalProfile>((event, emit) async {
       emit(ProfileLoadingState());
       try {
-        final post_record = await repo.posts;
+        final post_record = await repo.personalPosts;
         List<Post> posts =
             post_record.map((post) => Post.fromRecord(post)).toList();
         late final User user;
@@ -31,34 +31,6 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
       } catch (e) {
         String errorMsg = handleError.handleError(e);
         emit(ProfileLoadingFailedState(errorMsg));
-      }
-    });
-    on<LoadUserProfile>((event, emit) async {
-      emit(ProfileLoadingState());
-      List<Post> posts = event.posts!;
-      User user = event.user!;
-      bool isFollowing = await repo.isFollowing(event.id!);
-      emit(ProfileLoadedState(posts, user, isFollowing: isFollowing));
-    });
-
-    on<FollowButtonPressed>((event, emit) async {
-      emit(FollowingLoadingState());
-      try {
-        await repo.followUser(event.id);
-        emit(FollowedSuccessfulState());
-      } catch (e) {
-        String errorMsg = handleError.handleError(e);
-        emit(FollowedFailedState(errorMsg));
-      }
-    });
-    on<UnfollowButtonPressed>((event, emit) async {
-      emit(FollowingLoadingState());
-      try {
-        await repo.unfollow(event.id);
-        emit(FollowedSuccessfulState());
-      } catch (e) {
-        String errorMsg = handleError.handleError(e);
-        emit(FollowedFailedState(errorMsg));
       }
     });
 

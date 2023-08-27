@@ -168,11 +168,7 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                                                     widget.post.id,
                                                     widget.post.expand.user),
                                               )
-                                          : context.read<ProfileBloc>().add(
-                                                ReportPostButtonPressed(
-                                                  widget.post.id,
-                                                ),
-                                              );
+                                          : null;
                                     },
                                     child: Text(
                                       // TODO: Make sure

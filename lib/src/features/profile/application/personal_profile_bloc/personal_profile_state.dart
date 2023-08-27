@@ -11,15 +11,6 @@ final class ProfileInitial extends ProfileState {}
 
 final class ProfileLoadingState extends ProfileState {}
 
-final class FollowingLoadingState extends ProfileState {}
-
-final class FollowedSuccessfulState extends ProfileState {}
-
-final class FollowedFailedState extends ProfileState {
-  FollowedFailedState(this.error);
-  final String error;
-}
-
 final class ProfileLoadedState extends ProfileState {
   ProfileLoadedState(this.posts, this.user, {this.isFollowing});
   final List<Post> posts;
