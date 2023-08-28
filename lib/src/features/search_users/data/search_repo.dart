@@ -16,13 +16,13 @@ class SearchRepo {
     }
   }
 
-  Future<List<RecordModel>> searchPosts(String query) async {
+  Future<List<RecordModel>> searchPosts(String query, String field) async {
     PocketBase pb = await PocketBaseSingleton.instance;
 
     try {
       List<RecordModel> record = await pb.collection('posts').getFullList(
             sort: '-updated',
-            filter: 'caption = "$query"',
+            filter: '$field = "$query"',
             expand: 'user',
           );
       return record;

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:connectopia/src/features/notifications/presentation/screens/notifications.dart';
 import 'package:connectopia/src/features/profile/domain/models/post.dart';
 import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:connectopia/src/features/profile/presentation/screens/personal_profile.dart';
@@ -48,9 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const Center(
         child: Text('Add'),
       ),
-      const Center(
-        child: Text('Notifications'),
-      ),
+      const NotificationView(),
       PersonalProfileScreen(),
     ];
     return Container(

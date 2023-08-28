@@ -26,7 +26,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
             usersRecord.items.map((e) => User.fromRecord(e)).toList();
 
         List<RecordModel> postsRecord =
-            await _searchRepo.searchPosts(event.query);
+            await _searchRepo.searchPosts(event.query, 'caption');
         List<Post> posts = postsRecord.map((e) => Post.fromRecord(e)).toList();
 
         if (posts.isNotEmpty)
@@ -45,6 +45,14 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
       } catch (e) {
         emit(SearchErrorState(e.toString()));
       }
+    });
+
+    on<GetUserPosts>((event, emit) async {
+      emit(LoadingUserPosts());
+      List<RecordModel> postsRecord =
+          await _searchRepo.searchPosts(event.id, 'user');
+      List<Post> posts = postsRecord.map((e) => Post.fromRecord(e)).toList();
+      emit(UserPostsLoadedState(posts, event.index));
     });
   }
 }

@@ -15,3 +15,10 @@ final class SearchUsersEvent extends SearchEvent {
   @override
   List<Object> get props => [query];
 }
+
+final class GetUserPosts extends SearchEvent {
+  final String id;
+  final int index;
+
+  GetUserPosts(this.id, this.index);
+}

@@ -22,7 +22,7 @@ class MediaGridView extends StatelessWidget {
             child: context.read<SearchBloc>().hasFoundMedia
                 ? GridView.builder(
                     itemCount:
-                        state is SearchLoadedState ? state.posts.length : 20,
+                        state is SearchLoadedState ? state.media.length : 20,
                     padding: EdgeInsets.zero,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3,
@@ -36,13 +36,13 @@ class MediaGridView extends StatelessWidget {
                             '/single-post',
                             arguments: {
                               'posts': state is SearchLoadedState
-                                  ? state.posts
+                                  ? state.media
                                   : null,
                               'post': state is SearchLoadedState
-                                  ? state.posts[index]
+                                  ? state.media[index]
                                   : null,
                               'isOwnPost': state is SearchLoadedState
-                                  ? state.posts[index].expand.user.id == userId
+                                  ? state.media[index].expand.user.id == userId
                                   : null,
                             },
                           );
@@ -50,14 +50,14 @@ class MediaGridView extends StatelessWidget {
                         child: Container(
                             decoration: BoxDecoration(),
                             child: state is SearchLoadedState &&
-                                    state.posts[index].image.isEmpty
+                                    state.media[index].image.isEmpty
                                 ? DecoratedBox(
                                     decoration: BoxDecoration(
                                       color: Pellet.kDark,
                                     ),
                                     child: Center(
                                       child: Text(
-                                        state.posts[index].caption,
+                                        state.media[index].caption,
                                         style: TextStyle(
                                           color: Pellet.kWhite,
                                           fontSize: 12,
@@ -72,7 +72,7 @@ class MediaGridView extends StatelessWidget {
                                 : state is SearchLoadedState
                                     ? CachedNetworkImage(
                                         imageUrl:
-                                            '${dotenv.env['POCKETBASE_URL']}/api/files/${state.posts[index].collectionId}/${state.posts[index].id}/${state.posts[index].image[0]}/',
+                                            '${dotenv.env['POCKETBASE_URL']}/api/files/${state.media[index].collectionId}/${state.media[index].id}/${state.media[index].image[0]}/',
                                         fit: BoxFit.cover,
                                       )
                                     : SizedBox()),
@@ -82,7 +82,7 @@ class MediaGridView extends StatelessWidget {
                     ? FakeGridView()
                     : state is SearchInitial
                         ? HintColumn(
-                            text: 'Search for media',
+                            text: 'Search for Media',
                             icon: IconlyLight.image_2,
                           )
                         : HintColumn(

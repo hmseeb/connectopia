@@ -58,8 +58,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     return BlocConsumer<EditProfileBloc, EditProfileState>(
       listener: (context, state) {
         if (state is AvatarUpdateSuccess) {
+          context.read<ProfileBloc>().add(LoadPersonalProfile());
           Navigator.pop(context);
         } else if (state is BannerUpdateSuccess) {
+          context.read<ProfileBloc>().add(LoadPersonalProfile());
           Navigator.pop(context);
         } else if (state is EditProfileSuccess) {
           Navigator.pop(context);

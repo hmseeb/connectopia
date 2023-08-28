@@ -67,10 +67,8 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
           ));
         }
         if (state is ProfilePostDeletedState) {
-          Navigator.pushNamed(context, '/home', arguments: {
-            'selectedIndex': 4,
-            'user': state.user,
-          });
+          Navigator.of(context).popUntil((route) => route.isFirst);
+          context.read<ProfileBloc>().add(LoadPersonalProfile());
         }
       },
       builder: (context, state) {
@@ -164,13 +162,16 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                                 actions: [
                                   CupertinoActionSheetAction(
                                     onPressed: () {
-                                      widget.isOwnPost
-                                          ? context.read<ProfileBloc>().add(
-                                                DeletePostButtonPressed(
-                                                    widget.post.id,
-                                                    widget.post.expand.user),
-                                              )
-                                          : null;
+                                      if (widget.isOwnPost) {
+                                        context
+                                            .read<ProfileBloc>()
+                                            .add(LoadPersonalProfile());
+                                        context.read<ProfileBloc>().add(
+                                              DeletePostButtonPressed(
+                                                  widget.post.id,
+                                                  widget.post.expand.user),
+                                            );
+                                      }
                                     },
                                     child: Text(
                                       // TODO: Make sure

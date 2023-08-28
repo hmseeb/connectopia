@@ -13,9 +13,9 @@ final class SearchLoading extends SearchState {}
 
 final class SearchLoadedState extends SearchState {
   final List<User> users;
-  final List<Post> posts;
+  final List<Post> media;
 
-  const SearchLoadedState(this.users, this.posts);
+  const SearchLoadedState(this.users, this.media);
 
   @override
   List<Object> get props => [users];
@@ -28,4 +28,13 @@ final class SearchErrorState extends SearchState {
 
   @override
   List<Object> get props => [message];
+}
+
+final class LoadingUserPosts extends SearchState {}
+
+final class UserPostsLoadedState extends SearchState {
+  final List<Post> posts;
+  final int index;
+
+  UserPostsLoadedState(this.posts, this.index);
 }

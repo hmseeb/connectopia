@@ -39,13 +39,15 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
     on<LocationButtonClickedEvent>((event, emit) async {
       CreatePostRepo repo = CreatePostRepo();
-      enableLocation = !enableLocation;
-      emit(ToggleLocation(enableLocation));
+
       if (pickedFile != null || pickedFiles.isNotEmpty || caption.isNotEmpty)
         emit(ValidSubmitState());
       try {
+        //! TODO: Check if it's working with internet
         final location = await repo.determineLocation();
         userLocation = '${location.locality}, ${location.country}';
+        enableLocation = !enableLocation;
+        emit(ToggleLocation(enableLocation));
       } catch (err) {
         String errorMsg = handleError.handleError(err);
         emit(PostCreationFailure(errorMsg));
@@ -72,12 +74,18 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         pickedFile = null;
         pickedFiles = [];
         caption = '';
+        userLocation = null;
+        enableLocation = false;
+        enableStory = false;
       } catch (err) {
         String errorMsg = handleError.handleError(err);
         emit(PostCreationFailure(errorMsg));
         pickedFile = null;
         pickedFiles = [];
         caption = '';
+        userLocation = null;
+        enableLocation = false;
+        enableStory = false;
       }
     });
 

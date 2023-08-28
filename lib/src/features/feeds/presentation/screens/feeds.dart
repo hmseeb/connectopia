@@ -1,5 +1,6 @@
 import 'package:connectopia/src/features/feeds/data/feeds_repo.dart';
 import 'package:connectopia/src/features/feeds/presentation/views/single_post.dart';
+import 'package:connectopia/src/features/messaging/presentation/screens/dms.dart';
 import 'package:connectopia/src/features/profile/domain/models/post.dart';
 import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:flutter/material.dart';
@@ -66,7 +67,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
                           curve: Curves.easeInOut,
                         );
                       },
-                      child: Icon(
+                      child: Icon(  
                         IconlyLight.chat,
                         color: Pellet.kWhite,
                       ),
@@ -91,16 +92,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
             ],
           ),
         ),
-        Center(
-          child: Text(
-            'Chat',
-            style: TextStyle(
-              fontSize: _width * ScreenSize.kSpaceXL,
-              fontWeight: FontWeight.bold,
-              color: Pellet.kWhite,
-            ),
-          ),
-        ),
+        DmsView(),
       ],
     );
   }
