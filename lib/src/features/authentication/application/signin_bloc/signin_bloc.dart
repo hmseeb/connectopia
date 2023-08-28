@@ -53,7 +53,7 @@ class SigninBloc extends Bloc<SigninEvent, SigninState> {
       } catch (e) {
         ErrorHandlerRepo errorHandler = ErrorHandlerRepo();
         String errorMsg = errorHandler.handleError(e);
-        SigninFailureState(errorMsg);
+        emit(SigninFailureState(errorMsg));
       }
     });
 

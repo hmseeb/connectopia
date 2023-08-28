@@ -14,7 +14,7 @@ class NotificationView extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          SizedBox(height: _height * 4),
+          SizedBox(height: _height * 6),
           PageTitleView(),
           SizedBox(height: _height * 2),
           DaySeparator(

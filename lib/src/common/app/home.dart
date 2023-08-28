@@ -100,7 +100,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     label: 'Add',
                   ),
                   BottomNavigationBarItem(
-                    icon: Icon(IconlyLight.notification),
+                    icon: Badge(
+                      child: Icon(IconlyLight.notification),
+                      isLabelVisible: true,
+                      backgroundColor: Pellet.kBlue,
+                      textColor: Pellet.kWhite,
+                    ),
                     activeIcon: GlowIcon(
                       IconlyBold.notification,
                       glowColor: Pellet.kWhite,

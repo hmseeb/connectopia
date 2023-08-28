@@ -46,6 +46,7 @@ class _FeedsScreenState extends State<FeedsScreen> {
           clipBehavior: Clip.none,
           child: Column(
             children: [
+              SizedBox(height: _height * 2),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
@@ -63,13 +64,16 @@ class _FeedsScreenState extends State<FeedsScreen> {
                       onTap: () {
                         _pageController.animateToPage(
                           1,
-                          duration: const Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 250),
                           curve: Curves.easeInOut,
                         );
                       },
-                      child: Icon(  
-                        IconlyLight.chat,
-                        color: Pellet.kWhite,
+                      child: Badge(
+                        child: Icon(IconlyLight.chat),
+                        isLabelVisible: true,
+                        backgroundColor: Colors.red,
+                        textColor: Pellet.kWhite,
+                        label: Text('1'),
                       ),
                     )
                   ],

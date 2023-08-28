@@ -6,7 +6,6 @@ class ErrorHandlerRepo {
   Logger logger = Logger();
   String handleError(Object? error) {
     String errorMsg = error.toString();
-    logger.e(errorMsg);
     if (errorMsg.contains('validation_invalid_email')) {
       return "Hmm… that email doesn't look valid";
     } else if (errorMsg.contains('validation_invalid_username')) {

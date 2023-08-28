@@ -1,4 +1,5 @@
 import 'package:connectopia/src/features/feeds/application/bloc/feeds_bloc.dart';
+import 'package:connectopia/src/features/messaging/dms_bloc/dms_bloc.dart';
 import 'package:connectopia/src/features/profile/application/personal_profile_bloc/personal_profile_bloc.dart';
 import 'package:connectopia/src/features/profile/application/user_profile_bloc/user_profile_bloc.dart';
 import 'package:connectopia/src/features/search_users/application/bloc/search_bloc.dart';
@@ -34,6 +35,7 @@ class Connectopia extends StatelessWidget {
         BlocProvider<AccountSettings>(create: (context) => AccountSettings()),
         BlocProvider<SearchBloc>(create: (context) => SearchBloc()),
         BlocProvider<FeedsBloc>(create: (context) => FeedsBloc()),
+        BlocProvider<DmsBloc>(create: (context) => DmsBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
