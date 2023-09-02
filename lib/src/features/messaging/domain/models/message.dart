@@ -1,10 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:pocketbase/pocketbase.dart';
 
-part 'expanded_message.g.dart';
+part 'message.g.dart';
 
 @JsonSerializable()
 class Message {
+  @JsonKey(name: "chat")
+  String chat;
   @JsonKey(name: "collectionId")
   String collectionId;
   @JsonKey(name: "collectionName")
@@ -25,6 +27,7 @@ class Message {
   DateTime updated;
 
   Message({
+    required this.chat,
     required this.collectionId,
     required this.collectionName,
     required this.content,
@@ -46,21 +49,58 @@ class Message {
 
 @JsonSerializable()
 class Expand {
+  @JsonKey(name: "chat")
+  Chat chat;
   @JsonKey(name: "receiver")
   Receiver receiver;
   @JsonKey(name: "sender")
   Receiver sender;
 
   Expand({
+    required this.chat,
     required this.receiver,
     required this.sender,
   });
-  factory Expand.fromRecord(RecordModel record) =>
+    factory Expand.fromRecord(RecordModel record) =>
       Expand.fromJson(record.toJson());
 
   factory Expand.fromJson(Map<String, dynamic> json) => _$ExpandFromJson(json);
 
   Map<String, dynamic> toJson() => _$ExpandToJson(this);
+}
+
+@JsonSerializable()
+class Chat {
+  @JsonKey(name: "collectionId")
+  String collectionId;
+  @JsonKey(name: "collectionName")
+  String collectionName;
+  @JsonKey(name: "created")
+  DateTime created;
+  @JsonKey(name: "createdBy")
+  String createdBy;
+  @JsonKey(name: "createdWith")
+  String createdWith;
+  @JsonKey(name: "id")
+  String id;
+  @JsonKey(name: "updated")
+  DateTime updated;
+
+  Chat({
+    required this.collectionId,
+    required this.collectionName,
+    required this.created,
+    required this.createdBy,
+    required this.createdWith,
+    required this.id,
+    required this.updated,
+  });
+    factory Chat.fromRecord(RecordModel record) =>
+      Chat.fromJson(record.toJson());
+
+  factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChatToJson(this);
 }
 
 @JsonSerializable()
@@ -77,6 +117,8 @@ class Receiver {
   String collectionName;
   @JsonKey(name: "created")
   DateTime created;
+  @JsonKey(name: "email")
+  String email;
   @JsonKey(name: "emailVisibility")
   bool emailVisibility;
   @JsonKey(name: "id")
@@ -89,8 +131,6 @@ class Receiver {
   String username;
   @JsonKey(name: "verified")
   bool verified;
-  @JsonKey(name: "email")
-  String? email;
 
   Receiver({
     required this.avatar,
@@ -99,16 +139,15 @@ class Receiver {
     required this.collectionId,
     required this.collectionName,
     required this.created,
+    required this.email,
     required this.emailVisibility,
     required this.id,
     required this.name,
     required this.updated,
     required this.username,
     required this.verified,
-    this.email,
   });
-
-  factory Receiver.fromRecord(RecordModel record) =>
+    factory Receiver.fromRecord(RecordModel record) =>
       Receiver.fromJson(record.toJson());
 
   factory Receiver.fromJson(Map<String, dynamic> json) =>

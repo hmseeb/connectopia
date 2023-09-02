@@ -10,6 +10,8 @@ part 'personal_profile_event.dart';
 part 'personal_profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  late User user;
+  List<Post> posts = [];
   ProfileRepo repo = ProfileRepo();
   ErrorHandlerRepo handleError = ErrorHandlerRepo();
 
@@ -17,16 +19,17 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
     on<LoadPersonalProfile>((event, emit) async {
       emit(ProfileLoadingState());
       try {
+        final startedTime = Stopwatch()..start();
         final post_record = await repo.personalPosts;
-        List<Post> posts =
-            post_record.map((post) => Post.fromRecord(post)).toList();
-        late final User user;
+        posts = post_record.map((post) => Post.fromRecord(post)).toList();
         if (posts.isEmpty) {
           final user_record = await repo.user;
           user = User.fromRecord(user_record);
         } else {
           user = posts.first.expand.user;
         }
+        print('${startedTime.elapsedMilliseconds}ms');
+        Stopwatch()..stop();
         emit(ProfileLoadedState(posts, user));
       } catch (e) {
         String errorMsg = handleError.handleError(e);

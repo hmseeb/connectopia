@@ -7,6 +7,14 @@ import 'package:pocketbase/pocketbase.dart';
 import '../../../../db/pocketbase.dart';
 
 class ProfileRepo {
+  static Future<String> get id async {
+    PocketBase pb = await PocketBaseSingleton.instance;
+    try {
+      return pb.authStore.model.id;
+    } catch (e) {
+      throw e;
+    }
+  }
   Future<RecordModel> get user async {
     PocketBase pb = await PocketBaseSingleton.instance;
     try {
@@ -25,7 +33,7 @@ class ProfileRepo {
       return '';
     }
     Uint8List imagebytes = await file.readAsBytes();
-    String base64string = base64.encode(imagebytes);
+  String base64string = base64.encode(imagebytes);
     return base64string;
   }
 

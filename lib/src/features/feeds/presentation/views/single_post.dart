@@ -80,13 +80,20 @@ class _SinglePostTemplateState extends State<SinglePostTemplate> {
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      backgroundImage: MemoryImage(
-                        ProfileRepo.decodeBase64(
-                          widget.post.expand.user.avatar,
+                    if (widget.post.expand.user.avatar.isNotEmpty)
+                      CircleAvatar(
+                        backgroundImage: MemoryImage(
+                          ProfileRepo.decodeBase64(
+                            widget.post.expand.user.avatar,
+                          ),
+                        ),
+                      )
+                    else
+                      CircleAvatar(
+                        backgroundImage: AssetImage(
+                          Assets.avatarPlaceholder,
                         ),
                       ),
-                    ),
                     SizedBox(
                       width: _width * ScreenSize.kSpaceL,
                     ),

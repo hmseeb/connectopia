@@ -1,3 +1,5 @@
+import 'package:connectopia/src/features/messaging/presentation/screens/create_chat.dart';
+import 'package:connectopia/src/features/messaging/presentation/screens/messages.dart';
 import 'package:flutter/material.dart';
 
 import 'common/app/home.dart';
@@ -115,6 +117,47 @@ class GenerateRoutes {
             emailVisibility: args['emailVisibility'],
           );
         });
+      case '/create-dm':
+        return PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 250),
+          pageBuilder: (_, animation, secondaryAnimation) => const CreateDM(),
+          transitionsBuilder: (_, animation, secondaryAnimation, child) {
+            var begin = const Offset(1.0, 0.0);
+            var end = Offset.zero;
+            var curve = Curves.ease;
+            var tween =
+                Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+        );
+      case '/messages':
+        {
+          final args = settings.arguments as Map<String, dynamic>;
+          return PageRouteBuilder(
+            transitionDuration: const Duration(milliseconds: 250),
+            pageBuilder: (_, animation, secondaryAnimation) => Messages(
+              isCreator: args['isCreator'],
+              chatId: args['chatId'],
+              username: args['username'],
+              avatar: args['avatar'],
+              receiverId: args['receiverId'],
+            ),
+            transitionsBuilder: (_, animation, secondaryAnimation, child) {
+              var begin = const Offset(1.0, 0.0);
+              var end = Offset.zero;
+              var curve = Curves.ease;
+              var tween =
+                  Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              return SlideTransition(
+                position: animation.drive(tween),
+                child: child,
+              );
+            },
+          );
+        }
 
       default:
         return MaterialPageRoute(builder: (_) => const SplashScreen());

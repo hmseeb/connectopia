@@ -20,12 +20,12 @@ class ForgotPwdBloc extends Bloc<ForgotPwdEvent, ForgotPwdState> {
 
     on<EmailChangedEvent>(_handleEmailChanged);
     on<EmailSubmittedEvent>(
-      (event, emit) {
+      (event, emit) async {
         emit(SendingEmailState());
-        authRepo
+        await authRepo
             .sendVerificationEmail(event.email)
             .then((value) => emit(EmailSentState()))
-            .catchError((e) => emit(EmailNotSentState('An error occured')));
+            .catchError((e) => emit(EmailNotSentState('An error occurred')));
       },
     );
   }

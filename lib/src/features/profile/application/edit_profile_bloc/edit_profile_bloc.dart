@@ -65,6 +65,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       try {
         final ImagePicker imagePicker = ImagePicker();
         pickedImage = await imagePicker.pickImage(
+          imageQuality: 60,
+          preferredCameraDevice: CameraDevice.front,
           source: ImageSource.gallery,
         );
         if (pickedImage != null) {

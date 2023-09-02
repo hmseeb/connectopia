@@ -1,5 +1,7 @@
 import 'package:autoscale_tabbarview/autoscale_tabbarview.dart';
 import 'package:connectopia/src/features/profile/application/personal_profile_bloc/personal_profile_bloc.dart';
+import 'package:connectopia/src/features/profile/domain/models/post.dart';
+import 'package:connectopia/src/features/profile/domain/models/user.dart';
 import 'package:connectopia/src/features/profile/presentation/widgets/fake_grid_view.dart';
 import 'package:connectopia/src/features/search_users/presentation/widgets/hint_col.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
@@ -33,10 +35,18 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen>
     with TickerProviderStateMixin {
   late final _personalTabController;
 
+  late User user;
+  late List<Post> posts;
+
   @override
   void initState() {
     super.initState();
-    context.read<ProfileBloc>().add(LoadPersonalProfile());
+    posts = context.read<ProfileBloc>().posts;
+    if (posts.isEmpty) {
+      context.read<ProfileBloc>().add(LoadPersonalProfile());
+    } else {
+      user = posts.first.expand.user;
+    }
     _personalTabController = TabController(length: 4, vsync: this);
   }
 
@@ -50,7 +60,13 @@ class _PersonalProfileScreenState extends State<PersonalProfileScreen>
   Widget build(BuildContext context) {
     final _height = ScreenSize.height(context);
     final _width = ScreenSize.width(context);
-    return BlocBuilder<ProfileBloc, ProfileState>(
+    return BlocConsumer<ProfileBloc, ProfileState>(
+      listener: (context, state) {
+        if (state is ProfileLoadedState) {
+          user = state.user;
+          posts = state.posts;
+        }
+      },
       builder: (context, state) {
         return Container(
           decoration: BoxDecoration(

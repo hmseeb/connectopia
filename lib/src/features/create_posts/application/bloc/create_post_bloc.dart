@@ -22,7 +22,9 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       pickedFiles = [];
       pickedFile = null;
       final picker = ImagePicker();
-      pickedFiles = await picker.pickMultiImage();
+      pickedFiles = await picker.pickMultiImage(
+        imageQuality: 60,
+      );
       if (pickedFiles.isEmpty) return;
       emit(PickedImageFromGallery(pickedFile: pickedFiles));
     });
@@ -31,6 +33,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       pickedFile = null;
       final picker = ImagePicker();
       pickedFile = await picker.pickImage(
+        imageQuality: 60,
         source: ImageSource.camera,
       );
       if (pickedFile == null) return;
@@ -43,11 +46,12 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
       if (pickedFile != null || pickedFiles.isNotEmpty || caption.isNotEmpty)
         emit(ValidSubmitState());
       try {
-        //! TODO: Check if it's working with internet
         final location = await repo.determineLocation();
         userLocation = '${location.locality}, ${location.country}';
         enableLocation = !enableLocation;
         emit(ToggleLocation(enableLocation));
+        if (pickedFile != null || pickedFiles.isNotEmpty || caption.isNotEmpty)
+          emit(ValidSubmitState());
       } catch (err) {
         String errorMsg = handleError.handleError(err);
         emit(PostCreationFailure(errorMsg));
@@ -63,6 +67,7 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
 
     on<CreatePostButtonClickedEvent>((event, emit) async {
       emit(CreatingPost());
+      final startedTime = Stopwatch()..start();
       CreatePostRepo repo = CreatePostRepo();
       if (!event.enableLocation) userLocation = null;
       if (pickedFile != null) pickedFiles.add(pickedFile!);
@@ -77,6 +82,8 @@ class CreatePostBloc extends Bloc<CreatePostEvent, CreatePostState> {
         userLocation = null;
         enableLocation = false;
         enableStory = false;
+        print('Created Post in ${startedTime.elapsedMilliseconds}ms');
+        Stopwatch()..stop();
       } catch (err) {
         String errorMsg = handleError.handleError(err);
         emit(PostCreationFailure(errorMsg));

@@ -1,9 +1,11 @@
 import 'package:connectopia/src/features/feeds/data/feeds_repo.dart';
 import 'package:connectopia/src/features/feeds/presentation/views/single_post.dart';
-import 'package:connectopia/src/features/messaging/presentation/screens/dms.dart';
+import 'package:connectopia/src/features/messaging/presentation/screens/chats.dart';
 import 'package:connectopia/src/features/profile/domain/models/post.dart';
 import 'package:connectopia/src/features/profile/domain/models/user.dart';
+import 'package:connectopia/src/features/search_users/presentation/widgets/hint_col.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:iconly/iconly.dart';
 
 import '../../../../constants/sizing.dart';
@@ -80,19 +82,36 @@ class _FeedsScreenState extends State<FeedsScreen> {
                 ),
               ),
               SizedBox(height: _height * 2),
-              SizedBox(
-                height: _height * 90,
-                child: ListView.builder(
-                  itemCount: widget.posts.length,
-                  itemBuilder: (context, index) {
-                    return SinglePostTemplate(
-                      post: widget.posts[index],
-                      isOwnPost: false,
-                      posts: widget.posts,
-                    );
-                  },
-                ),
-              ),
+              widget.posts.isNotEmpty
+                  ? SizedBox(
+                      height: _height * 90,
+                      child: ListView.builder(
+                        itemCount: widget.posts.length,
+                        itemBuilder: (context, index) {
+                          return SinglePostTemplate(
+                            post: widget.posts[index],
+                            isOwnPost: false,
+                            posts: widget.posts,
+                          );
+                        },
+                      ),
+                    )
+                  : SizedBox(
+                      height: _height * 70,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          HintColumn(
+                            text: 'Your feed is empty',
+                            icon: FontAwesomeIcons.globe,
+                          ),
+                          SizedBox(height: 2),
+                          Text(
+                            'Follow people to see their posts',
+                          ),
+                        ],
+                      ),
+                    )
             ],
           ),
         ),

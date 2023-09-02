@@ -5,6 +5,7 @@ import 'package:logger/logger.dart';
 class ErrorHandlerRepo {
   Logger logger = Logger();
   String handleError(Object? error) {
+    logger.e(error);
     String errorMsg = error.toString();
     if (errorMsg.contains('validation_invalid_email')) {
       return "Hmm… that email doesn't look valid";
@@ -21,7 +22,7 @@ class ErrorHandlerRepo {
   }
 
   List<String> serverErrors = [
-    "We are embarrassed! Human Error is inevitable, but this is unacceptable. We'll look into the matter now.",
+    "Human Error is inevitable, but this is unacceptable. We'll look into the matter now.",
     'There was a glitch in the matrix...',
   ];
   List<String> userErrors = [

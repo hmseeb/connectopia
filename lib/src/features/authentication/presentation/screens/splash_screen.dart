@@ -25,6 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<bool> checkAuth() async {
     PocketBase pocketBase = await PocketBaseSingleton.instance;
+    pocketBase.authStore.clear();
     return pocketBase.authStore.isValid;
   }
 
