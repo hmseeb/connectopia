@@ -23,11 +23,11 @@ class CreateChatBloc extends Bloc<CreateChatEvent, CreateChatState> {
         emit(SearchingUsersFailed());
       }
     });
-    on<CreateChatButtonPressed>((event, emit) {
+    on<CreateChatButtonPressed>((event, emit) async {
       emit(CreatingChat());
       MessagingRepository msgRepo = MessagingRepository();
       try {
-        msgRepo.createChat(event.createdWith);
+        await msgRepo.createChat(event.createdWith);
         emit(ChatCreated());
       } catch (e) {
         emit(ChatCreationFailed('Failed to create chat.'));

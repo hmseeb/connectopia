@@ -5,7 +5,6 @@ import 'package:logger/logger.dart';
 class ErrorHandlerRepo {
   Logger logger = Logger();
   String handleError(Object? error) {
-    logger.e(error);
     String errorMsg = error.toString();
     if (errorMsg.contains('validation_invalid_email')) {
       return "Hmm… that email doesn't look valid";

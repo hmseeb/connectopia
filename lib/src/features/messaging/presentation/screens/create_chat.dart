@@ -47,7 +47,7 @@ class _CreateChatsState extends State<CreateDM> {
             errorSnack('An error occurred while searching users.'),
           );
         } else if (state is ChatCreated) {
-          Navigator.popUntil(context, (route) => route.isFirst);
+          Navigator.pop(context);
         }
       },
       builder: (context, state) {

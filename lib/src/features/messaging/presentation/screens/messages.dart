@@ -3,7 +3,7 @@ import 'package:connectopia/src/constants/assets.dart';
 import 'package:connectopia/src/constants/sizing.dart';
 import 'package:connectopia/src/db/encryption.dart';
 import 'package:connectopia/src/features/messaging/application/messages_bloc/messages_bloc.dart';
-import 'package:connectopia/src/features/messaging/domain/models/message.dart';
+import 'package:connectopia/src/features/messaging/models/message.dart';
 import 'package:connectopia/src/features/messaging/presentation/screens/chats.dart';
 import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
 import 'package:connectopia/src/theme/colors.dart';
@@ -15,12 +15,10 @@ import 'package:lottie/lottie.dart';
 class Messages extends StatefulWidget {
   const Messages(
       {super.key,
-      required this.isCreator,
       required this.chatId,
       required this.username,
       required this.avatar,
       required this.receiverId});
-  final bool isCreator;
   final String avatar;
   final String username;
   final String chatId;
@@ -32,13 +30,12 @@ class Messages extends StatefulWidget {
 
 class _MessagesState extends State<Messages> {
   String userId = '';
-  late List<Message> messages;
+  late List<Message> messages = [];
   late final _messageController;
   @override
   void initState() {
     super.initState();
     _messageController = TextEditingController();
-    messages = context.read<MessagesBloc>().messages;
     context.read<MessagesBloc>().add(LoadMessages(chatId: widget.chatId));
   }
 
@@ -58,8 +55,9 @@ class _MessagesState extends State<Messages> {
       ),
       child: BlocConsumer<MessagesBloc, MessagesState>(
         listener: (context, state) {
+          print(state);
           if (state is LoadedMessages) {
-            messages = context.read<MessagesBloc>().messages;
+            messages = state.messages;
             if (userId.isEmpty) {
               userId = state.userId;
             }
@@ -72,9 +70,6 @@ class _MessagesState extends State<Messages> {
               errorSnack(state.message),
             );
           } else if (state is MessageSent) {
-            context.read<MessagesBloc>().add(LoadMessages(
-                  chatId: widget.chatId,
-                ));
             _messageController.clear();
           }
         },
@@ -97,7 +92,7 @@ class _MessagesState extends State<Messages> {
                               ),
                             ),
                     ),
-                    SizedBox(width: _width * 2),
+                    SizedBox(width: _width * 3),
                     Text(widget.username),
                   ],
                 ),
@@ -122,7 +117,7 @@ class _MessagesState extends State<Messages> {
                 children: [
                   SizedBox(
                       height: _height * 80,
-                      child: state is LoadedMessages
+                      child: messages.isNotEmpty
                           ? ListView.builder(
                               shrinkWrap: true,
                               reverse: true,
@@ -233,14 +228,15 @@ class MessagesTextField extends StatelessWidget {
                       receiverId: widget.receiverId,
                       chatId: widget.chatId,
                     ));
-
-                messageController.clear();
               }
             },
-            icon: Icon(
-              IconlyBold.send,
-              color: state is CanSendMessage ? Pellet.kBlue : Pellet.kGrey,
-            ),
+            icon: state is MessageSending
+                ? Lottie.asset(Assets.progressIndicator)
+                : Icon(
+                    IconlyBold.send,
+                    color:
+                        state is CanSendMessage ? Pellet.kBlue : Pellet.kGrey,
+                  ),
           )
         ],
       ),

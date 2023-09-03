@@ -2,8 +2,7 @@ import 'package:connectopia/src/common/messages/error_snackbar.dart';
 import 'package:connectopia/src/constants/assets.dart';
 import 'package:connectopia/src/constants/sizing.dart';
 import 'package:connectopia/src/features/messaging/application/chats_bloc/chats_bloc.dart';
-import 'package:connectopia/src/features/messaging/domain/models/chat.dart';
-import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
+import 'package:connectopia/src/features/messaging/models/chat.dart';
 import 'package:connectopia/src/theme/colors.dart';
 import 'package:custom_refresh_indicator/custom_refresh_indicator.dart';
 import 'package:flutter/material.dart';
@@ -107,8 +106,6 @@ class _DmsViewState extends State<DmsView> {
                             shrinkWrap: true,
                             itemCount: chats.length,
                             itemBuilder: (context, index) {
-                              bool isCreator =
-                                  chats[index].expand.createdBy.id == userId;
                               String time = chats[index]
                                   .updated
                                   .toString()
@@ -119,103 +116,45 @@ class _DmsViewState extends State<DmsView> {
                                     context,
                                     '/messages',
                                     arguments: {
-                                      'isCreator': isCreator,
                                       'chatId': chats[index].id,
-                                      'username': isCreator
-                                          ? chats[index]
-                                              .expand
-                                              .createdWith
-                                              .username
-                                          : chats[index]
-                                              .expand
-                                              .createdBy
-                                              .username,
-                                      'avatar': isCreator
-                                          ? chats[index]
-                                              .expand
-                                              .createdWith
-                                              .avatar
-                                          : chats[index]
-                                              .expand
-                                              .createdBy
-                                              .avatar,
-                                      'receiverId': isCreator
-                                          ? chats[index].expand.createdWith.id
-                                          : chats[index].expand.createdBy.id,
+                                      'username': chats[index]
+                                          .expand!
+                                          .users!
+                                          .firstWhere(
+                                              (element) => element.id != userId)
+                                          .username,
+                                      'avatar': chats[index]
+                                          .expand!
+                                          .users!
+                                          .firstWhere(
+                                              (element) => element.id != userId)
+                                          .avatar,
+                                      'receiverId': chats[index]
+                                          .expand!
+                                          .users!
+                                          .firstWhere(
+                                              (element) => element.id != userId)
+                                          .id,
                                     },
                                   );
                                 },
-                                leading: isCreator
-                                    ? chats[index]
-                                            .expand
-                                            .createdWith
-                                            .avatar
-                                            .isNotEmpty
-                                        ? CircleAvatar(
-                                            backgroundImage: MemoryImage(
-                                              ProfileRepo.decodeBase64(isCreator
-                                                  ? chats[index]
-                                                      .expand
-                                                      .createdWith
-                                                      .avatar
-                                                  : chats[index]
-                                                      .expand
-                                                      .createdBy
-                                                      .avatar),
-                                            ),
-                                          )
-                                        : chats[index]
-                                                .expand
-                                                .createdBy
-                                                .avatar
-                                                .isNotEmpty
-                                            ? CircleAvatar(
-                                                backgroundImage: MemoryImage(
-                                                  ProfileRepo.decodeBase64(
-                                                      isCreator
-                                                          ? chats[index]
-                                                              .expand
-                                                              .createdWith
-                                                              .avatar
-                                                          : chats[index]
-                                                              .expand
-                                                              .createdBy
-                                                              .avatar),
-                                                ),
-                                              )
-                                            : CircleAvatar(
-                                                backgroundImage: AssetImage(
-                                                  Assets.avatarPlaceholder,
-                                                ),
-                                              )
-                                    : chats[index]
-                                            .expand
-                                            .createdBy
-                                            .avatar
-                                            .isNotEmpty
-                                        ? CircleAvatar(
-                                            backgroundImage: MemoryImage(
-                                              ProfileRepo.decodeBase64(isCreator
-                                                  ? chats[index]
-                                                      .expand
-                                                      .createdWith
-                                                      .avatar
-                                                  : chats[index]
-                                                      .expand
-                                                      .createdBy
-                                                      .avatar),
-                                            ),
-                                          )
-                                        : CircleAvatar(
-                                            backgroundImage: AssetImage(
-                                              Assets.avatarPlaceholder,
-                                            ),
-                                          ),
-                                title: Text(
-                                  isCreator
-                                      ? chats[index].expand.createdWith.username
-                                      : chats[index].expand.createdBy.username,
+                                leading: CircleAvatar(
+                                  backgroundColor: Colors.redAccent,
                                 ),
+                                title: Text(
+                                    chats[index].expand!.users!.first.id !=
+                                            userId
+                                        ? chats[index]
+                                            .expand!
+                                            .users!
+                                            .first
+                                            .username
+                                            .toString()
+                                        : chats[index]
+                                            .expand!
+                                            .users![1]
+                                            .username
+                                            .toString()),
                                 subtitle: Text(
                                   'Message content goes here',
                                 ),

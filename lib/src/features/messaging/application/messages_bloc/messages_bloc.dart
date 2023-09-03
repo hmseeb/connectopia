@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:connectopia/src/common/data/errors_repo.dart';
 import 'package:connectopia/src/db/pocketbase.dart';
 import 'package:connectopia/src/features/messaging/data/repository/messaging.repo.dart';
-import 'package:connectopia/src/features/messaging/domain/models/message.dart';
+import 'package:connectopia/src/features/messaging/models/message.dart';
 import 'package:equatable/equatable.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -10,17 +10,40 @@ part 'messages_event.dart';
 part 'messages_state.dart';
 
 class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
-  List<Message> messages = [];
   String userId = '';
+  String chatId = '';
+  MessagingRepository msgRepo = MessagingRepository();
   MessagesBloc() : super(MessagesInitial()) {
+    subscribeToMessages() async {
+      PocketBase pb = await PocketBaseSingleton.instance;
+      return pb.collection('messages').subscribe('*', (e) async {
+        final record = await msgRepo.loadMessages(chatId);
+        List<Message> messages =
+            record.map((msg) => Message.fromJson(msg.toJson())).toList();
+        this.add(NewMessages(messages));
+      });
+    }
+
+    subscribeToMessages();
+
+    on<NewMessages>((event, emit) async {
+      emit(LoadingMessages());
+
+      PocketBase pb = await PocketBaseSingleton.instance;
+
+      emit(LoadedMessages(
+          messages: event.messages, userId: pb.authStore.model.id));
+    });
+
     on<LoadMessages>((event, emit) async {
+      chatId = event.chatId;
       emit(LoadingMessages());
       try {
-        MessagingRepository msgRepo = MessagingRepository();
-        final record = await msgRepo.loadMessages(event.chatId);
-        messages = record.map((msg) => Message.fromJson(msg.toJson())).toList();
+        final record = await msgRepo.loadMessages(chatId);
+        List<Message> messages =
+            record.map((msg) => Message.fromJson(msg.toJson())).toList();
         PocketBase pb = await PocketBaseSingleton.instance;
-        emit(LoadedMessages(pb.authStore.model.id));
+        emit(LoadedMessages(userId: pb.authStore.model.id, messages: messages));
       } catch (e) {
         ErrorHandlerRepo handlerRepo = ErrorHandlerRepo();
         emit(FailedLoadingMessages(message: handlerRepo.handleError(e)));
@@ -48,5 +71,10 @@ class MessagesBloc extends Bloc<MessagesEvent, MessagesState> {
         emit(MessageSendingFailed(handlerRepo.handleError(e)));
       }
     });
+
+    unubscribeToMessages() async {
+      PocketBase pb = await PocketBaseSingleton.instance;
+      return pb.collection('messages').unsubscribe();
+    }
   }
 }

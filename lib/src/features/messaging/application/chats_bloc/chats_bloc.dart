@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:connectopia/src/common/data/errors_repo.dart';
 import 'package:connectopia/src/features/messaging/data/repository/messaging.repo.dart';
-import 'package:connectopia/src/features/messaging/domain/models/chat.dart';
+import 'package:connectopia/src/features/messaging/models/chat.dart';
 import 'package:connectopia/src/features/profile/data/repository/profile_repo.dart';
 import 'package:equatable/equatable.dart';
 import 'package:logger/logger.dart';

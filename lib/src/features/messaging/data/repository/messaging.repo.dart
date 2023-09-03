@@ -9,9 +9,9 @@ class MessagingRepository {
     String userId = pb.authStore.model.id;
     try {
       final record = await pb.collection('chats').getFullList(
-            filter: 'createdBy = "$userId" || createdWith = "$userId"',
+            filter: 'users ~ "$userId"',
             sort: '-updated',
-            expand: 'createdBy, createdWith',
+            expand: 'users',
           );
       return record;
     } catch (e) {
@@ -25,7 +25,6 @@ class MessagingRepository {
       final record = await pb.collection('messages').getFullList(
             filter: 'chat = "$chatId"',
             sort: '-created',
-            expand: 'sender,receiver,chat',
           );
       return record;
     } catch (e) {
@@ -63,10 +62,9 @@ class MessagingRepository {
   Future<void> createChat(String createdWith) async {
     try {
       final pb = await PocketBaseSingleton.instance;
-      String createdBy = pb.authStore.model.id;
+      String userId = pb.authStore.model.id;
       await pb.collection('chats').create(body: {
-        'createdBy': createdBy,
-        'createdWith': createdWith,
+        "users": [userId, createdWith]
       });
     } catch (e) {
       throw e;

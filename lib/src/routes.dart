@@ -139,7 +139,6 @@ class GenerateRoutes {
           return PageRouteBuilder(
             transitionDuration: const Duration(milliseconds: 250),
             pageBuilder: (_, animation, secondaryAnimation) => Messages(
-              isCreator: args['isCreator'],
               chatId: args['chatId'],
               username: args['username'],
               avatar: args['avatar'],

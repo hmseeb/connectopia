@@ -13,8 +13,9 @@ final class LoadingMessages extends MessagesState {}
 
 final class LoadedMessages extends MessagesState {
   final String userId;
+  final List<Message> messages;
 
-  LoadedMessages(this.userId);
+  LoadedMessages({required this.userId, required this.messages});
 }
 
 final class FailedLoadingMessages extends MessagesState {
@@ -31,6 +32,7 @@ final class FailedLoadingMessages extends MessagesState {
 final class CanSendMessage extends MessagesState {}
 
 final class MessageSending extends MessagesState {}
+
 final class MessageSent extends MessagesState {}
 
 final class MessageSendingFailed extends MessagesState {
