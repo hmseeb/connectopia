@@ -2,9 +2,7 @@
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Connectopia&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient" />
 </h1>
 
-> Encrypted virtual connection with beautiful world <br />
-
-<img width="1143" alt="Screenshot 2023-09-04 at 6 20 24 PM" src="https://github.com/hmseeb/connectopia/assets/74695355/a6a2c0a6-946d-4a72-89b6-1c25dbea9132">
+> Virtual connection with beautiful world <br />
 
 ## Setup
 
@@ -46,6 +44,11 @@ Run the following commands from your terminal:
 
   </tbody>
 </table>
+
+> Encrypted database
+> 
+<img width="1143" alt="Screenshot 2023-09-04 at 6 20 24 PM" src="https://github.com/hmseeb/connectopia/assets/74695355/a6a2c0a6-946d-4a72-89b6-1c25dbea9132">
+
 
 ## LICENSE
 
