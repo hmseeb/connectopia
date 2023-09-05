@@ -48,7 +48,7 @@ Run the following commands from your terminal:
 </table>
 
 > Encrypted database
-> 
+
 <img width="1143" alt="Screenshot 2023-09-04 at 6 20 24 PM" src="https://github.com/hmseeb/connectopia/assets/74695355/a6a2c0a6-946d-4a72-89b6-1c25dbea9132">
 
 
