@@ -54,5 +54,4 @@ Run the following commands from your terminal:
 
 ## LICENSE
 
-Connectopia is
 [MIT-licensed](https://github.com/hmseeb/connectopia/blob/main/LICENSE).
