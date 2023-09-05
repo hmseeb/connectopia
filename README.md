@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Connectopia&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient" />
+  <img src="https://socialify.git.ci/legistech/connectopia/image?issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Light/>
 </h1>
 
 > Virtual connection with beautiful world <br />
