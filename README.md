@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Connectopia&fontSize=80&fontAlignY=35&animation=twinkling&fontColor=gradient" />
+  <img src="https://socialify.git.ci/legistech/connectopia/image?issues=1&language=1&name=1&owner=1&pulls=1&stargazers=1&theme=Light" />
 </h1>
 
 > Virtual connection with beautiful world <br />
@@ -11,6 +11,8 @@ Run the following commands from your terminal:
 1. `git clone https://github.com/hmseeb/connectopia.git` to clone this repository
 
 2. `flutter pub get` in the project root directory to install all the required dependencies.
+
+3. Create `.env` file in the project directory. Check `.env.example` for example.
 
 ## Screenshots
 
